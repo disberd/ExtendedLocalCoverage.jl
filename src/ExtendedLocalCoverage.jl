@@ -2,7 +2,7 @@ module ExtendedLocalCoverage
 
 using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, generate_coverage
 using Revise: Revise, parse_pkg_files
-using PythonCall
+using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
 import Pkg
 
@@ -19,15 +19,7 @@ function generate_extended_coverage(pkg = nothing; run_test=true, test_args=[""]
     pkg_id = Base.PkgId(pkg_uuid, pkg_name)
     if !haskey(Base.loaded_modules, pkg_id)
         @warn "The target package $pkg_name is not loaded. Loading it to correctly extract the source files."
-        current_project = Base.active_project()
-        try
-            Pkg.activate(pkg_dir)
-            Base.eval(Main, :(using $(Symbol(pkg_name))))
-        catch e
-            rethrow(e)
-        finally
-            Pkg.activate(current_project)
-        end
+        Base.eval(Main, :(import $(Symbol(pkg_name))))
     end
     pkgfiles = parse_pkg_files(pkg_id)
     file_list = deepcopy(pkgfiles.info.files) |> unique
@@ -49,7 +41,7 @@ function generate_extended_coverage(pkg = nothing; run_test=true, test_args=[""]
     (; filesystem_factory) = pyimport("pycobertura.filesystem")
     pycob = pycobertura()
     cobertura = pycob.Cobertura(cobertura_file, filesystem=filesystem_factory(pkg_dir))
-    reporter = pycob.reporters.HtmlReporter(cobertura)
+    reporter = pycall(pycob.reporters.HtmlReporter, cobertura; title = pkg_name * "coverage report")
     report = reporter.generate()
     open(html_file, "w") do io
         print(io, report)
