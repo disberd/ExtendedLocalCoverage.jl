@@ -1,3 +1,6 @@
 @testset "ExtendedLocalCoverage.jl" begin
-    @test ExtendedLocalCoverage.hello_world() == "Hello, World!"
+    xml, html = generate_extended_coverage("Example")
+    @test dirname(xml) |> endswith("coverage")
+    @test isfile(xml)
+    @test isfile(html)
 end
