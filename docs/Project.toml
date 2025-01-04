@@ -1,0 +1,11 @@
+# Don't forget to run
+#
+#     pkg> dev ..
+#
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+LiveServer = "16fef848-5104-11e9-1b77-fb7a48bbb589"
+ExtendedLocalCoverage = "eb248270-a497-541c-8f75-6bb2aa2715dc"
+
+[compat]
+Documenter = "1"

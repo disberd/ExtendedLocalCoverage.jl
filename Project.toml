@@ -1,0 +1,23 @@
+name = "ExtendedLocalCoverage"
+uuid = "eb248270-a497-541c-8f75-6bb2aa2715dc"
+authors = ["Alberto Mengali <a.mengali@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
+Example = "7876af07-990d-54b4-ab0e-23690620f79a"
+LocalCoverage = "5f6e1e16-694c-5876-87ef-16b5274f298e"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[compat]
+CondaPkg = "0.2.24"
+Example = "0.5.5"
+LocalCoverage = "0.8.2"
+Pkg = "1.11.0"
+PythonCall = "0.9.23"
+Revise = "3.7.1"
+TOML = "1.0.3"
+julia = "1.10"
