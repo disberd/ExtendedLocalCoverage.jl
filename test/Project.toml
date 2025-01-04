@@ -1,3 +1,6 @@
 [deps]
-Example = "7876af07-990d-54b4-ab0e-23690620f79a"
+CoverageTest = "800f3ee2-9fa6-4bb2-9e19-6019203e9ef1"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[sources]
+CoverageTest = {path = "CoverageTest"}
