@@ -12,6 +12,11 @@
 [![All Contributors](https://img.shields.io/github/all-contributors/disberd/ExtendedLocalCoverage.jl?labelColor=5e1ec7&color=c0ffee&style=flat-square)](#contributors)
 [![BestieTemplate](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/JuliaBesties/BestieTemplate.jl/main/docs/src/assets/badge.json)](https://github.com/JuliaBesties/BestieTemplate.jl)
 
+This package simply extends the functionality of [LocalCoverage.jl](https://github.com/JuliaBesties/LocalCoverage.jl) by adding the following features:
+- Automatically extract the source files for the provided package using `Revise.parse_pkg_files`.
+- Automatically create an xml cobertura coverage and an html report using `pycobertura`.
+  - The `pycobertura` library is automatically installed and used thanks to `CondaPkg.jl` and `PythonCall.jl`, not requiring the user to manually install python or `lcov` which is only available on non-windows systems.
+
 ## How to Cite
 
 If you use ExtendedLocalCoverage.jl in your work, please cite using the reference given in [CITATION.cff](https://github.com/disberd/ExtendedLocalCoverage.jl/blob/main/CITATION.cff).
