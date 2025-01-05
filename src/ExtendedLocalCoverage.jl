@@ -110,7 +110,7 @@ function generate_package_coverage(pkg = nothing; run_test=true, test_args=[""],
     end
     # Create the cobertura html file with source code
     if !isnothing(html_file)
-        generate_html_report(cobertura_file, html_file; title = pkg_name * "coverage report", pkg_dir)
+        generate_html_report(cobertura_file, html_file; title = pkg_name * " coverage report", pkg_dir)
     end
     return (; cov, cobertura_file, html_file)
 end
