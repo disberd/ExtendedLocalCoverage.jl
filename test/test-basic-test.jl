@@ -1,5 +1,9 @@
 @testset "ExtendedLocalCoverage.jl" begin
-    xml, html = generate_extended_coverage("CoverageTest"; exclude = ["foo", r"bar"])
+    function clean_coverage()
+        coverage_dir = joinpath(@__DIR__, "CoverageTest", "coverage")
+        rm(coverage_dir, recursive = true, force = true)
+    end
+    cov, xml, html = generate_package_coverage("CoverageTest"; exclude = ["foo", r"bar"])
     @test dirname(xml) |> endswith("coverage")
     @test isfile(xml)
     @test isfile(html)
@@ -12,5 +16,7 @@
         @test !contains(text, joinpath("src", "foo.jl"))
         @test !contains(text, joinpath("src", "exclude_bar.jl"))
     end
+
+    clean_coverage()
 end
 
