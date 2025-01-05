@@ -53,7 +53,7 @@ end
 Generate a summary of coverage results for package `pkg`.
 
 If no `pkg` is supplied, the method operates in the currently active package.
-This acts similary to (and based on) the [`LocalCoverage.generate_coverage`](@ref) function, but providing two main differences:
+This acts similary to (and based on) the `generate_coverage` function from [LocalCoverage.jl](https://github.com/JuliaCI/LocalCoverage.jl), but providing two main differences:
 - It automatically extracts the list of files included by the package using `Revise.parse_pkg_files`.
 - It allows to generate an HTML report (does so by default) using the `pycobertura` Python package which is installed by default via CondaPkg.
   - In contrast, the HTML report from `LocalCoverage.jl` relies on lcov being already available on your system and does not work on Windows machines.
