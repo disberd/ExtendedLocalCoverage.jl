@@ -1,7 +1,7 @@
 @testset "ExtendedLocalCoverage.jl" begin
-    function clean_coverage()
-        coverage_dir = joinpath(@__DIR__, "CoverageTest", "coverage")
-        rm(coverage_dir, recursive = true, force = true)
+    function clean_coverage(dir)
+        isdir(dir) && rm(dir, recursive = true, force = true)
+        nothing
     end
     cov, xml, html = generate_package_coverage("CoverageTest"; exclude = ["foo", r"bar"])
     @test dirname(xml) |> endswith("coverage")
@@ -17,6 +17,33 @@
         @test !contains(text, joinpath("src", "exclude_bar.jl"))
     end
 
-    clean_coverage()
+    coverage_dir = dirname(xml)
+    clean_coverage(coverage_dir)
+    @test !isdir(coverage_dir)
+
+    cov, xml_path, html_path = generate_package_coverage("CoverageTest"; html_name = nothing)
+    @test isdir(coverage_dir)
+    @test xml_path === joinpath(coverage_dir, "cobertura-coverage.xml")
+    @test html_path === nothing
+    @test isfile(xml_path)
+    @test all(!endswith(".html"), readdir(coverage_dir))
+
+    clean_coverage(coverage_dir)
+    @test !isdir(coverage_dir)
+    cov, xml_path, html_path = generate_package_coverage("CoverageTest"; html_name = nothing, cobertura_name = nothing)
+    @test isfile(joinpath(coverage_dir, "lcov.info"))
+    @test xml_path === nothing
+    @test html_path === nothing
+    @test all(!endswith(".html"), readdir(coverage_dir))
+    @test all(!endswith(".xml"), readdir(coverage_dir))
+
+    clean_coverage(coverage_dir)
+    @test !isdir(coverage_dir)
+    cov, xml_path, html_path = generate_package_coverage("CoverageTest"; html_name = "magic.html", cobertura_name = nothing)
+    @test isfile(joinpath(coverage_dir, "lcov.info"))
+    @test xml_path === joinpath(coverage_dir, "cobertura-coverage.xml")
+    @test html_path === joinpath(coverage_dir, "magic.html")
+    @test isfile(xml_path)
+    @test isfile(html_path)
 end
 
