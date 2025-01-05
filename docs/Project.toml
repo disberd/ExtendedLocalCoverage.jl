@@ -9,3 +9,6 @@ ExtendedLocalCoverage = "eb248270-a497-541c-8f75-6bb2aa2715dc"
 
 [compat]
 Documenter = "1"
+
+[sources]
+ExtendedLocalCoverage = {path = ".."}
