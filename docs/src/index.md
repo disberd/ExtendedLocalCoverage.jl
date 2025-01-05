@@ -13,6 +13,8 @@ This package extends the functionality of [LocalCoverage](https://github.com/Jul
 
 The main reason for the creation of this package is simplifying assessing coverage on private repositories (specifically on gitlab) which do not have easy access to tools like [codecov](https://about.codecov.io/).
 
+You can check an example of the resulting coverage report [at this page](https://disberd.github.io/ExtendedLocalCoverage.jl/coverage)
+
 ## Contributors
 
 ```@raw html
