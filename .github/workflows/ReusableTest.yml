@@ -49,4 +49,5 @@ jobs:
         if: ${{ inputs.run_codecov }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          exclude: test
+          files: ./lcov.info
+          disable_search: true
