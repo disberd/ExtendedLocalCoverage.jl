@@ -37,6 +37,11 @@
     @test all(!endswith(".html"), readdir(coverage_dir))
     @test all(!endswith(".xml"), readdir(coverage_dir))
 
+    # We now test extracting the coverage directly from the lcov.info file
+    generate_package_coverage("CoverageTest"; use_existing_lcov = true, force_paths_relative = true)
+    @test isfile(joinpath(coverage_dir, "cobertura-coverage.xml"))
+    @test isfile(joinpath(coverage_dir, "index.html"))
+
     clean_coverage(coverage_dir)
     @test !isdir(coverage_dir)
     cov, xml_path, html_path = generate_package_coverage("CoverageTest"; html_name = "magic.html", cobertura_name = nothing)

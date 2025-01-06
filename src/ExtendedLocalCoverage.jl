@@ -1,9 +1,10 @@
 module ExtendedLocalCoverage
 
-using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir
+using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, eval_coverage_metrics
 using Revise: Revise, parse_pkg_files
 using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
+using CoverageTools: CoverageTools, LCOV
 import Pkg
 
 
@@ -60,10 +61,12 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
 # Keyword arguments (and their defaults)
 
+ - `use_existing_lcov = false` if true, the coverage is assumed to be already computed and available in `coverage/lcov.info` within the package directory. If false, the coverage is generated from scratch calling `LocalCoverage.generate_coverage`.
+
 - `run_test = true` this is forwarded to `LocalCoverage.generate_coverage` and determines whether tests are executed. When `false`, test execution
 step is skipped allowing an easier use in combination with other test packages.
 
-- `test_args = [""]` is passed on to `Pkg.test`.
+- `test_args = [""]` this is forwarded to `LocalCoverage.generate_coverage` and is there passed on to `Pkg.test`.
 
 - `exclude = []` is used to specify string or regexes that are used to filter out some of the files in the list of package includes. The exclusion is done by removing from the list of files all files for which `occursin(needle, filename)` returns `true`, where `needle` is any element of `exclude`.
 
@@ -73,6 +76,8 @@ step is skipped allowing an easier use in combination with other test packages.
 
 - `print_to_stdout = true` determines whether the coverage summary is printed to the standard output.
 
+- `force_paths_relative = false` determines whether the paths in the `lcov.info` file are processed to make sure they are relative to the package directory. This is needed in some corner cases, especially if one wants the html file to correctly show source code for the files in the report.
+
 # Return values
 
 The function returns a named tuple with the following fields:
@@ -81,24 +86,32 @@ The function returns a named tuple with the following fields:
 - `cobertura_file` the full path to the cobertura XML file, if any was generated.
 - `html_file` the full path to the HTML file, if any was generated.
 """
-function generate_package_coverage(pkg = nothing; run_test=true, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true)
+function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test=!use_existing_lcov, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false)
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id) = extract_package_info(pkg_dir)
-    file_list = extract_included_files(pkg_id)
-    filter!(file_list) do filename
-        for needle in exclude
-            occursin(needle, filename) && return false
-        end
-        return true
-    end
     # Generate the coverage
-    cov = LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
+    cov = if use_existing_lcov
+        coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
+        eval_coverage_metrics(coverage, pkg_dir)
+    else
+        file_list = extract_included_files(pkg_id)
+        filter!(file_list) do filename
+            for needle in exclude
+                occursin(needle, filename) && return false
+            end
+            return true
+        end
+        LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
+    end
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
     end
     # Create the cobertura xml file
     coverage_dir = joinpath(pkg_dir, "coverage")
     lcov_file = joinpath(coverage_dir, "lcov.info")
+    if force_paths_relative
+        make_paths_relative(lcov_file, pkg_dir)
+    end
     cobertura_file = if isnothing(cobertura_name) && isnothing(html_name)
         nothing
     else
@@ -113,6 +126,27 @@ function generate_package_coverage(pkg = nothing; run_test=true, test_args=[""],
         generate_html_report(cobertura_file, html_file; title = pkg_name * " coverage report", pkg_dir)
     end
     return (; cov, cobertura_file, html_file)
+end
+
+# This ensures that paths in the lcov.info file relative to the package directory. Needed in some corner cases.
+function make_paths_relative(lcov_file::String, pkg_dir::String; output_file::String = lcov_file)
+    (tmppath, tmpio) = mktemp()
+    open(lcov_file) do io
+        for line in eachline(io, keep=true) # keep so the new line isn't chomped
+            if startswith(line, "SF:")
+                path = split(line, "SF:")[2] 
+                path = chopsuffix(path, "\n")
+                if isabspath(path)
+                    real_path = realpath(path)
+                    ispath(real_path) || error("Something went wrong, path $path does not seem valid")
+                    line = replace(line, path => relpath(real_path, pkg_dir))
+                end
+            end
+            write(tmpio, line)
+        end
+    end
+    close(tmpio)
+    mv(tmppath, output_file, force=true)
 end
 
 end
