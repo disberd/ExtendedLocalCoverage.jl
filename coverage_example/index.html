@@ -1,0 +1,5512 @@
+<html>
+  <head>
+    <title>PlutoPlotly coverage report</title>
+    <meta charset="UTF-8">
+    <style>
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+
+
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+- Grid
+- Base Styles
+- Typography
+- Links
+- Buttons
+- Forms
+- Lists
+- Code
+- Tables
+- Spacing
+- Utilities
+- Clearing
+- Media Queries
+*/
+
+
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+
+
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* NOTE
+html is set to 62.5% so that all the REM measurements throughout Skeleton
+are based on 10px sizing. So basically 1.5rem = 15px :) */
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.0rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 1.8rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+  h1 { font-size: 5.0rem; }
+  h2 { font-size: 4.2rem; }
+  h3 { font-size: 3.6rem; }
+  h4 { font-size: 3.0rem; }
+  h5 { font-size: 2.4rem; }
+  h6 { font-size: 1.5rem; }
+}
+
+p {
+  margin-top: 0; }
+
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+
+
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+ul {
+  list-style: circle inside; }
+ol {
+  list-style: decimal inside; }
+ol, ul {
+  padding-left: 0;
+  margin-top: 0; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li {
+  margin-bottom: 1rem; }
+
+
+/* Code
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+code {
+  padding: .2rem .5rem;
+  margin: 0 .2rem;
+  font-size: 90%;
+  white-space: nowrap;
+  background: #F1F1F1;
+  border: 1px solid #E1E1E1;
+  border-radius: 4px; }
+pre > code {
+  display: block;
+  padding: 1rem 1.5rem;
+  white-space: pre; }
+
+
+/* Tables
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+
+
+/* Spacing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 2.5rem; }
+
+
+/* Utilities
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+
+
+/* Misc
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+
+/* Media Queries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*
+Note: The best way to structure the use of media queries is to create the queries
+near the relevant code. For example, if you wanted to change the styles for buttons
+on small devices, paste the mobile query code up in the buttons section and style it
+there.
+*/
+
+
+/* Larger than mobile */
+@media (min-width: 400px) {}
+
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}
+.hit {background-color: #EAFFEA}
+.miss {background-color: #FFECEC}
+.container .code {margin-left: 0}
+pre {line-height: 1.3}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PlutoPlotly coverage report</h1>
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>Filename</th>
+            <th>Stmts</th>
+            <th>Miss</th>
+            <th>Cover</th>
+            <th>Missing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#src\PlutoPlotly.jl">src\PlutoPlotly.jl</a></td>
+            <td>13</td>
+            <td>5</td>
+            <td>61.54%</td>
+            <td>64-73</td>
+          </tr>
+          <tr>
+            <td><a href="#src\local_plotly_library.jl">src\local_plotly_library.jl</a></td>
+            <td>67</td>
+            <td>12</td>
+            <td>82.09%</td>
+            <td>2-5, 35-37, 52-55, 65, 136-137</td>
+          </tr>
+          <tr>
+            <td><a href="#src\basics.jl">src\basics.jl</a></td>
+            <td>64</td>
+            <td>6</td>
+            <td>90.62%</td>
+            <td>36-39, 45, 52, 140, 157</td>
+          </tr>
+          <tr>
+            <td><a href="#src\main_struct.jl">src\main_struct.jl</a></td>
+            <td>27</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\paste_receiver.jl">src\paste_receiver.jl</a></td>
+            <td>1</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\mathjax.jl">src\mathjax.jl</a></td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\preprocess.jl">src\preprocess.jl</a></td>
+            <td>65</td>
+            <td>1</td>
+            <td>98.46%</td>
+            <td>78</td>
+          </tr>
+          <tr>
+            <td><a href="#src\js_helpers.jl">src\js_helpers.jl</a></td>
+            <td>27</td>
+            <td>11</td>
+            <td>59.26%</td>
+            <td>33, 60-78</td>
+          </tr>
+          <tr>
+            <td><a href="#src\show.jl">src\show.jl</a></td>
+            <td>4</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\plotlybase_forward.jl">src\plotlybase_forward.jl</a></td>
+            <td>11</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\utilities.jl">src\utilities.jl</a></td>
+            <td>22</td>
+            <td>0</td>
+            <td>100.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\script_contents\clipboard.jl">src\script_contents\clipboard.jl</a></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><a href="#src\script_contents\resizer.jl">src\script_contents\resizer.jl</a></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>TOTAL</td>
+            <td>303</td>
+            <td>35</td>
+            <td>88.45%</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+<h4 id="src\PlutoPlotly.jl">src\PlutoPlotly.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">module PlutoPlotly
+</span><span class="noop">
+</span><span class="noop">using PlotlyBase
+</span><span class="noop">
+</span><span class="noop">using HypertextLiteral
+</span><span class="noop">using AbstractPlutoDingetjes
+</span><span class="noop">using Dates
+</span><span class="noop">using Scratch
+</span><span class="noop">using TOML
+</span><span class="noop">using Colors
+</span><span class="noop">using ColorSchemes
+</span><span class="noop">using LaTeXStrings
+</span><span class="noop">using Markdown
+</span><span class="noop">using Downloads: download
+</span><span class="noop">using Artifacts
+</span><span class="noop">using ScopedValues
+</span><span class="noop">using PrecompileTools
+</span><span class="noop"># This is similar to `@reexport` but does not exports undefined names and can
+</span><span class="noop"># also avoid exporting the module name
+</span><span class="hit">function re_export(m::Module; skip_modname = false)
+</span><span class="hit">    mod_name = nameof(m)
+</span><span class="hit">    nms = names(m)
+</span><span class="hit">    exprts = filter(nms) do n
+</span><span class="hit">        isdefined(m, n) &amp;&amp; (!skip_modname || n != mod_name)
+</span><span class="noop">    end
+</span><span class="hit">    eval(:(using .$mod_name))
+</span><span class="hit">    eval(:(export $(exprts...)))
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">re_export(PlotlyBase; skip_modname = false)
+</span><span class="noop">export PlutoPlot, get_plotly_version, change_plotly_version,
+</span><span class="noop">force_pluto_mathjax_local, htl_js, add_plotly_listener!,
+</span><span class="noop">add_class!, remove_class!, add_js_listener!, default_plotly_template,
+</span><span class="noop">get_image_options, change_image_options!, plutoplotly_paste_receiver
+</span><span class="noop">export plot, push_script!, prepend_cell_selector
+</span><span class="noop">export make_subplots
+</span><span class="noop">export enable_plutoplotly_offline
+</span><span class="noop"># From utilities.jl
+</span><span class="noop">export sample_colorscheme, discrete_colorscale
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop">include(&#34;local_plotly_library.jl&#34;)
+</span><span class="noop">
+</span><span class="noop">include(&#34;basics.jl&#34;)
+</span><span class="noop">include(&#34;script_contents/clipboard.jl&#34;)
+</span><span class="noop">include(&#34;script_contents/resizer.jl&#34;)
+</span><span class="noop">include(&#34;main_struct.jl&#34;)
+</span><span class="noop">include(&#34;paste_receiver.jl&#34;)
+</span><span class="noop">include(&#34;mathjax.jl&#34;)
+</span><span class="noop">include(&#34;preprocess.jl&#34;)
+</span><span class="noop">include(&#34;js_helpers.jl&#34;)
+</span><span class="noop">include(&#34;show.jl&#34;)
+</span><span class="noop"># Forward methods of PlotlyBase to support PlutoPlot objects
+</span><span class="noop">include(&#34;plotlybase_forward.jl&#34;)
+</span><span class="noop">include(&#34;utilities.jl&#34;)
+</span><span class="noop">
+</span><span class="noop"># function __init__()
+</span><span class="noop">	# if !is_inside_pluto()
+</span><span class="noop">	# 	@warn &#34;You loaded this package outside of Pluto, this is not the intended behavior and you should use either PlotlyBase or PlotlyJS directly.\nNOTE: If you receive this warning during pre-compilation or sysimage creation, you can ignore this warning.&#34;
+</span><span class="noop">	# end
+</span><span class="noop"># end
+</span><span class="noop">
+</span><span class="hit">@compile_workload begin
+</span><span class="miss">    data = [
+</span><span class="noop">        scatter(;y = rand(10)),
+</span><span class="noop">        scattergeo(;lat = rand(10), lon = rand(10)),
+</span><span class="noop">        heatmap(;z = rand(10,10)),
+</span><span class="noop">        surface(;z = rand(10,10))
+</span><span class="noop">    ]
+</span><span class="miss">    layout = Layout(;title = &#34;lol&#34;)
+</span><span class="miss">    p = plot(data, layout)
+</span><span class="miss">    _show(p)
+</span><span class="miss">    plot(rand(10,4)) |&gt; _show
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\local_plotly_library.jl">src\local_plotly_library.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+165 &nbsp;
+166 &nbsp;
+167 &nbsp;
+168 &nbsp;
+169 &nbsp;
+170 &nbsp;
+171 &nbsp;
+172 &nbsp;
+173 &nbsp;
+174 &nbsp;
+175 &nbsp;
+176 &nbsp;
+177 &nbsp;
+178 &nbsp;
+179 &nbsp;
+180 &nbsp;
+181 &nbsp;
+182 &nbsp;
+183 &nbsp;
+184 &nbsp;
+185 &nbsp;
+186 &nbsp;
+187 &nbsp;
+188 &nbsp;
+189 &nbsp;
+190 &nbsp;
+191 &nbsp;
+192 &nbsp;
+193 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="hit">get_plotly_esm_url(v) = &#34;https://esm.sh/plotly.js-dist-min@$(VersionNumber(v))&#34;
+</span><span class="miss">get_plotly_cdn_url(v) = &#34;https://cdn.plot.ly/plotly-$(VersionNumber(v)).min.js&#34;
+</span><span class="noop">
+</span><span class="noop"># We use our custom bundler to download an esm version of the plotly library
+</span><span class="miss">get_plotly_download_url(v) = &#34;https://github.com/disberd/PlotlyArtifactsESM/releases/download/v$(VersionNumber(v))/plotly-esm-min.mjs&#34;
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">mapping a path like &#34;/home/user/.julia/blabla/plotly-1.2.3.min.js&#34; to its contents, read as String
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">const PLOTLY_DEP_CONTENTS = Dict{String, String}()
+</span><span class="noop">
+</span><span class="hit">function get_local_plotly_contents(v)
+</span><span class="hit">    maybe_add_plotly_local(v)
+</span><span class="hit">    path = get_local_path(v)
+</span><span class="hit">    get!(PLOTLY_DEP_CONTENTS, path) do
+</span><span class="hit">        read(path, String)
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">get_local_path(v) = if VersionNumber(v) === ARTIFACT_VERSION
+</span><span class="hit">    joinpath(artifact&#34;plotly-esm-min&#34;, &#34;plotly-esm-min.mjs&#34;)
+</span><span class="noop">else
+</span><span class="noop">    # We use the UUID explicitly to make this work with PlutoDevMacros even without rootmodule
+</span><span class="hit">    scratchspace = get_scratch!(Base.UUID(&#34;8e989ff0-3d88-8e9f-f020-2b208a939ff0&#34;), &#34;plotly-library-esm&#34;)
+</span><span class="hit">    joinpath(scratchspace, &#34;$(get_local_name(v)).mjs&#34;)
+</span><span class="noop">end
+</span><span class="hit">get_local_name(v) = &#34;plotly-esm-min-$(VersionNumber(v))&#34;
+</span><span class="noop">
+</span><span class="hit">function maybe_add_plotly_local(v)
+</span><span class="hit">    ver = VersionNumber(v)
+</span><span class="noop">    # Check if the artifact already exists
+</span><span class="hit">    path = get_local_path(ver)
+</span><span class="hit">    if !isfile(path)
+</span><span class="noop">        # We download bundle and save locally
+</span><span class="miss">        @info &#34;Downloading a local version of plotly@$v&#34;
+</span><span class="miss">        bundle_url = get_plotly_download_url(ver)
+</span><span class="miss">        download(bundle_url, path)
+</span><span class="noop">    end
+</span><span class="hit">    nothing
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="hit">function src_type(type)
+</span><span class="hit">    @assert type in (&#34;hybrid&#34;, &#34;esm&#34;, &#34;local&#34;)
+</span><span class="hit">    type
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function get_plotly_import(v, force = &#34;hybrid&#34;)
+</span><span class="hit">    force = src_type(force)
+</span><span class="hit">    if force == &#34;hybrid&#34;
+</span><span class="hit">        _ImportedHybridJS(v)
+</span><span class="miss">    elseif force == &#34;esm&#34;
+</span><span class="miss">        _ImportedRemoteJS(get_plotly_esm_url(v))
+</span><span class="miss">    elseif force == &#34;local&#34;
+</span><span class="miss">        import_local_js(get_local_plotly_contents(v))
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop"># Identify a remote JS ESM module to be imported when shown in a script. The `extract` argument, if non-empty, will be the name of the property of the remote module to extract
+</span><span class="noop">struct _ImportedRemoteJS
+</span><span class="hit">    src::String
+</span><span class="noop">    extract::String
+</span><span class="noop">end
+</span><span class="miss">_ImportedRemoteJS(src) = _ImportedRemoteJS(src, &#34;&#34;)
+</span><span class="noop">
+</span><span class="hit">function Base.show(io, m::MIME&#34;text/javascript&#34;, i::_ImportedRemoteJS)
+</span><span class="hit">    write(io, 
+</span><span class="noop">        &#34;(await import($(repr(i.src))))&#34;
+</span><span class="noop">    )
+</span><span class="hit">    if !isempty(i.extract)
+</span><span class="noop">        # Extract specific field from the module
+</span><span class="hit">        write(io, &#34;.$(i.extract)&#34;)
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop"># Identify a local (on filesystem) JS ESM module to be imported when shown in a script. The `extract` argument, if non-empty, will be the name of the property of the local module to extract
+</span><span class="noop">struct _ImportedLocalJS
+</span><span class="noop">    published
+</span><span class="noop">    extract::String
+</span><span class="hit">    function _ImportedLocalJS(published, extract::AbstractString = &#34;&#34;)
+</span><span class="hit">        @nospecialize
+</span><span class="hit">        new(published, extract)
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="hit">function Base.show(io, m::MIME&#34;text/javascript&#34;, i::_ImportedLocalJS)
+</span><span class="hit">    write(io, 
+</span><span class="noop">        &#34;&#34;&#34;
+</span><span class="noop">        (await (() =&gt; {
+</span><span class="noop">        window.created_imports = window.created_imports ?? new Map();
+</span><span class="noop">        let code = &#34;&#34;&#34;
+</span><span class="noop">    )
+</span><span class="hit">    Base.show(io, m, i.published)
+</span><span class="noop">
+</span><span class="hit">    write(io,
+</span><span class="noop">        &#34;&#34;&#34;;
+</span><span class="noop">        if(created_imports.has(code)){
+</span><span class="noop">            return created_imports.get(code);
+</span><span class="noop">        } else {
+</span><span class="noop">            let blob_promise = new Promise((resolve, reject) =&gt; {
+</span><span class="noop">                const reader = new FileReader();
+</span><span class="noop">                reader.onload = async () =&gt; {
+</span><span class="noop">                    try {
+</span><span class="noop">                        resolve(await import(reader.result));
+</span><span class="noop">                    } catch(e) {
+</span><span class="noop">                        reject();
+</span><span class="noop">                    }
+</span><span class="noop">                }
+</span><span class="noop">                reader.onerror = () =&gt; reject();
+</span><span class="noop">                reader.onabort = () =&gt; reject();
+</span><span class="noop">                reader.readAsDataURL(
+</span><span class="noop">                    new Blob([code], {type : &#34;text/javascript&#34;}))
+</span><span class="noop">                });
+</span><span class="noop">                created_imports.set(code, blob_promise);
+</span><span class="noop">                return blob_promise;
+</span><span class="noop">            }
+</span><span class="noop">        })())
+</span><span class="noop">        &#34;&#34;&#34;
+</span><span class="noop">    )
+</span><span class="hit">    if !isempty(i.extract)
+</span><span class="noop">        # Extract specific field from the module
+</span><span class="hit">        write(io, &#34;.$(i.extract)&#34;)
+</span><span class="noop">    end
+</span><span class="hit">    return nothing
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function import_local_js(code::AbstractString, extract::AbstractString = &#34;&#34;)
+</span><span class="noop">
+</span><span class="hit">    code_js = 
+</span><span class="noop">        try
+</span><span class="hit">        AbstractPlutoDingetjes.Display.published_to_js(code)
+</span><span class="noop">    catch e
+</span><span class="miss">        @warn &#34;published_to_js did not work&#34; exception=(e,catch_backtrace()) maxlog=1
+</span><span class="miss">        repr(code)
+</span><span class="noop">    end
+</span><span class="noop">
+</span><span class="hit">    _ImportedLocalJS(code_js, extract)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">    enable_plutoplotly_offline(;version = get_plotly_version())
+</span><span class="noop">Creates a script that loads the plotly library on the current browser session so that it is available even when not connected to internet.
+</span><span class="noop">
+</span><span class="noop">Put this in a separate cell so that the plotly JS library is stored in the browser and available for all plots.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function enable_plutoplotly_offline(;version = get_plotly_version())
+</span><span class="hit">    _import = import_local_js(get_local_plotly_contents(version), &#34;default&#34;)
+</span><span class="hit">    v_str = string(VersionNumber(version))
+</span><span class="hit">    @htl(&#34;&#34;&#34;
+</span><span class="noop">        &lt;script&gt;
+</span><span class="noop">            const imports = {
+</span><span class="noop">                $(v_str): $(_import)
+</span><span class="noop">            }
+</span><span class="noop">            window.plutoplotly_imports = imports
+</span><span class="noop">        &lt;/script&gt;
+</span><span class="noop">    &#34;&#34;&#34;)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">struct _ImportedHybridJS
+</span><span class="hit">    object::String
+</span><span class="noop">    key::String
+</span><span class="noop">    fallback::_ImportedRemoteJS
+</span><span class="noop">end
+</span><span class="hit">function _ImportedHybridJS(v)
+</span><span class="hit">    object = &#34;plutoplotly_imports&#34;
+</span><span class="hit">    key = string(VersionNumber(v))
+</span><span class="hit">    fallback = _ImportedRemoteJS(get_plotly_esm_url(v), &#34;default&#34;)
+</span><span class="hit">    return _ImportedHybridJS(object, key, fallback)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="hit">function Base.show(io::IO, m::MIME&#34;text/javascript&#34;, i::_ImportedHybridJS)
+</span><span class="hit">    write(io, &#34;window.$(i.object)?.[&#39;$(i.key)&#39;] ??&#34;)
+</span><span class="hit">    show(io, m, i.fallback)
+</span><span class="noop">end
+</span><span class="noop"># function Base.show(io::IO, m::MIME&#34;text/javascript&#34;, i::_ImportedHybridJS)
+</span><span class="noop">#     write(io, &#34;&#34;&#34;await (async function() {
+</span><span class="noop">#     let Plotly = window.$(i.object)?.[&#39;$(i.key)&#39;]
+</span><span class="noop">#     if (Plotly == undefined) {
+</span><span class="noop">#         console.log(&#34;Could not find loaded library among offline imports, trying to load from esm.sh&#34;)
+</span><span class="noop">#         Plotly = &#34;&#34;&#34;)
+</span><span class="noop">#     show(io, m, i.fallback)
+</span><span class="noop">#     write(io, &#34;&#34;&#34;
+</span><span class="noop">#     } else {
+</span><span class="noop">#         console.log(&#34;Loaded plotly from window.plutoplotly_imports&#34;)
+</span><span class="noop">#     }
+</span><span class="noop">#     return Plotly
+</span><span class="noop"># })()&#34;&#34;&#34;)
+</span><span class="noop"># end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\basics.jl">src\basics.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+165 &nbsp;
+166 &nbsp;
+167 &nbsp;
+168 &nbsp;
+169 &nbsp;
+170 &nbsp;
+171 &nbsp;
+172 &nbsp;
+173 &nbsp;
+174 &nbsp;
+175 &nbsp;
+176 &nbsp;
+177 &nbsp;
+178 &nbsp;
+179 &nbsp;
+180 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">const ARTIFACT_VERSION = VersionNumber(read(joinpath(artifact&#34;plotly-esm-min&#34;, &#34;VERSION&#34;), String))
+</span><span class="noop">const DEFAULT_PLOTLY_VERSION = Ref(ARTIFACT_VERSION)
+</span><span class="noop">const PLOTLY_VERSION = ScopedValue{Union{Nothing, String, VersionNumber}}(nothing)
+</span><span class="noop">const DEFAULT_TEMPLATE = Ref(PlotlyBase.templates[PlotlyBase.templates.default])
+</span><span class="noop">const JS = HypertextLiteral.JavaScript
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	ScriptContents
+</span><span class="noop">Wrapper around a vector of `HypertextLiteral.JavaScript` elements. It has a custom print implementation of `HypertextLiteral.print_script` in order to allow serialization of its various elements inside a script tag.
+</span><span class="noop">
+</span><span class="noop">It is used inside the PlutoPlot to allow modularity and ease customization of the script contents that is used to generate the plotlyjs plot in Javascript.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">struct ScriptContents
+</span><span class="hit">	vec::Vector{JS}
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function HypertextLiteral.print_script(io::IO, value::ScriptContents)
+</span><span class="hit">	for el ∈ value.vec
+</span><span class="hit">		print(io, el.content, &#39;\n&#39;)
+</span><span class="hit">	end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	htl_js(x)
+</span><span class="noop">Simple convenience constructor for `HypertextLiteral.JavaScript` objects, renamed and re-exported from HypertextLiteral for convenience in case HypertextLiteral is not explicitly loaded alongisde PlutoPlotly.
+</span><span class="noop">
+</span><span class="noop">See also: [`add_plotly_listeners!`](@ref)
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">htl_js(x) = HypertextLiteral.JavaScript(x)
+</span><span class="hit">htl_js(x::HypertextLiteral.JavaScript) = x
+</span><span class="noop">
+</span><span class="hit">maybe_publish_to_js(x) = if is_inside_pluto()
+</span><span class="hit">	if isdefined(Main.PlutoRunner, :core_published_to_js)
+</span><span class="hit">		Main.PlutoRunner.PublishedToJavascript(x)
+</span><span class="noop">	else
+</span><span class="miss">		Main.PlutoRunner.publish_to_js(x)
+</span><span class="noop">	end
+</span><span class="noop">else
+</span><span class="miss">	x
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">current_cell_id()::Base.UUID = if is_inside_pluto()
+</span><span class="hit">	Main.PlutoRunner.currently_running_cell_id[]
+</span><span class="noop">else
+</span><span class="miss">	Base.UUID(zero(UInt128))
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function Base.show(io::IO, mime::MIME&#34;text/html&#34;, s::JS)
+</span><span class="hit">    if is_inside_pluto()
+</span><span class="hit">        show(io, mime, Markdown.MD(Markdown.Code(&#34;js&#34;,s.content)))
+</span><span class="noop">    else
+</span><span class="miss">        show(io, MIME&#34;text/plain&#34;,s)
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop">## Plotly Version ##
+</span><span class="hit">function change_plotly_version(v)
+</span><span class="hit">	ver = VersionNumber(v)
+</span><span class="hit">	maybe_add_plotly_local(ver)
+</span><span class="hit">	DEFAULT_PLOTLY_VERSION[] = ver
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function get_plotly_version() 
+</span><span class="hit">    v = @something PLOTLY_VERSION[] DEFAULT_PLOTLY_VERSION[]
+</span><span class="hit">    return VersionNumber(v)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## Prepend Cell Selector ##
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	prepend_cell_selector(selector=&#34;&#34;)
+</span><span class="noop">	prepend_cell_selector(selectors)
+</span><span class="noop">
+</span><span class="noop">Prepends a CSS selector (represented by the argument `selector`) with a selector
+</span><span class="noop">of the current pluto-cell (of the form `pluto-cell[id=&#39;cell_id&#39;]`, where
+</span><span class="noop">`cell_id` is the currently running cell).
+</span><span class="noop">
+</span><span class="noop">It can be used to ease creating style sheets (using `@htl` from
+</span><span class="noop">HypertextLiteral.jl) with selector that only apply to the cell where they are
+</span><span class="noop">executed.
+</span><span class="noop">
+</span><span class="noop">When called with a vector of selectors as input, prepends each selector and
+</span><span class="noop">joins them together using `,` as separator.
+</span><span class="noop">
+</span><span class="noop">`prepend_cell_selector(&#34;div&#34;) = pluto-cell[id=&#39;\$cell_id&#39;] div`
+</span><span class="noop">
+</span><span class="noop">`prepend_cell_selector([&#34;div&#34;, &#34;span&#34;]) = pluto-cell[id=&#39;\$cell_id&#39;] div, pluto-cell[id=&#39;\$cell_id&#39;] span`
+</span><span class="noop">
+</span><span class="noop">As example, one can create a plot and force its width to 400px in CSS by using the following snippet:
+</span><span class="noop">```julia
+</span><span class="noop">@htl \&#34;\&#34;\&#34;
+</span><span class="noop">\$(plot(rand(10)))
+</span><span class="noop">&lt;style&gt;
+</span><span class="noop">	\$(prepend_cell_selector(&#34;div.js-plotly-plot&#34;)) {
+</span><span class="noop">		width: 400px !important;
+</span><span class="noop">	}
+</span><span class="noop">&lt;/style&gt;
+</span><span class="noop">\&#34;\&#34;\&#34;
+</span><span class="noop">```
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">prepend_cell_selector(str::AbstractString=&#34;&#34;)::String = &#34;pluto-cell[id=&#39;$(current_cell_id())&#39;] $str&#34; |&gt; strip
+</span><span class="hit">prepend_cell_selector(selectors) = join(map(prepend_cell_selector, selectors), &#34;,\n&#34;)
+</span><span class="noop">
+</span><span class="noop">const IO_DICT = Ref{Tuple{&lt;:IO, Dict{UInt, Int}}}((IOBuffer(), Dict{UInt, Int}()))
+</span><span class="hit">function get_IO_DICT(io::IO)
+</span><span class="hit">	old_io = first(IO_DICT[])
+</span><span class="hit">	dict = if old_io === io
+</span><span class="hit">		last(IO_DICT[])
+</span><span class="noop">	else
+</span><span class="hit">		d = Dict{UInt, Int}()
+</span><span class="hit">		IO_DICT[] = (io, d)
+</span><span class="hit">		d
+</span><span class="noop">	end
+</span><span class="hit">	return dict
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## Unique Counter ##
+</span><span class="hit">function unique_io_counter(io::IO, identifier = &#34;script_id&#34;)
+</span><span class="hit">	!get(io, :is_pluto, false) &amp;&amp; return -1 # We simply return -1 if not inside pluto
+</span><span class="noop">	# We extract (or create if not existing) a dictionary that will keep track of instances of the same script name
+</span><span class="hit">	dict = get_IO_DICT(io)
+</span><span class="noop">	# We use the objectid as the key
+</span><span class="hit">	key = objectid(identifier)
+</span><span class="hit">	counter = get(dict, key, 0) + 1
+</span><span class="noop">	# Update the counter on the dict that is shared within this IOContext
+</span><span class="hit">	dict[key] = counter
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Using the unique_io_counter inside the show3 method allows to have unique counters for plots within a same cell.
+</span><span class="noop"># This does not ensure that the same plot object is always given the same unique script id if the plots are added to the cells with `if...end` blocks.
+</span><span class="hit">function plotly_script_id(io::IO)
+</span><span class="hit">	counter = unique_io_counter(io, &#34;plotly-plot&#34;)
+</span><span class="hit">	return &#34;plot_$counter&#34;
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function find_matching_template(t::Template)
+</span><span class="hit">	for name in templates.available
+</span><span class="hit">		t == templates[name] &amp;&amp; return name
+</span><span class="hit">	end
+</span><span class="miss">	return missing
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	default_plotly_template(;find_matching = false)::Template
+</span><span class="noop">Returns the current default plotly template (following the synthax
+</span><span class="noop">to set Templates from PlotlyBase).
+</span><span class="noop">
+</span><span class="noop">If `find_matching` is set to true, the function will also send a message (using
+</span><span class="noop">`@info`) to specify whether the default template is one of the templates
+</span><span class="noop">available by default in PlotlyBase (and which one it is) or not.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function default_plotly_template(; find_matching = false)
+</span><span class="hit">	template = DEFAULT_TEMPLATE[] 
+</span><span class="hit">	if find_matching
+</span><span class="hit">		matching = find_matching_template(template)
+</span><span class="hit">		if matching isa Missing
+</span><span class="miss">			@info &#34;The default template is not one of the predefined ones&#34;
+</span><span class="noop">		else
+</span><span class="hit">			@info &#34;The default plotly template is $matching&#34;
+</span><span class="noop">		end
+</span><span class="noop">	end
+</span><span class="hit">	template
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	default_plotly_template(template::Template)::Template
+</span><span class="noop">	default_plotly_template(name::Union{Symbol, String})::Template
+</span><span class="noop">Set `template` as the current default plotly template (**globally**) to be used by all plots
+</span><span class="noop">from PlutoPlotly (unless specifically overridden with Layout).
+</span><span class="noop">
+</span><span class="noop">If called with a `Symbol` or `String`, uses `name` to extract the corresponding
+</span><span class="noop">template the default ones available in PlotlyBase and sets it as default.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">default_plotly_template(t::Template) = DEFAULT_TEMPLATE[] = t
+</span><span class="hit">default_plotly_template(s::String) = default_plotly_template(Symbol(s))
+</span><span class="hit">function default_plotly_template(s::Symbol)
+</span><span class="hit">	s in templates.available || s === :none || error(&#34;The provided template $s is not available&#34;)
+</span><span class="hit">	template = s === :none ? Template() : templates[s]
+</span><span class="hit">	DEFAULT_TEMPLATE[] = template
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\main_struct.jl">src\main_struct.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+165 &nbsp;
+166 &nbsp;
+167 &nbsp;
+168 &nbsp;
+169 &nbsp;
+170 &nbsp;
+171 &nbsp;
+172 &nbsp;
+173 &nbsp;
+174 &nbsp;
+175 &nbsp;
+176 &nbsp;
+177 &nbsp;
+178 &nbsp;
+179 &nbsp;
+180 &nbsp;
+181 &nbsp;
+182 &nbsp;
+183 &nbsp;
+184 &nbsp;
+185 &nbsp;
+186 &nbsp;
+187 &nbsp;
+188 &nbsp;
+189 &nbsp;
+190 &nbsp;
+191 &nbsp;
+192 &nbsp;
+193 &nbsp;
+194 &nbsp;
+195 &nbsp;
+196 &nbsp;
+197 &nbsp;
+198 &nbsp;
+199 &nbsp;
+200 &nbsp;
+201 &nbsp;
+202 &nbsp;
+203 &nbsp;
+204 &nbsp;
+205 &nbsp;
+206 &nbsp;
+207 &nbsp;
+208 &nbsp;
+209 &nbsp;
+210 &nbsp;
+211 &nbsp;
+212 &nbsp;
+213 &nbsp;
+214 &nbsp;
+215 &nbsp;
+216 &nbsp;
+217 &nbsp;
+218 &nbsp;
+219 &nbsp;
+220 &nbsp;
+221 &nbsp;
+222 &nbsp;
+223 &nbsp;
+224 &nbsp;
+225 &nbsp;
+226 &nbsp;
+227 &nbsp;
+228 &nbsp;
+229 &nbsp;
+230 &nbsp;
+231 &nbsp;
+232 &nbsp;
+233 &nbsp;
+234 &nbsp;
+235 &nbsp;
+236 &nbsp;
+237 &nbsp;
+238 &nbsp;
+239 &nbsp;
+240 &nbsp;
+241 &nbsp;
+242 &nbsp;
+243 &nbsp;
+244 &nbsp;
+245 &nbsp;
+246 &nbsp;
+247 &nbsp;
+248 &nbsp;
+249 &nbsp;
+250 &nbsp;
+251 &nbsp;
+252 &nbsp;
+253 &nbsp;
+254 &nbsp;
+255 &nbsp;
+256 &nbsp;
+257 &nbsp;
+258 &nbsp;
+259 &nbsp;
+260 &nbsp;
+261 &nbsp;
+262 &nbsp;
+263 &nbsp;
+264 &nbsp;
+265 &nbsp;
+266 &nbsp;
+267 &nbsp;
+268 &nbsp;
+269 &nbsp;
+270 &nbsp;
+271 &nbsp;
+272 &nbsp;
+273 &nbsp;
+274 &nbsp;
+275 &nbsp;
+276 &nbsp;
+277 &nbsp;
+278 &nbsp;
+279 &nbsp;
+280 &nbsp;
+281 &nbsp;
+282 &nbsp;
+283 &nbsp;
+284 &nbsp;
+285 &nbsp;
+286 &nbsp;
+287 &nbsp;
+288 &nbsp;
+289 &nbsp;
+290 &nbsp;
+291 &nbsp;
+292 &nbsp;
+293 &nbsp;
+294 &nbsp;
+295 &nbsp;
+296 &nbsp;
+297 &nbsp;
+298 &nbsp;
+299 &nbsp;
+300 &nbsp;
+301 &nbsp;
+302 &nbsp;
+303 &nbsp;
+304 &nbsp;
+305 &nbsp;
+306 &nbsp;
+307 &nbsp;
+308 &nbsp;
+309 &nbsp;
+310 &nbsp;
+311 &nbsp;
+312 &nbsp;
+313 &nbsp;
+314 &nbsp;
+315 &nbsp;
+316 &nbsp;
+317 &nbsp;
+318 &nbsp;
+319 &nbsp;
+320 &nbsp;
+321 &nbsp;
+322 &nbsp;
+323 &nbsp;
+324 &nbsp;
+325 &nbsp;
+326 &nbsp;
+327 &nbsp;
+328 &nbsp;
+329 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">const _default_script_contents = htl_js.([
+</span><span class="noop">	&#34;&#34;&#34;
+</span><span class="noop">	// Flag to check if this cell was  manually ran or reactively ran
+</span><span class="noop">	const firstRun = this ? false : true
+</span><span class="noop">	const CONTAINER = this ?? html`&lt;div class=&#39;plutoplotly-container&#39;&gt;`
+</span><span class="noop">	const PLOT = CONTAINER.querySelector(&#39;.js-plotly-plot&#39;) ?? CONTAINER.appendChild(html`&lt;div&gt;`)
+</span><span class="noop">	const parent = CONTAINER.parentElement
+</span><span class="noop">	// We use a controller to remove event listeners upon invalidation
+</span><span class="noop">	const controller = new AbortController()
+</span><span class="noop">	// We have to add this to keep supporting @bind with the old API using PLOT
+</span><span class="noop">	PLOT.addEventListener(&#39;input&#39;, (e) =&gt; {
+</span><span class="noop">		CONTAINER.value = PLOT.value
+</span><span class="noop">		if (e.bubbles) {
+</span><span class="noop">			return
+</span><span class="noop">		}
+</span><span class="noop">		CONTAINER.dispatchEvent(new CustomEvent(&#39;input&#39;))
+</span><span class="noop">	}, { signal: controller.signal })
+</span><span class="noop">	&#34;&#34;&#34;,
+</span><span class="noop">	&#34;&#34;&#34;
+</span><span class="noop">		// This create the style subdiv on first run
+</span><span class="noop">		firstRun &amp;&amp; CONTAINER.appendChild(html`
+</span><span class="noop">		&lt;style&gt;
+</span><span class="noop">		.plutoplotly-container {
+</span><span class="noop">			width: 100%;
+</span><span class="noop">			height: 100%;
+</span><span class="noop">			min-height: 0;
+</span><span class="noop">			min-width: 0;
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-container .js-plotly-plot .plotly div {
+</span><span class="noop">			margin: 0 auto; // This centers the plot
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-container.popped-out {
+</span><span class="noop">			overflow: auto;
+</span><span class="noop">			z-index: 1000;
+</span><span class="noop">			position: fixed;
+</span><span class="noop">			resize: both;
+</span><span class="noop">			background: var(--main-bg-color);
+</span><span class="noop">			border: 3px solid var(--kbd-border-color);
+</span><span class="noop">			border-radius: 12px;
+</span><span class="noop">			border-top-left-radius: 0px;
+</span><span class="noop">			border-top-right-radius: 0px;
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-clipboard-header {
+</span><span class="noop">			display: flex;
+</span><span class="noop">			flex-flow: row wrap;
+</span><span class="noop">			background: var(--main-bg-color);
+</span><span class="noop">			border: 3px solid var(--kbd-border-color);
+</span><span class="noop">			border-top-left-radius: 12px;
+</span><span class="noop">			border-top-right-radius: 12px;
+</span><span class="noop">			position: fixed;
+</span><span class="noop">			z-index: 1001;
+</span><span class="noop">			cursor: move;
+</span><span class="noop">			transform: translate(0px, -100%);
+</span><span class="noop">			padding: 5px;
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-clipboard-header span {
+</span><span class="noop">			display: inline-block;
+</span><span class="noop">			flex: 1
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-clipboard-header.hidden {
+</span><span class="noop">			display: none;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span {
+</span><span class="noop">			position: relative;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-value {
+</span><span class="noop">			padding-right: 5px;
+</span><span class="noop">			padding-left: 2px;
+</span><span class="noop">			cursor: text;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span.format {
+</span><span class="noop">			display: none;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span.filename {
+</span><span class="noop">			flex: 0 0 100%;
+</span><span class="noop">			text-align: center;
+</span><span class="noop">			border-top: 3px solid var(--kbd-border-color);
+</span><span class="noop">			margin-top: 5px;
+</span><span class="noop">			display: none;
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-container.filesave .clipboard-span.filename {
+</span><span class="noop">			display: inline-block;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-value.filename {
+</span><span class="noop">			margin-left: 3px;
+</span><span class="noop">			text-align: left;
+</span><span class="noop">			min-width: min(60%, min-content);
+</span><span class="noop">		}
+</span><span class="noop">		.plutoplotly-container.filesave .clipboard-span.format {
+</span><span class="noop">			display: inline-flex;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span.format .label {
+</span><span class="noop">			flex: 0 0 0;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-value.format {
+</span><span class="noop">			position: relative;
+</span><span class="noop">			flex: 1 0 auto;
+</span><span class="noop">			min-width: 30px;
+</span><span class="noop">			margin-right: 10px;
+</span><span class="noop">		}
+</span><span class="noop">		div.format-options {
+</span><span class="noop">			display: inline-flex;
+</span><span class="noop">			flex-flow: column;
+</span><span class="noop">			position: absolute;
+</span><span class="noop">			background: var(--main-bg-color);
+</span><span class="noop">			border-radius: 12px;
+</span><span class="noop">			padding-left: 3px;
+</span><span class="noop">			z-index: 2000;
+</span><span class="noop">		}
+</span><span class="noop">		div.format-options:hover {
+</span><span class="noop">			cursor: pointer;
+</span><span class="noop">			border: 3px solid var(--kbd-border-color);
+</span><span class="noop">			padding: 3px;
+</span><span class="noop">			transform: translate(-3px, -6px);
+</span><span class="noop">		}
+</span><span class="noop">		div.format-options .format-option {
+</span><span class="noop">			display: none;
+</span><span class="noop">		}
+</span><span class="noop">		div.format-options:hover .format-option {
+</span><span class="noop">			display: inline-block;
+</span><span class="noop">		}
+</span><span class="noop">		.format-option:not(.selected) {
+</span><span class="noop">			margin-top: 3px;
+</span><span class="noop">		}
+</span><span class="noop">		div.format-options .format-option.selected {
+</span><span class="noop">			order: -1;
+</span><span class="noop">			display: inline-block;
+</span><span class="noop">		}
+</span><span class="noop">		.format-option:hover {
+</span><span class="noop">			background-color: var(--kbd-border-color);
+</span><span class="noop">		}
+</span><span class="noop">		span.config-value {
+</span><span class="noop">			font-weight: normal;
+</span><span class="noop">			color: var(--pluto-output-color);
+</span><span class="noop">			display: none;
+</span><span class="noop">			position: absolute;
+</span><span class="noop">			background: var(--main-bg-color);
+</span><span class="noop">			border: 3px solid var(--kbd-border-color);
+</span><span class="noop">			border-radius: 12px;
+</span><span class="noop">			transform: translate(0px, calc(-100% - 10px));
+</span><span class="noop">			padding: 5px;
+</span><span class="noop">		}
+</span><span class="noop">		.label {
+</span><span class="noop">			user-select: none;
+</span><span class="noop">		}
+</span><span class="noop">		.label:hover span.config-value {
+</span><span class="noop">			display: inline-block;
+</span><span class="noop">			min-width: 150px;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span.matching-config .label {
+</span><span class="noop">			color: var(--cm-macro-color);
+</span><span class="noop">			font-weight: bold;
+</span><span class="noop">		}
+</span><span class="noop">		.clipboard-span.different-config .label {
+</span><span class="noop">			color: var(--cm-tag-color);
+</span><span class="noop">			font-weight: bold;
+</span><span class="noop">		}
+</span><span class="noop">	&lt;/style&gt;
+</span><span class="noop">	`)
+</span><span class="noop">	&#34;&#34;&#34;,
+</span><span class="noop">	&#34;&#34;&#34;
+</span><span class="noop">	let original_height = plot_obj.layout.height
+</span><span class="noop">	let original_width = plot_obj.layout.width
+</span><span class="noop">	// For the height we have to also put a fixed value in case the plot is put on a non-fixed-size container (like the default wrapper)
+</span><span class="noop">	// We define a variable to check whether we still have to remove the fixed height
+</span><span class="noop">	let remove_container_size = firstRun
+</span><span class="noop">	let container_height = original_height ?? PLOT.container_height ?? 400
+</span><span class="noop">	CONTAINER.style.height = container_height + &#39;px&#39;
+</span><span class="noop">	&#34;&#34;&#34;,
+</span><span class="noop">	clipboard_script,
+</span><span class="noop">	resizer_script,
+</span><span class="noop">	&#34;&#34;&#34;
+</span><span class="noop">
+</span><span class="noop">	Plotly.react(PLOT, plot_obj).then(() =&gt; {
+</span><span class="noop">		// Assign the Plotly event listeners
+</span><span class="noop">		for (const [key, listener_vec] of Object.entries(plotly_listeners)) {
+</span><span class="noop">			for (const listener of listener_vec) {
+</span><span class="noop">				PLOT.on(key, listener)
+</span><span class="noop">			}
+</span><span class="noop">		}
+</span><span class="noop">		// Assign the JS event listeners
+</span><span class="noop">		for (const [key, listener_vec] of Object.entries(js_listeners)) {
+</span><span class="noop">			for (const listener of listener_vec) {
+</span><span class="noop">				PLOT.addEventListener(key, listener, {
+</span><span class="noop">					signal: controller.signal
+</span><span class="noop">				})
+</span><span class="noop">			}
+</span><span class="noop">		}
+</span><span class="noop">	}
+</span><span class="noop">	)
+</span><span class="noop">	&#34;&#34;&#34;,
+</span><span class="noop">	&#34;&#34;&#34;
+</span><span class="noop">
+</span><span class="noop">	invalidation.then(() =&gt; {
+</span><span class="noop">		// Remove all plotly listeners
+</span><span class="noop">		PLOT.removeAllListeners()
+</span><span class="noop">		// Remove all JS listeners
+</span><span class="noop">		controller.abort()
+</span><span class="noop">		// Remove the resizeObserver
+</span><span class="noop">		resizeObserver.disconnect()
+</span><span class="noop">	})
+</span><span class="noop">	&#34;&#34;&#34;,
+</span><span class="noop">])
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	PlutoPlot(p::Plot; kwargs...)
+</span><span class="noop">
+</span><span class="noop">A wrapper around `PlotlyBase.Plot` to provide optimized visualization within
+</span><span class="noop">Pluto notebooks exploiting `@htl` from HypertextLiteral.
+</span><span class="noop">
+</span><span class="noop"># Fields
+</span><span class="noop">- `Plot::PlotlyBase.Plot`
+</span><span class="noop">- `plotly_listeners::Dict{String, Vector{HypertextLitera.JavaScript}}`
+</span><span class="noop">- `js_listeners::Dict{String, Vector{HypertextLitera.JavaScript}}`
+</span><span class="noop">- `classList::Vector{String}`
+</span><span class="noop">- `script_contents::ScriptContents`
+</span><span class="noop">
+</span><span class="noop">Once the wrapper has been created, the underlying `Plot` object can be accessed
+</span><span class="noop">from the `Plot` field of the `PlutoPlot` object.
+</span><span class="noop">
+</span><span class="noop">Custom listeners to [plotly
+</span><span class="noop">events](https://plotly.com/javascript/plotlyjs-events/) are saved inside the
+</span><span class="noop">`plotly_listeners` field and can be added to the `PlutoPlot` as *javascript*
+</span><span class="noop">functions using the [`add_plotly_listener!`](@ref) function.
+</span><span class="noop">
+</span><span class="noop">Custom listeners to normal javascript events can instead be added to the
+</span><span class="noop">`PlutoPlot` as *javascript* functions using the [`add_js_listener!`](@ref)
+</span><span class="noop">function.
+</span><span class="noop">
+</span><span class="noop">Multiple listeners can be associated to each event, and they are executed in the
+</span><span class="noop">order they are added.
+</span><span class="noop">
+</span><span class="noop">A list of custom CSS classes can be added to the PlutoPlot by using the
+</span><span class="noop">[`add_class!`](@ref) and [`remove_class!`](@ref) functions.
+</span><span class="noop">
+</span><span class="noop">Finally, the contents of the script tag generating the plot are stored in the
+</span><span class="noop">field `script_contents` which is of type [`ScriptContents`](@ref). The elements
+</span><span class="noop">of `script_contents` are written serially inside the javascript script tag. The
+</span><span class="noop">displayed plot can be customized by modifying the elements of this field.
+</span><span class="noop">
+</span><span class="noop"># Examples
+</span><span class="noop">```julia
+</span><span class="noop">p = PlutoPlot(Plot(rand(10)))
+</span><span class="noop">add_plotly_listener!(p, &#34;plotly_click&#34;, &#34;e =&gt; console.log(e)&#34;)
+</span><span class="noop">add_class!(p, &#34;custom_class&#34;)
+</span><span class="noop">```
+</span><span class="noop">
+</span><span class="noop">See also: [`ScriptContents`](@ref), [`add_js_listener!`](@ref), [`add_plotly_listener!`](@ref)
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">Base.@kwdef struct PlutoPlot
+</span><span class="hit">	Plot::PlotlyBase.Plot
+</span><span class="noop">	plotly_listeners::Dict{String, Vector{JS}} = Dict{String, Vector{JS}}()
+</span><span class="noop">	js_listeners::Dict{String, Vector{JS}} = Dict{String, Vector{JS}}()
+</span><span class="noop">	classList::Vector{String} = String[]
+</span><span class="noop">	script_contents::ScriptContents = ScriptContents(deepcopy(_default_script_contents))
+</span><span class="noop">end
+</span><span class="hit">PlutoPlot(p::PlotlyBase.Plot; kwargs...) = PlutoPlot(;kwargs..., Plot = p)
+</span><span class="noop">
+</span><span class="noop"># Getter that extract the underlying Plot object data
+</span><span class="hit">function Base.getproperty(p::PlutoPlot, s::Symbol)
+</span><span class="hit">	if hasfield(Plot, s)
+</span><span class="hit">		getfield(getfield(p, :Plot), s)
+</span><span class="noop">	else
+</span><span class="hit">		getfield(p, s)
+</span><span class="noop">	end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="hit">function plot(args...;kwargs...) 
+</span><span class="hit">	@nospecialize
+</span><span class="hit">	PlutoPlot(Plot(args...;kwargs...))
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># This function extracts the toImageButtonOptions as a Dict
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	get_image_options(p::Union{Plot, PlutoPlot})::Dict{Symbol, Any}
+</span><span class="noop">Extract the dictionary of image options that are stored in the
+</span><span class="noop">`toImageButtonOptions` of the `PlotConfig` object embedded in the `Plot`.
+</span><span class="noop">
+</span><span class="noop">If not explicitly set, the image options are empty by default when creating a Plot object.
+</span><span class="noop">
+</span><span class="noop">See also: [`change_image_options!`](@ref)
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function get_image_options(p::Union{Plot, PlutoPlot}) 
+</span><span class="hit">    dict = something(p.config.toImageButtonOptions, Dict())
+</span><span class="hit">    return Dict{Symbol, Any}((Symbol(k) =&gt; v) for (k, v) in dict)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	change_image_options!(p::Union{Plot, PlutoPlot}; kwargs...)
+</span><span class="noop">
+</span><span class="noop">Returns the input plot `p` after having modified the `toImageButtonOptions` of the
+</span><span class="noop">`PlotConfig` object embedded in the plot. These options are passed to
+</span><span class="noop">the plotly.js library and are used to provide defaults when downloading the plot
+</span><span class="noop">as an image (See the relevant
+</span><span class="noop">[docs](https://plotly.com/julia/configuration-options/#customizing-modebar-download-plot-button)
+</span><span class="noop">for more details.)
+</span><span class="noop">
+</span><span class="noop">If explicitly set, each option will also be used as the default value when
+</span><span class="noop">popping out plot container for customizing size/scale/name before copying to
+</span><span class="noop">clipboard or downloading the image. See [PR
+</span><span class="noop">#22](https://github.com/JuliaPluto/PlutoPlotly.jl/pull/32) of PlutoPlotly for
+</span><span class="noop">more details.
+</span><span class="noop">
+</span><span class="noop">## Keyword Arguments
+</span><span class="noop">- `format`: The format of the exported plot to download. Can be one of &#34;png&#34;, &#34;jpeg&#34;, &#34;webp&#34;, &#34;svg&#34; or &#34;full-json&#34;,
+</span><span class="noop">- `width`: An integer specifying the width (in pixels) of the exported plot.
+</span><span class="noop">- `height`: An integer specifying the height (in pixels) of the exported plot.
+</span><span class="noop">- `scale`: Set the scaling for the generated image, keeping the aspect ratio intact (increases the resolution).
+</span><span class="noop">- `filename`: Sets the name of the exported file, the extension will be added automatically based on the chosen `format`.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function change_image_options!(p::Union{Plot, PlutoPlot}; kwargs...)
+</span><span class="noop">    # valid_args = (:format, :width, :height, :scale, :setBackground, :imageDataOnly, :filename)
+</span><span class="noop">	# At the moment setBackground and imageDataOnly are not supported.
+</span><span class="hit">    valid_args = (:format, :width, :height, :scale, :filename)
+</span><span class="hit">    invalid_kwargs = setdiff(keys(kwargs), valid_args) |&gt; Tuple
+</span><span class="hit">    isempty(invalid_kwargs) || error(&#34;You provided the some invalid keyword arguments.
+</span><span class="noop">Invalid kwargs: $invalid_kwargs
+</span><span class="noop">Possible kwargs: $valid_args&#34;)
+</span><span class="hit">    existing_dict = get_image_options(p)
+</span><span class="hit">    new_dict = Dict{Symbol, Any}()
+</span><span class="hit">    for k in valid_args
+</span><span class="hit">        val = get(kwargs, k, get(existing_dict, k, missing))
+</span><span class="hit">        val isa Missing &amp;&amp; continue
+</span><span class="hit">        new_dict[k] = val
+</span><span class="hit">    end
+</span><span class="hit">    isempty(new_dict) &amp;&amp; return
+</span><span class="hit">    p.config.toImageButtonOptions = new_dict
+</span><span class="hit">    p
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\paste_receiver.jl">src\paste_receiver.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+165 &nbsp;
+166 &nbsp;
+167 &nbsp;
+168 &nbsp;
+169 &nbsp;
+170 &nbsp;
+171 &nbsp;
+172 &nbsp;
+173 &nbsp;
+174 &nbsp;
+175 &nbsp;
+176 &nbsp;
+177 &nbsp;
+178 &nbsp;
+179 &nbsp;
+180 &nbsp;
+181 &nbsp;
+182 &nbsp;
+183 &nbsp;
+184 &nbsp;
+185 &nbsp;
+186 &nbsp;
+187 &nbsp;
+188 &nbsp;
+189 &nbsp;
+190 &nbsp;
+191 &nbsp;
+192 &nbsp;
+193 &nbsp;
+194 &nbsp;
+195 &nbsp;
+196 &nbsp;
+197 &nbsp;
+198 &nbsp;
+199 &nbsp;
+200 &nbsp;
+201 &nbsp;
+202 &nbsp;
+203 &nbsp;
+204 &nbsp;
+205 &nbsp;
+206 &nbsp;
+207 &nbsp;
+208 &nbsp;
+209 &nbsp;
+210 &nbsp;
+211 &nbsp;
+212 &nbsp;
+213 &nbsp;
+214 &nbsp;
+215 &nbsp;
+216 &nbsp;
+217 &nbsp;
+218 &nbsp;
+219 &nbsp;
+220 &nbsp;
+221 &nbsp;
+222 &nbsp;
+223 &nbsp;
+224 &nbsp;
+225 &nbsp;
+226 &nbsp;
+227 &nbsp;
+228 &nbsp;
+229 &nbsp;
+230 &nbsp;
+231 &nbsp;
+232 &nbsp;
+233 &nbsp;
+234 &nbsp;
+235 &nbsp;
+236 &nbsp;
+237 &nbsp;
+238 &nbsp;
+239 &nbsp;
+240 &nbsp;
+241 &nbsp;
+242 &nbsp;
+243 &nbsp;
+244 &nbsp;
+245 &nbsp;
+246 &nbsp;
+247 &nbsp;
+248 &nbsp;
+249 &nbsp;
+250 &nbsp;
+251 &nbsp;
+252 &nbsp;
+253 &nbsp;
+254 &nbsp;
+255 &nbsp;
+256 &nbsp;
+257 &nbsp;
+258 &nbsp;
+259 &nbsp;
+260 &nbsp;
+261 &nbsp;
+262 &nbsp;
+263 &nbsp;
+264 &nbsp;
+265 &nbsp;
+266 &nbsp;
+267 &nbsp;
+268 &nbsp;
+269 &nbsp;
+270 &nbsp;
+271 &nbsp;
+272 &nbsp;
+273 &nbsp;
+274 &nbsp;
+275 &nbsp;
+276 &nbsp;
+277 &nbsp;
+278 &nbsp;
+279 &nbsp;
+280 &nbsp;
+281 &nbsp;
+282 &nbsp;
+283 &nbsp;
+284 &nbsp;
+285 &nbsp;
+286 &nbsp;
+287 &nbsp;
+288 &nbsp;
+289 &nbsp;
+290 &nbsp;
+291 &nbsp;
+292 &nbsp;
+293 &nbsp;
+294 &nbsp;
+295 &nbsp;
+296 &nbsp;
+297 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">  plutoplotly_paste_receiver(;popped = true)
+</span><span class="noop">Create a widget that when shown inside a Pluto output generates a container
+</span><span class="noop">specifically made for extracting images of exported plots obtained with the
+</span><span class="noop">clipboard button on the plotly modebar.
+</span><span class="noop">
+</span><span class="noop">With `popped` equals to true (default), the widget will be collapsed and
+</span><span class="noop">represented by a clipboard icon on the top-right of the screen. When clicked
+</span><span class="noop">upon, the container div is expanded and it will contain the last image that has
+</span><span class="noop">been sent to the clipboard from a PlutoPlotly plot.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">plutoplotly_paste_receiver(;popped = true) = @htl(&#34;&#34;&#34;
+</span><span class="noop">&lt;script src=&#34;https://kit.fontawesome.com/087fc9ff41.js&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+</span><span class="noop">&lt;paste-receiver class=&#34;plutoplotly noimage minimized $(popped ? &#34;popped&#34; : &#34;&#34;)&#34;&gt;
+</span><span class="noop">  &lt;div class=&#34;header&#34;&gt;
+</span><span class="noop">    &lt;i class=&#34;empty&#34;&gt;&lt;/i&gt;
+</span><span class="noop">    &lt;i class=&#34;clipboard fa-regular fa-clipboard&#34;&gt;&lt;/i&gt;
+</span><span class="noop">    &lt;i class=&#34;minimize fa-solid fa-down-left-and-up-right-to-center&#34;&gt;&lt;/i&gt;
+</span><span class="noop">    &lt;i class=&#34;popout fa-solid fa-arrow-up-right-from-square&#34;&gt;&lt;/i&gt;
+</span><span class="noop">    &lt;i class=&#34;close fa-solid fa-xmark&#34;&gt;&lt;/i&gt;
+</span><span class="noop">  &lt;/div&gt;
+</span><span class="noop">  &lt;img /&gt;
+</span><span class="noop">  &lt;div class=&#34;message&#34;&gt;
+</span><span class="noop">    The plot image will be pasted here as soon as the clipboard button is
+</span><span class="noop">    pressed
+</span><span class="noop">  &lt;/div&gt;
+</span><span class="noop">&lt;/paste-receiver&gt;
+</span><span class="noop">&lt;script&gt;
+</span><span class="noop">  const paste_receiver =
+</span><span class="noop">    currentScript.parentElement.querySelector(&#34;paste-receiver&#34;);
+</span><span class="noop">  const img = paste_receiver.querySelector(&#34;img&#34;);
+</span><span class="noop">  const clipboard_icon = paste_receiver.querySelector(&#34;.clipboard&#34;);
+</span><span class="noop">  paste_receiver.attachImage = function (data, caller) {
+</span><span class="noop">    img.src = data;
+</span><span class="noop">    paste_receiver.last_caller = caller;
+</span><span class="noop">    paste_receiver.classList.toggle(&#34;noimage&#34;, false);
+</span><span class="noop">    paste_receiver.classList.toggle(&#34;hasimage&#34;, true);
+</span><span class="noop">    // We make the clipboard wobble for half a second
+</span><span class="noop">    clipboard_icon.classList.toggle(&#39;animate&#39;, true)
+</span><span class="noop">    setTimeout(() =&gt; clipboard_icon.classList.toggle(&#39;animate&#39;, false), 1000)
+</span><span class="noop">  };
+</span><span class="noop">
+</span><span class="noop">  const { default: interact } = await import(
+</span><span class="noop">    &#34;https://esm.sh/interactjs@1.10.19&#34;
+</span><span class="noop">  );
+</span><span class="noop">  function initialize_interact() {
+</span><span class="noop">    paste_receiver.offset = paste_receiver.offset ?? { x: 0, y: 0 };
+</span><span class="noop">    const startPosition = { x: 0, y: 0 };
+</span><span class="noop">    interact(&#34;paste-receiver.popped &gt; .header&#34;)
+</span><span class="noop">      .draggable({
+</span><span class="noop">        listeners: {
+</span><span class="noop">          start(event) {
+</span><span class="noop">            paste_receiver.offset.y = startPosition.y =
+</span><span class="noop">              paste_receiver.offsetTop;
+</span><span class="noop">            paste_receiver.offset.x = startPosition.x =
+</span><span class="noop">              paste_receiver.offsetLeft;
+</span><span class="noop">          },
+</span><span class="noop">          move(event) {
+</span><span class="noop">            paste_receiver.offset.x += event.dx;
+</span><span class="noop">            paste_receiver.offset.y += event.dy;
+</span><span class="noop">
+</span><span class="noop">            paste_receiver.style.top = `min(95vh, \${paste_receiver.offset.y}px`;
+</span><span class="noop">            paste_receiver.style.left = `min(95vw, \${paste_receiver.offset.x}px`;
+</span><span class="noop">          },
+</span><span class="noop">        },
+</span><span class="noop">      })
+</span><span class="noop">      .on(&#34;doubletap&#34;, (e) =&gt; {
+</span><span class="noop">        minimize(e, true)
+</span><span class="noop">      });
+</span><span class="noop">
+</span><span class="noop">    function modify_size_position(remove) {
+</span><span class="noop">      const keys = [&#39;top&#39;,&#39;left&#39;,&#39;width&#39;,&#39;height&#39;]
+</span><span class="noop">      const ps = paste_receiver.position_size ?? _.pick(paste_receiver.getBoundingClientRect(), keys)
+</span><span class="noop">      const cs = getComputedStyle(paste_receiver)
+</span><span class="noop">      for (const key of keys) {
+</span><span class="noop">        if (remove) {
+</span><span class="noop">          ps[key] = parseFloat(cs[key])
+</span><span class="noop">          paste_receiver.style[key] = &#34;&#34;
+</span><span class="noop">        } else {
+</span><span class="noop">          // We put the style from the saved one
+</span><span class="noop">          paste_receiver.style[key] = ps[key] + &#34;px&#34;
+</span><span class="noop">        }
+</span><span class="noop">      }
+</span><span class="noop">      paste_receiver.position_size = ps
+</span><span class="noop">    }
+</span><span class="noop">    function find_center(el) {
+</span><span class="noop">        r = el.getBoundingClientRect()
+</span><span class="noop">        return {
+</span><span class="noop">            top: r.top + r.height/2,
+</span><span class="noop">            left: r.left + r.width/2
+</span><span class="noop">        }
+</span><span class="noop">    }
+</span><span class="noop">
+</span><span class="noop">    // This function minimizes or expands the plot and handles the offset
+</span><span class="noop">    function minimize(evt, force) {
+</span><span class="noop">        const current = paste_receiver.classList.contains(&#39;minimized&#39;)
+</span><span class="noop">        if (force == current) {
+</span><span class="noop">            // Noting happens, we just return
+</span><span class="noop">            return
+</span><span class="noop">        }
+</span><span class="noop">        const minimized_after = !current
+</span><span class="noop">        const r_before = paste_receiver.getBoundingClientRect()
+</span><span class="noop">        paste_receiver.classList.toggle(&#39;minimized&#39;,force)
+</span><span class="noop">        const r_after = paste_receiver.getBoundingClientRect()
+</span><span class="noop">        // Expanded (e) and Contracted (c) sizes
+</span><span class="noop">        const e = minimized_after ? r_before : r_after
+</span><span class="noop">        const c = minimized_after ? r_after : r_before
+</span><span class="noop">        // We compute the viewport size
+</span><span class="noop">        const vw = window.innerWidth
+</span><span class="noop">        const vh = window.innerHeight
+</span><span class="noop">        // This is the distance from the top of the top-left icon to the top-left of the container
+</span><span class="noop">        const dist = {
+</span><span class="noop">          top: 17.4,
+</span><span class="noop">          left: 15.9,
+</span><span class="noop">        }
+</span><span class="noop">        const to_right = e.left + e.width/2 &gt; vw/2
+</span><span class="noop">        const minimize_icon = paste_receiver.querySelector(&#39;.minimize&#39;)
+</span><span class="noop">        minimize_icon.style.order = to_right ? 1 : -1
+</span><span class="noop">        let left
+</span><span class="noop">        let top
+</span><span class="noop">        if (minimized_after) {
+</span><span class="noop">            /*
+</span><span class="noop">            We are contracting
+</span><span class="noop">            */
+</span><span class="noop">           left = to_right ?
+</span><span class="noop">           // We have to contracts towards the right, putting the left at the right corner
+</span><span class="noop">           e.right - dist.left : 
+</span><span class="noop">           e.left + dist.left
+</span><span class="noop">           // Top for top we don&#39;t care about left and right targets, just top value
+</span><span class="noop">           top = e.top + e.height/2 &gt; vh/2 ?
+</span><span class="noop">           e.bottom - dist.top : 
+</span><span class="noop">           e.top + dist.top
+</span><span class="noop">        } else {
+</span><span class="noop">            /*
+</span><span class="noop">            We are expanding
+</span><span class="noop">            */
+</span><span class="noop">           left = to_right ?
+</span><span class="noop">           // We have to contracts towards the right, putting the left at the right corner
+</span><span class="noop">           c.right + dist.left - e.width : 
+</span><span class="noop">           c.left - dist.left
+</span><span class="noop">           // Top for top we don&#39;t care about left and right targets, just top value
+</span><span class="noop">           top = e.top + e.height/2 &gt; vh/2 ?
+</span><span class="noop">           c.bottom + dist.top - e.height :
+</span><span class="noop">           c.top - dist.top
+</span><span class="noop">        }
+</span><span class="noop">        paste_receiver.style.left = left + &#39;px&#39;
+</span><span class="noop">        paste_receiver.style.top = top + &#39;px&#39;
+</span><span class="noop">    }
+</span><span class="noop">
+</span><span class="noop">    interact(&#39;i.minimize&#39;).on(&#39;tap&#39;, function(e) {
+</span><span class="noop">        // We skip on right click
+</span><span class="noop">        if (e.originalEvent.button == 2) {return}
+</span><span class="noop">        minimize(e, true)
+</span><span class="noop">    })
+</span><span class="noop">    interact(&#39;paste-receiver.minimized i.clipboard&#39;).on(&#39;tap&#39;, function(e) {
+</span><span class="noop">        // We skip on right click
+</span><span class="noop">        if (e.originalEvent.button == 2) {return}
+</span><span class="noop">        minimize(e, false)
+</span><span class="noop">    })
+</span><span class="noop">
+</span><span class="noop">    interact(&#39;paste-receiver.popped:not(.minimized)&#39;)
+</span><span class="noop">      .resizable({
+</span><span class="noop">        edges: { top: true, left: false, bottom: true, right: true },
+</span><span class="noop">        listeners: {
+</span><span class="noop">          move: function (event) {
+</span><span class="noop">            console.log(event)
+</span><span class="noop">            Object.assign(paste_receiver.style, {
+</span><span class="noop">              width: `\${event.rect.width}px`,
+</span><span class="noop">              height: `\${event.rect.height}px`,
+</span><span class="noop">            });
+</span><span class="noop">          },
+</span><span class="noop">        },
+</span><span class="noop">      })
+</span><span class="noop">      
+</span><span class="noop">      interact(&#39;i.popout&#39;).on(&#39;tap&#39;, function(e) {
+</span><span class="noop">        // We skip on right click
+</span><span class="noop">        if (e.originalEvent.button == 2) {return}
+</span><span class="noop">        paste_receiver.classList.toggle(&#39;popped&#39;, true)
+</span><span class="noop">        modify_size_position(false)
+</span><span class="noop">      })
+</span><span class="noop">      interact(&#39;i.close&#39;).on(&#39;tap&#39;, function(e) {
+</span><span class="noop">        // We skip on right click
+</span><span class="noop">        if (e.originalEvent.button == 2) {return}
+</span><span class="noop">        modify_size_position(true)
+</span><span class="noop">        paste_receiver.classList.toggle(&#39;popped&#39;, false)
+</span><span class="noop">      })
+</span><span class="noop">  }
+</span><span class="noop">  initialize_interact()
+</span><span class="noop">
+</span><span class="noop">  invalidation.then(() =&gt; {
+</span><span class="noop">    interact(&#39;paste-receiver&#39;).unset()
+</span><span class="noop">    interact(&#39;i.close&#39;).unset()
+</span><span class="noop">  })
+</span><span class="noop">&lt;/script&gt;
+</span><span class="noop">&lt;style&gt;
+</span><span class="noop">  paste-receiver &gt; .header {
+</span><span class="noop">    height: 30px;
+</span><span class="noop">    position: absolute;
+</span><span class="noop">    left: 0px;
+</span><span class="noop">    top: 0px;
+</span><span class="noop">    width: 100%;
+</span><span class="noop">    display: flex;
+</span><span class="noop">    justify-content: space-between;
+</span><span class="noop">    align-items: center;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly {
+</span><span class="noop">    display: flex;
+</span><span class="noop">    background: var(--main-bg-color);
+</span><span class="noop">    border: 3px solid var(--kbd-border-color);
+</span><span class="noop">    border-radius: 12px;
+</span><span class="noop">    min-height: 200px;
+</span><span class="noop">    max-height: 800px;
+</span><span class="noop">    align-items: center;
+</span><span class="noop">    justify-content: center;
+</span><span class="noop">    flex-flow: column;
+</span><span class="noop">    position: relative;
+</span><span class="noop">    overflow: auto;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly.popped {
+</span><span class="noop">    z-index: 1000;
+</span><span class="noop">    position: fixed;
+</span><span class="noop">    width: 600px;
+</span><span class="noop">    height: 400px;
+</span><span class="noop">    right: 165px;
+</span><span class="noop">    top: 62px;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly.popped.minimized {
+</span><span class="noop">    overflow: visible;
+</span><span class="noop">    min-height: 0px;
+</span><span class="noop">    height: 0px !important;
+</span><span class="noop">    width: 0px !important;
+</span><span class="noop">    border: none;
+</span><span class="noop">    background-color: transparent;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly.popped.minimized .header {
+</span><span class="noop">    height: 100%;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly.popped.minimized *:not(.header) {
+</span><span class="noop">    display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly .header:not(:hover) i {
+</span><span class="noop">    visibility: hidden
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.plutoplotly.popped.minimized i.clipboard {
+</span><span class="noop">    display: block;
+</span><span class="noop">    scale: 1.5;
+</span><span class="noop">    transform: translate(-50%, 0);
+</span><span class="noop">    visibility: visible !important;
+</span><span class="noop">  }
+</span><span class="noop">  i.clipboard.animate {
+</span><span class="noop">    animation: tilt-shaking 0.2s 0s 6;
+</span><span class="noop">  }
+</span><span class="noop">  @keyframes tilt-shaking {
+</span><span class="noop">    0% { transform: rotate(0deg) translate(-50%, 0); }
+</span><span class="noop">    25% { transform: rotate(5deg) translate(-50%, 0); }
+</span><span class="noop">    50% { transform: rotate(0eg) translate(-50%, 0); }
+</span><span class="noop">    75% { transform: rotate(-5deg) translate(-50%, 0); }
+</span><span class="noop">    100% { transform: rotate(0deg) translate(-50%, 0); }
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.noimage &gt; div.noimage,
+</span><span class="noop">  paste-receiver.noimage &gt; img {
+</span><span class="noop">    margin: 0 auto;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.noimage &gt; img {
+</span><span class="noop">    display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.hasimage &gt; .message {
+</span><span class="noop">    display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.hasimage &gt; img {
+</span><span class="noop">    display: block;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver i {
+</span><span class="noop">    margin: 0 5px;
+</span><span class="noop">    cursor: pointer;
+</span><span class="noop">    color: var(--pluto-output-color);
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.popped i.empty,
+</span><span class="noop">  paste-receiver.popped i.popout {
+</span><span class="noop">      display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.popped:not(.minimized) i.clipboard {
+</span><span class="noop">      display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver.popped.minimized i.minimize {
+</span><span class="noop">      display: none;
+</span><span class="noop">  }
+</span><span class="noop">  paste-receiver:not(.popped) i.clipboard,
+</span><span class="noop">  paste-receiver:not(.popped) i.minimize,
+</span><span class="noop">  paste-receiver:not(.popped) i.close {
+</span><span class="noop">    display: none;
+</span><span class="noop">  }
+</span><span class="noop">  .header:hover &gt; i.popout {
+</span><span class="noop">    visibility: visible;
+</span><span class="noop">  }
+</span><span class="noop">&lt;/style&gt;
+</span><span class="noop">&#34;&#34;&#34;)</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\mathjax.jl">src\mathjax.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop"># This hack is necessary to force loading mathjax
+</span><span class="noop">
+</span><span class="noop">const FORCE_MATHJAX_LOCAL = Ref(false)
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	force_pluto_mathjax_local::Bool
+</span><span class="noop">	force_pluto_mathjax_local(flag::Bool)::Bool
+</span><span class="noop">
+</span><span class="noop">Returns `true` if the `PlutoPlot` `show` method forces svgs produced by MathJax
+</span><span class="noop">to be locally cached and `false` otherwise.
+</span><span class="noop">
+</span><span class="noop">The flag can be set at package level by providing the intended boolean value as
+</span><span class="noop">argument to the function
+</span><span class="noop">
+</span><span class="noop">Local svg caching is used to make mathjax in recent plolty versions (&gt;2.10) work
+</span><span class="noop">as expected. The default `global` caching in Pluto creates problems with the
+</span><span class="noop">math display.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">force_pluto_mathjax_local() = FORCE_MATHJAX_LOCAL[]
+</span><span class="hit">force_pluto_mathjax_local(flag::Bool) = FORCE_MATHJAX_LOCAL[] = flag</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\preprocess.jl">src\preprocess.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">const FORCE_FLOAT32 = ScopedValue(true)
+</span><span class="noop">
+</span><span class="noop"># Get a val to specify whether 
+</span><span class="hit">floatval() = Val{FORCE_FLOAT32[]}()
+</span><span class="noop">
+</span><span class="noop"># Helper struct just to have the name as symbol parameter for dispatch
+</span><span class="noop">struct AttrName{S}
+</span><span class="noop">    name::Symbol
+</span><span class="hit">    AttrName(s::Symbol) = new{s}(s)
+</span><span class="noop">end
+</span><span class="noop"># This is used to handle args... which in case only one element is passed is not iterable
+</span><span class="hit">Base.iterate(n::AttrName, state=1) = state &gt; 1 ? nothing : (n, state + 1)
+</span><span class="noop">
+</span><span class="noop">#=
+</span><span class="noop">This function is basically `_json_lower` from PlotlyBase, but we do it directly
+</span><span class="noop">on the PlutoPlot to avoid the modifying the behavior of `_json_lower` for `Plot`
+</span><span class="noop">objects (which is required to modify how matrices are passed to `publish_to_js`).
+</span><span class="noop">
+</span><span class="noop">We now have a complex dispatch to be able to do custom processing for specific
+</span><span class="noop">attributes.
+</span><span class="noop">
+</span><span class="noop">The standard signature for a _process_with_names method is:
+</span><span class="noop">    _process_with_names(x, fl::Val, @nospecialize(args::Vararg{AttrName}))
+</span><span class="noop">
+</span><span class="noop">where 
+</span><span class="noop">- the first argument should be the actual input to process and should be
+</span><span class="noop">typed accordingly for dispatch.
+</span><span class="noop">- The second argument is either `Val{true}` or `Val{false}` and represents the
+</span><span class="noop">flag to force number to be converted in Float32. # We added this to
+</span><span class="noop">significantly improve performance as the runtime check for converting or not was
+</span><span class="noop">creating type instability.
+</span><span class="noop">- All the remaining arguments are of type `AttrName` and represent the path of
+</span><span class="noop">attributes names leading to this specific input. For example, if we are
+</span><span class="noop">processing the input that is inside the xaxis_range in the layout, the function
+</span><span class="noop">call will have this form:
+</span><span class="noop">    _process_with_names(x, fl, AttrName(:xaxis), AttrName(:range), AttrName(:layout))
+</span><span class="noop">
+</span><span class="noop">This again is to allow dispatch to work on the path so that one can customize behavior of _process_with_names with great control.
+</span><span class="noop">At the moment this is only used for modifying the behavior when `title` is
+</span><span class="noop">passed as a String, changing it to the more recent plotly syntax (see
+</span><span class="noop">https://github.com/JuliaPluto/PlutoPlotly.jl/issues/51)
+</span><span class="noop">
+</span><span class="noop">The various `@nospecialize` below are to avoid exploding compilation given our exponential number of dispatch options, so we only specialize where we need.
+</span><span class="noop">=#
+</span><span class="noop">
+</span><span class="noop"># Main _process_with_names for the PlutoPlot object
+</span><span class="hit">function _process_with_names(pp::PlutoPlot)
+</span><span class="hit">    p = pp.Plot
+</span><span class="hit">    fl = floatval()
+</span><span class="hit">    out = Dict(
+</span><span class="noop">        :data =&gt; _process_with_names(p.data, fl, AttrName(:data)),
+</span><span class="noop">        :layout =&gt; _process_with_names(p.layout, fl, AttrName(:layout)),
+</span><span class="noop">        :frames =&gt; _process_with_names(p.frames, fl, AttrName(:frames)),
+</span><span class="noop">        :config =&gt; _process_with_names(p.config, fl, AttrName(:config))
+</span><span class="noop">    )
+</span><span class="noop">
+</span><span class="hit">    templates = PlotlyBase.templates
+</span><span class="hit">    layout_template = p.layout.template
+</span><span class="hit">    template = if layout_template isa String
+</span><span class="hit">        layout_template === &#34;none&#34; ? Template() : templates[layout_template]
+</span><span class="hit">    elseif layout_template === templates[templates.default]
+</span><span class="noop">        # If we enter here we did not specify any template in the layout, so se use our default
+</span><span class="hit">        DEFAULT_TEMPLATE[]
+</span><span class="noop">    else
+</span><span class="hit">        layout_template
+</span><span class="noop">    end
+</span><span class="hit">    out[:layout][:template] = _process_with_names(template, fl, AttrName(:template), AttrName(:layout))
+</span><span class="hit">    out
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Generic fallbacks
+</span><span class="hit">_process_with_names(x, ::Val, @nospecialize(args::Vararg{AttrName})) = _preprocess(x)
+</span><span class="hit">_process_with_names(x) = _process_with_names(x, floatval())
+</span><span class="noop">
+</span><span class="noop"># Handle strings
+</span><span class="hit">_process_with_names(s::AbstractString, ::Val, @nospecialize(args::Vararg{AttrName})) =
+</span><span class="noop">    _preprocess(s)
+</span><span class="miss">_process_with_names(s::AbstractString, ::Val, ::AttrName{:title}, @nospecialize(args::Vararg{AttrName})) =
+</span><span class="noop">    Dict(:text =&gt; _preprocess(s))
+</span><span class="noop">
+</span><span class="noop"># Handle Reals
+</span><span class="hit">_process_with_names(x::Real, ::Val{false}, @nospecialize(args::Vararg{AttrName})) = x
+</span><span class="hit">_process_with_names(x::Real, ::Val{true}, @nospecialize(args::Vararg{AttrName})) = x isa Bool ? x : Float32(x)
+</span><span class="noop"># Tuple, Arrays
+</span><span class="hit">_process_with_names(x::Union{Tuple,AbstractArray}, fl::Val, @nospecialize(args::Vararg{AttrName})) = [_process_with_names(el, fl, args...) for el in x]
+</span><span class="noop"># Multidimensional array of numbers must be nested 1D arrays
+</span><span class="hit">_process_with_names(A::AbstractArray{&lt;:Union{Number,AbstractVector{&lt;:Number}},N}, fl::Val, @nospecialize(args::Vararg{AttrName})) where {N} =
+</span><span class="noop">    if N == 1
+</span><span class="hit">        [_process_with_names(el, fl, args...) for el in A]
+</span><span class="noop">    else
+</span><span class="hit">        [_process_with_names(collect(s), fl, args...) for s ∈ eachslice(A; dims=ndims(A))]
+</span><span class="noop">    end
+</span><span class="noop">
+</span><span class="noop"># Dict ans HasFields
+</span><span class="hit">function _process_with_names(d::Dict, fl::Val, @nospecialize(args::Vararg{AttrName}))
+</span><span class="hit">    Dict{Any,Any}(k =&gt; if k isa Symbol
+</span><span class="noop">        # We have this branch as we might have plotly properties here and we assume
+</span><span class="noop">        # they are if the dict key is a symbol.
+</span><span class="hit">        _process_with_names(v, fl, AttrName(k), args...)
+</span><span class="noop">    else
+</span><span class="hit">        _process_with_names(v, fl, args...)
+</span><span class="noop">    end for (k, v) in pairs(d))
+</span><span class="noop">end
+</span><span class="hit">function _process_with_names(d::Dict{Symbol}, fl::Val, @nospecialize(args::Vararg{AttrName}))
+</span><span class="hit">    Dict{Symbol,Any}(k =&gt; _process_with_names(v, fl, AttrName(k), args...) for (k, v) in pairs(d))
+</span><span class="noop">end
+</span><span class="noop"># We have a separate one because it seems to reduce allocations
+</span><span class="hit">_process_with_names(a::PlotlyBase.HasFields, fl::Val, @nospecialize(args::AttrName)) =
+</span><span class="noop">    _process_with_names(a.fields, fl, args...)
+</span><span class="noop">
+</span><span class="noop"># Templates
+</span><span class="hit">_process_with_names(t::PlotlyBase.Template, fl::Val, @nospecialize(args::Vararg{AttrName})) = Dict(
+</span><span class="noop">    :data =&gt; _process_with_names(t.data, fl, AttrName(:data), args...),
+</span><span class="noop">    :layout =&gt; _process_with_names(t.layout, fl, AttrName(:layout), args...)
+</span><span class="noop">)
+</span><span class="noop">
+</span><span class="noop"># Config
+</span><span class="hit">function _process_with_names(pc::PlotlyBase.PlotConfig, fl::Val, @nospecialize(args::Vararg{AttrName}))
+</span><span class="hit">    out = Dict{Symbol,Any}()
+</span><span class="hit">    for fn in fieldnames(PlotlyBase.PlotConfig)
+</span><span class="hit">        field = getfield(pc, fn)
+</span><span class="hit">        if !isnothing(field)
+</span><span class="hit">            out[fn] = _process_with_names(field, fl, AttrName(fn), args...)
+</span><span class="noop">        end
+</span><span class="hit">    end
+</span><span class="hit">    out
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## The functions below are the internal processing only taking the value, so not depending on names path or float32 flag
+</span><span class="noop"># Defaults to JSON.lower for generic non-overloaded types
+</span><span class="hit">_preprocess(x) = PlotlyBase.JSON.lower(x) # Default
+</span><span class="hit">_preprocess(x::TimeType) = sprint(print, x) # For handling datetimes
+</span><span class="noop">
+</span><span class="hit">_preprocess(s::Union{AbstractString,Symbol}) = String(s)
+</span><span class="noop">
+</span><span class="hit">_preprocess(x::Union{Nothing,Missing}) = x
+</span><span class="hit">_preprocess(x::Symbol) = string(x)
+</span><span class="noop">
+</span><span class="hit">_preprocess(c::PlotlyBase.Cycler) = c.vals
+</span><span class="noop">
+</span><span class="hit">function _preprocess(c::PlotlyBase.ColorScheme)::Vector{Tuple{Float64,String}}
+</span><span class="hit">    N = length(c.colors)
+</span><span class="hit">    map(ic -&gt; ((ic[1] - 1) / (N - 1), _preprocess(ic[2])), enumerate(c.colors))
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Files that will be later moved to an extension. At the moment it&#39;s pointless because PlotlyBase uses those internally anyway.
+</span><span class="hit">_preprocess(s::LaTeXString) = s.s
+</span><span class="noop">
+</span><span class="noop"># Colors, they can be put inside an extension
+</span><span class="hit">_preprocess(c::Color) = @views begin
+</span><span class="hit">    s = hex(c, :rrggbb)
+</span><span class="hit">    r = parse(Int, s[1:2]; base=16)
+</span><span class="hit">    g = parse(Int, s[3:4]; base=16)
+</span><span class="hit">    b = parse(Int, s[5:6]; base=16)
+</span><span class="hit">    return &#34;rgb($r,$g,$b)&#34;
+</span><span class="noop">end
+</span><span class="hit">_preprocess(c::TransparentColor) = @views begin
+</span><span class="hit">    s = hex(c, :rrggbbaa)
+</span><span class="hit">    r = parse(Int, s[1:2]; base=16)
+</span><span class="hit">    g = parse(Int, s[3:4]; base=16)
+</span><span class="hit">    b = parse(Int, s[5:6]; base=16)
+</span><span class="hit">    a = parse(Int, s[7:8]; base=16)
+</span><span class="hit">    return &#34;rgba($r,$g,$b,$(a/255))&#34;
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\js_helpers.jl">src\js_helpers.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">## add listeners ##
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	add_js_listener!(p::PlutoPlot, event_name::String, listener::HypertextLiteral.JavaScript)
+</span><span class="noop">	add_js_listener!(p::PlutoPlot, event_name::String, listener::String)
+</span><span class="noop">
+</span><span class="noop">Add a custom *javascript* `listener` (to be provided as `String` or directly as `HypertextLiteral.JavaScript`) to the `PlutoPlot` object `p`, and associated to the javascript event specified by `event_name`.
+</span><span class="noop">
+</span><span class="noop">The listeners are added to the HTML plot div after rendering. The div where the plot is inserted can be accessed using the variable named `PLOT` inside the listener code.
+</span><span class="noop">
+</span><span class="noop"># Differences with `add_plotly_listener!`
+</span><span class="noop">This function adds standard javascript events via the `addEventListener` function. These events differ from the plotly specific events.
+</span><span class="noop">
+</span><span class="noop">See also: [`add_plotly_listener!`](@ref), [`htl_js`](@ref)
+</span><span class="noop">
+</span><span class="noop"># Examples:
+</span><span class="noop">```julia
+</span><span class="noop">p = PlutoPlot(Plot(rand(10), Layout(uirevision = 1)))
+</span><span class="noop">add_js_listener!(p, &#34;mousedown&#34;, htl_js(\&#34;\&#34;\&#34;
+</span><span class="noop">function(e) {
+</span><span class="noop">
+</span><span class="noop">console.log(PLOT) // logs the plot div inside the developer console when pressing down the mouse
+</span><span class="noop">
+</span><span class="noop">}
+</span><span class="noop">\&#34;\&#34;\&#34;
+</span><span class="noop">```
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function add_js_listener!(p::PlutoPlot, event_name::String, listener::JS)
+</span><span class="hit">	ldict = p.js_listeners
+</span><span class="hit">	listeners_array = get!(ldict, event_name, JS[])
+</span><span class="hit">	push!(listeners_array, listener)
+</span><span class="hit">	return p
+</span><span class="noop">end
+</span><span class="miss">add_js_listener!(p::PlutoPlot, event_name, listener::String) = add_js_listener!(p, event_name, htl_js(listener))
+</span><span class="noop">
+</span><span class="noop">## add class ##
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	add_class!(p::PlutoPlot, className::String)
+</span><span class="noop">
+</span><span class="noop">Add a CSS class with name `className` to the list of custom classes that are added to the PLOT div when displayed inside Pluto. This can be used to give custom CSS styles to certain plots.
+</span><span class="noop">
+</span><span class="noop">See also: [`remove_class!`](@ref)
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function add_class!(p::PlutoPlot, className::String)
+</span><span class="hit">	cl = p.classList
+</span><span class="hit">	if className ∉ cl
+</span><span class="hit">		push!(cl, className)
+</span><span class="noop">	end
+</span><span class="hit">	return p
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## remove class ##
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	remove_class!(p::PlutoPlot, className::String)
+</span><span class="noop">
+</span><span class="noop">Remove a CSS class with name `className` (if present) from the list of custom classes that are added to the PLOT div when displayed inside Pluto. This can be used to give custom CSS styles to certain plots.
+</span><span class="noop">
+</span><span class="noop">See also: [`add_class!`](@ref)
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="miss">function remove_class!(p::PlutoPlot, className::String)
+</span><span class="miss">	cl = p.classList
+</span><span class="miss">	idx = findfirst(x -&gt; x === className, cl)
+</span><span class="miss">	if idx !== nothing
+</span><span class="miss">		deleteat!(cl, idx)
+</span><span class="noop">	end
+</span><span class="miss">	return p
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## Push Script ##
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	push_script!(p::PlutoPlot, items...)
+</span><span class="noop">Add script contents contained in collection `items` at the end of the plot show method script.
+</span><span class="noop">The `item` must either be a collection of `String` or `HypertextLiteral.JavaScript` elements
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="miss">function push_script!(p::PlutoPlot, items::Vararg{JS,N}) where N
+</span><span class="miss">	@nospecialize
+</span><span class="miss">	push!(p.script_contents.vec, items...)
+</span><span class="miss">	return p
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">## plotly listener ##
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">	add_plotly_listener!(p::PlutoPlot, event_name::String, listener::HypertextLiteral.JavaScript)
+</span><span class="noop">	add_plotly_listener!(p::PlutoPlot, event_name::String, listener::String)
+</span><span class="noop">
+</span><span class="noop">Add a custom *javascript* `listener` (to be provided as `String` or directly as `HypertextLiteral.JavaScript`) to the `PlutoPlot` object `p`, and associated to the [plotly event](https://plotly.com/javascript/plotlyjs-events/) specified by `event_name`.
+</span><span class="noop">
+</span><span class="noop">The listeners are added to the HTML plot div after rendering. The div where the plot is inserted can be accessed using the variable named `PLOT` inside the listener code.
+</span><span class="noop">
+</span><span class="noop"># Differences with `add_js_listener!`
+</span><span class="noop">This function adds a listener using the plotly internal events via the `on` function. These events differ from the standard javascript ones and provide data specific to the plot.
+</span><span class="noop">
+</span><span class="noop">See also: [`add_js_listener!`](@ref), [`htl_js`](@ref)
+</span><span class="noop">
+</span><span class="noop"># Examples:
+</span><span class="noop">```julia
+</span><span class="noop">p = PlutoPlot(Plot(rand(10), Layout(uirevision = 1)))
+</span><span class="noop">add_plotly_listener!(p, &#34;plotly_relayout&#34;, htl_js(\&#34;\&#34;\&#34;
+</span><span class="noop">function(e) {
+</span><span class="noop">
+</span><span class="noop">console.log(PLOT) // logs the plot div inside the developer console
+</span><span class="noop">
+</span><span class="noop">}
+</span><span class="noop">\&#34;\&#34;\&#34;
+</span><span class="noop">```
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function add_plotly_listener!(p::PlutoPlot, event_name::String, listener::JS)
+</span><span class="hit">	ldict = p.plotly_listeners
+</span><span class="hit">	listeners_array = get!(ldict, event_name, JS[])
+</span><span class="hit">	push!(listeners_array, listener)
+</span><span class="hit">	return p
+</span><span class="noop">end
+</span><span class="hit">add_plotly_listener!(p::PlutoPlot, event_name, listener::String) = add_plotly_listener!(p, event_name, htl_js(listener))</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\show.jl">src\show.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="hit">function _show(pp::PlutoPlot; script_id = &#34;pluto-plotly-div&#34;, ver = get_plotly_version())
+</span><span class="hit">@htl &#34;&#34;&#34;
+</span><span class="noop">	&lt;script id=$(script_id)&gt;
+</span><span class="noop">		// We start by putting all the variable interpolation here at the beginning
+</span><span class="noop">		// We have to convert all typedarrays in the layout to normal arrays. See Issue #25
+</span><span class="noop">		// We use lodash for this for compactness
+</span><span class="noop">		function removeTypedArray(o) {
+</span><span class="noop">			return _.isTypedArray(o) ? Array.from(o) :
+</span><span class="noop">			_.isPlainObject(o) ? _.mapValues(o, removeTypedArray) : 
+</span><span class="noop">			o
+</span><span class="noop">		}
+</span><span class="noop">
+</span><span class="noop">		// Publish the plot object to JS
+</span><span class="noop">		let plot_obj = _.update($(maybe_publish_to_js(_process_with_names(pp))), &#34;layout&#34;, removeTypedArray)
+</span><span class="noop">		// Get the plotly listeners
+</span><span class="noop">		const plotly_listeners = $(pp.plotly_listeners)
+</span><span class="noop">		// Get the JS listeners
+</span><span class="noop">		const js_listeners = $(pp.js_listeners)
+</span><span class="noop">		// Deal with eventual custom classes
+</span><span class="noop">		let custom_classlist = $(pp.classList)
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop">		// Load the plotly library
+</span><span class="noop">		const Plotly = $(get_plotly_import(ver, &#34;hybrid&#34;))
+</span><span class="noop">
+</span><span class="noop">		// Check if we have to force local mathjax font cache
+</span><span class="noop">		if ($(force_pluto_mathjax_local()) &amp;&amp; window?.MathJax?.config?.svg?.fontCache === &#39;global&#39;) {
+</span><span class="noop">			window.MathJax.config.svg.fontCache = &#39;local&#39;
+</span><span class="noop">		}
+</span><span class="noop">
+</span><span class="noop">		$(pp.script_contents)
+</span><span class="noop">
+</span><span class="noop">		return CONTAINER
+</span><span class="noop">	&lt;/script&gt;
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># ╔═╡ d42d4694-e05d-4e0e-a198-79a3a5cb688a
+</span><span class="hit">function Base.show(io::IO, mime::MIME&#34;text/html&#34;, plt::PlutoPlot)
+</span><span class="hit">	show(io, mime, _show(plt; script_id =  plotly_script_id(io)))
+</span><span class="noop">	# show(io, mime, _show(plt))
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\plotlybase_forward.jl">src\plotlybase_forward.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop"># Methods that do not return the plot object
+</span><span class="noop">for fname in (
+</span><span class="noop">    :relayout!,
+</span><span class="noop">    :restyle!,
+</span><span class="noop">    :addtraces!,
+</span><span class="noop">    :deletetraces!,
+</span><span class="noop">    :movetraces!,
+</span><span class="noop">    :purge!,
+</span><span class="noop">    :react!,
+</span><span class="noop">    :extendtraces!,
+</span><span class="noop">    :prependtraces!,
+</span><span class="noop">    # Layout shapes 
+</span><span class="noop">    :add_hrect!, :add_hline!, :add_vrect!, :add_vline!, :add_shape!,
+</span><span class="noop">    :add_layout_image!,
+</span><span class="noop">    # generic methods from API
+</span><span class="noop">    first.(PlotlyBase._layout_obj_updaters)...,
+</span><span class="noop">    first.(PlotlyBase._layout_vector_updaters)...,
+</span><span class="noop">)
+</span><span class="hit">    @eval PlotlyBase.$fname(p::PlutoPlot, args...; kwargs...) =
+</span><span class="noop">    PlotlyBase.$fname(p.Plot, args...; kwargs...) 
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Methods that do return the plot object, (we return the PlutoPlot object in this case)
+</span><span class="noop">for fname in (
+</span><span class="noop">    :update!,
+</span><span class="noop">    :add_trace!,
+</span><span class="noop">)
+</span><span class="hit">    @eval function PlotlyBase.$fname(p::PlutoPlot, args...; kwargs...) 
+</span><span class="hit">        PlotlyBase.$fname(p.Plot, args...; kwargs...) 
+</span><span class="hit">        p
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Methods that return a copy of the plot
+</span><span class="noop"># Methods that do return the plot object, (we return the PlutoPlot object in this case)
+</span><span class="noop">for fname in (:fork, :restyle, :relayout, :update, :addtraces, :deletetraces,
+</span><span class="noop">:movetraces, :redraw, :extendtraces, :prependtraces, :purge, :react)
+</span><span class="hit">    @eval function PlotlyBase.$fname(p::PlutoPlot, args...; kwargs...) 
+</span><span class="hit">        p = PlotlyBase.$fname(p.Plot, args...; kwargs...) 
+</span><span class="hit">        PlutoPlot(p)
+</span><span class="noop">    end
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop"># Here we put methods from PlotlyJS.jl
+</span><span class="hit">make_subplots(;kwargs...) = plot(Layout(Subplots(;kwargs...)))
+</span><span class="noop">
+</span><span class="noop">@doc (@doc Subplots) make_subplots
+</span><span class="noop">
+</span><span class="noop"># Overload of hcat,vcat,hvcat
+</span><span class="hit">Base.hcat(ps::PlutoPlot...) = PlutoPlot(hcat(map(x -&gt; x.Plot, ps)...))
+</span><span class="hit">Base.vcat(ps::PlutoPlot...) = PlutoPlot(vcat(map(x -&gt; x.Plot, ps)...))
+</span><span class="hit">Base.hvcat(rows::Tuple{Vararg{Int}}, ps::PlutoPlot...) = PlutoPlot(hvcat(rows, map(x -&gt; x.Plot, ps)...))</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\utilities.jl">src\utilities.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">    sample_colorscheme(cs::ColorScheme, sample_points::AbstractVector; alpha = nothing)
+</span><span class="noop">    sample_colorscheme(cs::ColorScheme, npoints::Int = length(cs); alpha = nothing)
+</span><span class="noop">    sample_colorscheme(cs_name::Symbol, args...; alpha = nothing)
+</span><span class="noop">
+</span><span class="noop">Function to create a reduced sampled version of the provided colorscheme `cs`, optionally specifying the opacity of the colors using the `alpha` keyword argument.
+</span><span class="noop">
+</span><span class="noop">The `sample_points` argument can be provided as a vector of points in the range [0, 1] to sample the colorscheme at specific points, or as an integer `npoints` to sample the colorscheme at `npoints` evenly spaced points in the range [0, 1].
+</span><span class="noop">
+</span><span class="noop">Instead of being called with an explicit `ColorScheme` object, the function can also be called with a `Symbol` which is used to extract the corresponding `ColorScheme` object from the `colorschemes` Dict in the `ColorSchemes.jl` package.
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function sample_colorscheme(cs::ColorScheme, sample_points::AbstractVector; alpha = nothing)
+</span><span class="hit">    @assert minimum(sample_points) &gt;= 0 &amp;&amp; maximum(sample_points) &lt;= 1 &#34;sample_points must be in the range [0, 1]&#34;
+</span><span class="hit">    colors = map(sample_points) do i
+</span><span class="hit">        c = get(cs, i)
+</span><span class="hit">        ca = convert(RGBA, c)
+</span><span class="hit">        if alpha === nothing
+</span><span class="hit">            ca
+</span><span class="noop">        else
+</span><span class="hit">            RGBA(ca.r, ca.g, ca.b, alpha)
+</span><span class="noop">        end
+</span><span class="noop">    end
+</span><span class="hit">    return ColorScheme(colors, &#34;custom&#34;, &#34;autogenerated&#34;)
+</span><span class="noop">end
+</span><span class="hit">sample_colorscheme(cs::ColorScheme, npoints::Int = length(cs); kwargs...) = sample_colorscheme(cs, range(0, 1, length = npoints); kwargs...)
+</span><span class="hit">function sample_colorscheme(cs_name::Symbol, args...; kwargs...) 
+</span><span class="hit">    cs = get(colorschemes, cs_name) do 
+</span><span class="hit">        error(&#34;colorscheme name must be a valid key for the `ColorSchemes.colorschemes` Dict.\n$(cs_name) not found within the valid keys&#34;)
+</span><span class="noop">    end 
+</span><span class="hit">    sample_colorscheme(cs, args...; kwargs...)
+</span><span class="noop">end
+</span><span class="noop">
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="noop">    discrete_colorscale(cs::Union{ColorScheme, Symbol}, points; alpha = nothing)
+</span><span class="noop">    discrete_colorscale(colors::AbstractVector{&lt;:Colorant})
+</span><span class="noop">
+</span><span class="noop">Function to create a discrete colorscale from a colorscheme or a vector of colors, specifically intended for use as the `colorscale` attribute of a plotlyjs plot.
+</span><span class="noop">
+</span><span class="noop">The function will assume that the resulting colorscale will have evenly spaced mapping between the colors in the vector and the corresponding plotly colorscale.
+</span><span class="noop">As example, when providing a vector of 3 colors as input, the resulting colorscale will assign each of the 3 colors to 33% of the values of the colorbar/coloraxis.
+</span><span class="noop">
+</span><span class="noop">This is useful for creating heatmaps where values are mapped to a few number of colors rather than to a continuous gradient.
+</span><span class="noop">
+</span><span class="noop">When called with a `ColorScheme` or `Symbol` as first argument, the colors are first sampled using the `sample_colorscheme` function, and then converted to a discrete colorscale.
+</span><span class="noop">
+</span><span class="noop">```jldoctest
+</span><span class="noop">julia&gt; using PlutoPlotly;
+</span><span class="noop">
+</span><span class="noop">julia&gt; colorscale = discrete_colorscale(:viridis, 5)
+</span><span class="noop">10-element Vector{Tuple{Float64, String}}:
+</span><span class="noop"> (0.0, &#34;rgba(68,1,84,1.0)&#34;)
+</span><span class="noop"> (0.2, &#34;rgba(68,1,84,1.0)&#34;)
+</span><span class="noop"> (0.2, &#34;rgba(59,82,139,1.0)&#34;)
+</span><span class="noop"> (0.4, &#34;rgba(59,82,139,1.0)&#34;)
+</span><span class="noop"> (0.4, &#34;rgba(33,144,140,1.0)&#34;)
+</span><span class="noop"> (0.6, &#34;rgba(33,144,140,1.0)&#34;)
+</span><span class="noop"> (0.6, &#34;rgba(93,201,99,1.0)&#34;)
+</span><span class="noop"> (0.8, &#34;rgba(93,201,99,1.0)&#34;)
+</span><span class="noop"> (0.8, &#34;rgba(253,231,37,1.0)&#34;)
+</span><span class="noop"> (1.0, &#34;rgba(253,231,37,1.0)&#34;)
+</span><span class="noop">
+</span><span class="noop">julia&gt; plot(heatmap(; z = rand(10,10), colorscale))
+</span><span class="noop">```
+</span><span class="noop">&#34;&#34;&#34;
+</span><span class="hit">function discrete_colorscale(cs::Union{ColorScheme, Symbol}, points; alpha = nothing)
+</span><span class="hit">    colors = sample_colorscheme(cs, points; alpha).colors
+</span><span class="hit">    return discrete_colorscale(colors)
+</span><span class="noop">end
+</span><span class="hit">function discrete_colorscale(colors::AbstractVector{&lt;:Colorant})
+</span><span class="hit">    N = length(colors)
+</span><span class="hit">    cols = map(enumerate(colors)) do (i,c)
+</span><span class="hit">		[
+</span><span class="noop">			((i-1)/N, _preprocess(c))			
+</span><span class="noop">			((i)/N, _preprocess(c))
+</span><span class="noop">		]
+</span><span class="noop">	end
+</span><span class="hit">	vcat(cols...)
+</span><span class="noop">end</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\script_contents\clipboard.jl">src\script_contents\clipboard.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+151 &nbsp;
+152 &nbsp;
+153 &nbsp;
+154 &nbsp;
+155 &nbsp;
+156 &nbsp;
+157 &nbsp;
+158 &nbsp;
+159 &nbsp;
+160 &nbsp;
+161 &nbsp;
+162 &nbsp;
+163 &nbsp;
+164 &nbsp;
+165 &nbsp;
+166 &nbsp;
+167 &nbsp;
+168 &nbsp;
+169 &nbsp;
+170 &nbsp;
+171 &nbsp;
+172 &nbsp;
+173 &nbsp;
+174 &nbsp;
+175 &nbsp;
+176 &nbsp;
+177 &nbsp;
+178 &nbsp;
+179 &nbsp;
+180 &nbsp;
+181 &nbsp;
+182 &nbsp;
+183 &nbsp;
+184 &nbsp;
+185 &nbsp;
+186 &nbsp;
+187 &nbsp;
+188 &nbsp;
+189 &nbsp;
+190 &nbsp;
+191 &nbsp;
+192 &nbsp;
+193 &nbsp;
+194 &nbsp;
+195 &nbsp;
+196 &nbsp;
+197 &nbsp;
+198 &nbsp;
+199 &nbsp;
+200 &nbsp;
+201 &nbsp;
+202 &nbsp;
+203 &nbsp;
+204 &nbsp;
+205 &nbsp;
+206 &nbsp;
+207 &nbsp;
+208 &nbsp;
+209 &nbsp;
+210 &nbsp;
+211 &nbsp;
+212 &nbsp;
+213 &nbsp;
+214 &nbsp;
+215 &nbsp;
+216 &nbsp;
+217 &nbsp;
+218 &nbsp;
+219 &nbsp;
+220 &nbsp;
+221 &nbsp;
+222 &nbsp;
+223 &nbsp;
+224 &nbsp;
+225 &nbsp;
+226 &nbsp;
+227 &nbsp;
+228 &nbsp;
+229 &nbsp;
+230 &nbsp;
+231 &nbsp;
+232 &nbsp;
+233 &nbsp;
+234 &nbsp;
+235 &nbsp;
+236 &nbsp;
+237 &nbsp;
+238 &nbsp;
+239 &nbsp;
+240 &nbsp;
+241 &nbsp;
+242 &nbsp;
+243 &nbsp;
+244 &nbsp;
+245 &nbsp;
+246 &nbsp;
+247 &nbsp;
+248 &nbsp;
+249 &nbsp;
+250 &nbsp;
+251 &nbsp;
+252 &nbsp;
+253 &nbsp;
+254 &nbsp;
+255 &nbsp;
+256 &nbsp;
+257 &nbsp;
+258 &nbsp;
+259 &nbsp;
+260 &nbsp;
+261 &nbsp;
+262 &nbsp;
+263 &nbsp;
+264 &nbsp;
+265 &nbsp;
+266 &nbsp;
+267 &nbsp;
+268 &nbsp;
+269 &nbsp;
+270 &nbsp;
+271 &nbsp;
+272 &nbsp;
+273 &nbsp;
+274 &nbsp;
+275 &nbsp;
+276 &nbsp;
+277 &nbsp;
+278 &nbsp;
+279 &nbsp;
+280 &nbsp;
+281 &nbsp;
+282 &nbsp;
+283 &nbsp;
+284 &nbsp;
+285 &nbsp;
+286 &nbsp;
+287 &nbsp;
+288 &nbsp;
+289 &nbsp;
+290 &nbsp;
+291 &nbsp;
+292 &nbsp;
+293 &nbsp;
+294 &nbsp;
+295 &nbsp;
+296 &nbsp;
+297 &nbsp;
+298 &nbsp;
+299 &nbsp;
+300 &nbsp;
+301 &nbsp;
+302 &nbsp;
+303 &nbsp;
+304 &nbsp;
+305 &nbsp;
+306 &nbsp;
+307 &nbsp;
+308 &nbsp;
+309 &nbsp;
+310 &nbsp;
+311 &nbsp;
+312 &nbsp;
+313 &nbsp;
+314 &nbsp;
+315 &nbsp;
+316 &nbsp;
+317 &nbsp;
+318 &nbsp;
+319 &nbsp;
+320 &nbsp;
+321 &nbsp;
+322 &nbsp;
+323 &nbsp;
+324 &nbsp;
+325 &nbsp;
+326 &nbsp;
+327 &nbsp;
+328 &nbsp;
+329 &nbsp;
+330 &nbsp;
+331 &nbsp;
+332 &nbsp;
+333 &nbsp;
+334 &nbsp;
+335 &nbsp;
+336 &nbsp;
+337 &nbsp;
+338 &nbsp;
+339 &nbsp;
+340 &nbsp;
+341 &nbsp;
+342 &nbsp;
+343 &nbsp;
+344 &nbsp;
+345 &nbsp;
+346 &nbsp;
+347 &nbsp;
+348 &nbsp;
+349 &nbsp;
+350 &nbsp;
+351 &nbsp;
+352 &nbsp;
+353 &nbsp;
+354 &nbsp;
+355 &nbsp;
+356 &nbsp;
+357 &nbsp;
+358 &nbsp;
+359 &nbsp;
+360 &nbsp;
+361 &nbsp;
+362 &nbsp;
+363 &nbsp;
+364 &nbsp;
+365 &nbsp;
+366 &nbsp;
+367 &nbsp;
+368 &nbsp;
+369 &nbsp;
+370 &nbsp;
+371 &nbsp;
+372 &nbsp;
+373 &nbsp;
+374 &nbsp;
+375 &nbsp;
+376 &nbsp;
+377 &nbsp;
+378 &nbsp;
+379 &nbsp;
+380 &nbsp;
+381 &nbsp;
+382 &nbsp;
+383 &nbsp;
+384 &nbsp;
+385 &nbsp;
+386 &nbsp;
+387 &nbsp;
+388 &nbsp;
+389 &nbsp;
+390 &nbsp;
+391 &nbsp;
+392 &nbsp;
+393 &nbsp;
+394 &nbsp;
+395 &nbsp;
+396 &nbsp;
+397 &nbsp;
+398 &nbsp;
+399 &nbsp;
+400 &nbsp;
+401 &nbsp;
+402 &nbsp;
+403 &nbsp;
+404 &nbsp;
+405 &nbsp;
+406 &nbsp;
+407 &nbsp;
+408 &nbsp;
+409 &nbsp;
+410 &nbsp;
+411 &nbsp;
+412 &nbsp;
+413 &nbsp;
+414 &nbsp;
+415 &nbsp;
+416 &nbsp;
+417 &nbsp;
+418 &nbsp;
+419 &nbsp;
+420 &nbsp;
+421 &nbsp;
+422 &nbsp;
+423 &nbsp;
+424 &nbsp;
+425 &nbsp;
+426 &nbsp;
+427 &nbsp;
+428 &nbsp;
+429 &nbsp;
+430 &nbsp;
+431 &nbsp;
+432 &nbsp;
+433 &nbsp;
+434 &nbsp;
+435 &nbsp;
+436 &nbsp;
+437 &nbsp;
+438 &nbsp;
+439 &nbsp;
+440 &nbsp;
+441 &nbsp;
+442 &nbsp;
+443 &nbsp;
+444 &nbsp;
+445 &nbsp;
+446 &nbsp;
+447 &nbsp;
+448 &nbsp;
+449 &nbsp;
+450 &nbsp;
+451 &nbsp;
+452 &nbsp;
+453 &nbsp;
+454 &nbsp;
+455 &nbsp;
+456 &nbsp;
+457 &nbsp;
+458 &nbsp;
+459 &nbsp;
+460 &nbsp;
+461 &nbsp;
+462 &nbsp;
+463 &nbsp;
+464 &nbsp;
+465 &nbsp;
+466 &nbsp;
+467 &nbsp;
+468 &nbsp;
+469 &nbsp;
+470 &nbsp;
+471 &nbsp;
+472 &nbsp;
+473 &nbsp;
+474 &nbsp;
+475 &nbsp;
+476 &nbsp;
+477 &nbsp;
+478 &nbsp;
+479 &nbsp;
+480 &nbsp;
+481 &nbsp;
+482 &nbsp;
+483 &nbsp;
+484 &nbsp;
+485 &nbsp;
+486 &nbsp;
+487 &nbsp;
+488 &nbsp;
+489 &nbsp;
+490 &nbsp;
+491 &nbsp;
+492 &nbsp;
+493 &nbsp;
+494 &nbsp;
+495 &nbsp;
+496 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">const clipboard_script = htl_js(&#34;&#34;&#34;
+</span><span class="noop">// We create a Promise version of setTimeout
+</span><span class="noop">function delay(ms) {
+</span><span class="noop">  return new Promise((resolve) =&gt; setTimeout(resolve, ms));
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// We import interact for dragging/resizing
+</span><span class="noop">const { default: interact } = await import(&#39;https://esm.sh/interactjs@1.10.19&#39;)
+</span><span class="noop">
+</span><span class="noop">
+</span><span class="noop">function getImageOptions() {
+</span><span class="noop">  const o = plot_obj.config.toImageButtonOptions ?? {};
+</span><span class="noop">  return {
+</span><span class="noop">    format: o.format ?? &#34;png&#34;,
+</span><span class="noop">    width: o.width ?? original_width,
+</span><span class="noop">    height: o.height ?? original_height,
+</span><span class="noop">    scale: o.scale ?? 1,
+</span><span class="noop">    filename: o.filename ?? &#34;newplot&#34;,
+</span><span class="noop">  };
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">const CLIPBOARD_HEADER =
+</span><span class="noop">  CONTAINER.querySelector(&#34;.plutoplotly-clipboard-header&#34;) ??
+</span><span class="noop">  CONTAINER.insertAdjacentElement(
+</span><span class="noop">    &#34;afterbegin&#34;,
+</span><span class="noop">    html`&lt;div class=&#34;plutoplotly-clipboard-header hidden&#34;&gt;
+</span><span class="noop">      &lt;span class=&#34;clipboard-span format&#34;
+</span><span class="noop">        &gt;&lt;span class=&#34;label&#34;&gt;Format:&lt;/span
+</span><span class="noop">        &gt;&lt;span class=&#34;clipboard-value format&#34;&gt;&lt;/span
+</span><span class="noop">      &gt;&lt;/span&gt;
+</span><span class="noop">      &lt;span class=&#34;clipboard-span width&#34;
+</span><span class="noop">        &gt;&lt;span class=&#34;label&#34;&gt;Width:&lt;/span
+</span><span class="noop">        &gt;&lt;span class=&#34;clipboard-value width&#34;&gt;&lt;/span&gt;px&lt;/span
+</span><span class="noop">      &gt;
+</span><span class="noop">      &lt;span class=&#34;clipboard-span height&#34;
+</span><span class="noop">        &gt;&lt;span class=&#34;label&#34;&gt;Height:&lt;/span
+</span><span class="noop">        &gt;&lt;span class=&#34;clipboard-value height&#34;&gt;&lt;/span&gt;px&lt;/span
+</span><span class="noop">      &gt;
+</span><span class="noop">      &lt;span class=&#34;clipboard-span scale&#34;
+</span><span class="noop">        &gt;&lt;span class=&#34;label&#34;&gt;Scale:&lt;/span
+</span><span class="noop">        &gt;&lt;span class=&#34;clipboard-value scale&#34;&gt;&lt;/span
+</span><span class="noop">      &gt;&lt;/span&gt;
+</span><span class="noop">      &lt;button class=&#34;clipboard-span set&#34;&gt;Set&lt;/button&gt;
+</span><span class="noop">      &lt;button class=&#34;clipboard-span unset&#34;&gt;Unset&lt;/button&gt;
+</span><span class="noop">      &lt;span class=&#34;clipboard-span filename&#34;
+</span><span class="noop">        &gt;&lt;span class=&#34;label&#34;&gt;Filename:&lt;/span
+</span><span class="noop">        &gt;&lt;span class=&#34;clipboard-value filename&#34;&gt;&lt;/span
+</span><span class="noop">      &gt;&lt;/span&gt;
+</span><span class="noop">    &lt;/div&gt;`
+</span><span class="noop">  );
+</span><span class="noop">
+</span><span class="noop">function checkConfigSync(container) {
+</span><span class="noop">  const valid_classes = [
+</span><span class="noop">    &#34;missing-config&#34;,
+</span><span class="noop">    &#34;matching-config&#34;,
+</span><span class="noop">    &#34;different-config&#34;,
+</span><span class="noop">  ];
+</span><span class="noop">  function setClass(cl) {
+</span><span class="noop">    for (const name of valid_classes) {
+</span><span class="noop">      container.classList.toggle(name, name == cl);
+</span><span class="noop">    }
+</span><span class="noop">  }
+</span><span class="noop">  // We use the custom getters we&#39;ll set up in the container
+</span><span class="noop">  const { ui_value, config_value, config_span, key } = container;
+</span><span class="noop">  if (config_value === undefined) {
+</span><span class="noop">    setClass(&#34;missing-config&#34;);
+</span><span class="noop">    config_span.innerHTML = `The key &lt;b&gt;&lt;em&gt;\${key}&lt;/em&gt;&lt;/b&gt; is not present in the config.`;
+</span><span class="noop">  } else if (ui_value == config_value) {
+</span><span class="noop">    setClass(&#34;matching-config&#34;);
+</span><span class="noop">    config_span.innerHTML = `The key &lt;b&gt;&lt;em&gt;\${key}&lt;/em&gt;&lt;/b&gt; has the same value in the config and in the header.`;
+</span><span class="noop">  } else {
+</span><span class="noop">    setClass(&#34;different-config&#34;);
+</span><span class="noop">    config_span.innerHTML = `The key &lt;b&gt;&lt;em&gt;\${key}&lt;/em&gt;&lt;/b&gt; has a different value (&lt;em&gt;\${config_value}&lt;/em&gt;) in the config.`;
+</span><span class="noop">  }
+</span><span class="noop">  // Add info about setting and unsetting
+</span><span class="noop">  config_span.insertAdjacentHTML(
+</span><span class="noop">    &#34;beforeend&#34;,
+</span><span class="noop">    `&lt;br&gt;Click on the label &lt;em&gt;&lt;b&gt;once&lt;/b&gt;&lt;/em&gt; to set the current UI value in the config.`
+</span><span class="noop">  );
+</span><span class="noop">  config_span.insertAdjacentHTML(
+</span><span class="noop">    &#34;beforeend&#34;,
+</span><span class="noop">    `&lt;br&gt;Click &lt;em&gt;&lt;b&gt;twice&lt;/b&gt;&lt;/em&gt; to remove this key from the config.`
+</span><span class="noop">  );
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">const valid_formats = [&#34;png&#34;, &#34;svg&#34;, &#34;webp&#34;, &#34;jpeg&#34;, &#34;full-json&#34;];
+</span><span class="noop">function initializeUIValueSpan(span, key, value) {
+</span><span class="noop">  const container = span.closest(&#34;.clipboard-span&#34;);
+</span><span class="noop">  span.contentEditable = key === &#34;format&#34; ? &#34;false&#34; : &#34;true&#34;;
+</span><span class="noop">  let parse = (x) =&gt; x;
+</span><span class="noop">  let update = (x) =&gt; (span.textContent = x);
+</span><span class="noop">  if (key === &#34;width&#34; || key === &#34;height&#34;) {
+</span><span class="noop">    parse = (x) =&gt; Math.round(parseFloat(x));
+</span><span class="noop">  } else if (key === &#34;scale&#34;) {
+</span><span class="noop">    parse = parseFloat;
+</span><span class="noop">  } else if (key === &#34;format&#34;) {
+</span><span class="noop">    // We remove contentEditable
+</span><span class="noop">    span.contentEditable = &#34;false&#34;;
+</span><span class="noop">    // Here we first add the subspans for each option
+</span><span class="noop">    const opts_div = span.appendChild(html`&lt;div class=&#34;format-options&#34;&gt;&lt;/div&gt;`);
+</span><span class="noop">    for (const fmt of valid_formats) {
+</span><span class="noop">      const opt = opts_div.appendChild(
+</span><span class="noop">        html`&lt;span class=&#34;format-option \${fmt}&#34;&gt;\${fmt}&lt;/span&gt;`
+</span><span class="noop">      );
+</span><span class="noop">      opt.onclick = (e) =&gt; {
+</span><span class="noop">        span.value = opt.textContent;
+</span><span class="noop">      };
+</span><span class="noop">    }
+</span><span class="noop">    parse = (x) =&gt; {
+</span><span class="noop">      return valid_formats.includes(x) ? x : localValue;
+</span><span class="noop">    };
+</span><span class="noop">    update = (x) =&gt; {
+</span><span class="noop">      for (const opt of opts_div.children) {
+</span><span class="noop">        opt.classList.toggle(&#34;selected&#34;, opt.textContent === x);
+</span><span class="noop">      }
+</span><span class="noop">    };
+</span><span class="noop">  } else {
+</span><span class="noop">    // We only have filename here
+</span><span class="noop">  }
+</span><span class="noop">  let localValue;
+</span><span class="noop">  Object.defineProperty(span, &#34;value&#34;, {
+</span><span class="noop">    get: () =&gt; {
+</span><span class="noop">      return localValue;
+</span><span class="noop">    },
+</span><span class="noop">    set: (val) =&gt; {
+</span><span class="noop">      if (val !== &#34;&#34;) {
+</span><span class="noop">        localValue = parse(val);
+</span><span class="noop">      }
+</span><span class="noop">      update(localValue);
+</span><span class="noop">      checkConfigSync(container);
+</span><span class="noop">    },
+</span><span class="noop">  });
+</span><span class="noop">  // We also assign a listener so that the editable is blurred when enter is pressed
+</span><span class="noop">  span.onkeydown = (e) =&gt; {
+</span><span class="noop">    if (e.keyCode === 13) {
+</span><span class="noop">      e.preventDefault();
+</span><span class="noop">      span.blur();
+</span><span class="noop">    }
+</span><span class="noop">  };
+</span><span class="noop">  span.value = value;
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">function initializeConfigValueSpan(span, key) {
+</span><span class="noop">  // Here we mostly want to define the setter and getter
+</span><span class="noop">  const container = span.closest(&#34;.clipboard-span&#34;);
+</span><span class="noop">  Object.defineProperty(span, &#34;value&#34;, {
+</span><span class="noop">    get: () =&gt; {
+</span><span class="noop">      return plot_obj.config.toImageButtonOptions[key];
+</span><span class="noop">    },
+</span><span class="noop">    set: (val) =&gt; {
+</span><span class="noop">      // if undefined is passed, we remove the entry from the options
+</span><span class="noop">      if (val === undefined) {
+</span><span class="noop">        delete plot_obj.config.toImageButtonOptions[key];
+</span><span class="noop">      } else {
+</span><span class="noop">        plot_obj.config.toImageButtonOptions[key] = val;
+</span><span class="noop">      }
+</span><span class="noop">      checkConfigSync(container);
+</span><span class="noop">    },
+</span><span class="noop">  });
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">const config_spans = {};
+</span><span class="noop">for (const [key, value] of Object.entries(getImageOptions())) {
+</span><span class="noop">  const container = CLIPBOARD_HEADER.querySelector(`.clipboard-span.\${key}`);
+</span><span class="noop">  const label = container.querySelector(&#34;.label&#34;);
+</span><span class="noop">  // We give the label a function that on single click will set the current value and with double click will unset it
+</span><span class="noop">  label.onclick = DualClick(
+</span><span class="noop">    () =&gt; {
+</span><span class="noop">      container.config_value = container.ui_value;
+</span><span class="noop">    },
+</span><span class="noop">    (e) =&gt; {
+</span><span class="noop">      console.log(&#34;e&#34;, e);
+</span><span class="noop">      e.preventDefault();
+</span><span class="noop">      container.config_value = undefined;
+</span><span class="noop">    }
+</span><span class="noop">  );
+</span><span class="noop">  const ui_value_span = container.querySelector(&#34;.clipboard-value&#34;);
+</span><span class="noop">  const config_value_span =
+</span><span class="noop">    container.querySelector(&#34;.config-value&#34;) ??
+</span><span class="noop">    label.insertAdjacentElement(
+</span><span class="noop">      &#34;afterbegin&#34;,
+</span><span class="noop">      html`&lt;span class=&#34;config-value&#34;&gt;&lt;/span&gt;`
+</span><span class="noop">    );
+</span><span class="noop">  // Assing the two spans as properties of the containing span
+</span><span class="noop">  container.ui_span = ui_value_span;
+</span><span class="noop">  container.config_span = config_value_span;
+</span><span class="noop">  container.key = key;
+</span><span class="noop">  config_spans[key] = container;
+</span><span class="noop">  if (firstRun) {
+</span><span class="noop">    plot_obj.config.toImageButtonOptions =
+</span><span class="noop">      plot_obj.config.toImageButtonOptions ?? {};
+</span><span class="noop">    // We do the initialization of the value span
+</span><span class="noop">    initializeUIValueSpan(ui_value_span, key, value);
+</span><span class="noop">    // Then we initialize the config value
+</span><span class="noop">    initializeConfigValueSpan(config_value_span, key);
+</span><span class="noop">    // We put some convenience getters/setters
+</span><span class="noop">    // ui_value forward
+</span><span class="noop">    Object.defineProperty(container, &#34;ui_value&#34;, {
+</span><span class="noop">      get: () =&gt; ui_value_span.value,
+</span><span class="noop">      set: (val) =&gt; {
+</span><span class="noop">        ui_value_span.value = val;
+</span><span class="noop">      },
+</span><span class="noop">    });
+</span><span class="noop">    // config_value forward
+</span><span class="noop">    Object.defineProperty(container, &#34;config_value&#34;, {
+</span><span class="noop">      get: () =&gt; config_value_span.value,
+</span><span class="noop">      set: (val) =&gt; {
+</span><span class="noop">        config_value_span.value = val;
+</span><span class="noop">      },
+</span><span class="noop">    });
+</span><span class="noop">  }
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// These objects will contain the default value
+</span><span class="noop">
+</span><span class="noop">// This code updates the image options in the PLOT config with the provided ones
+</span><span class="noop">function setImageOptions(o) {
+</span><span class="noop">  for (const [key, container] of Object.entries(config_spans)) {
+</span><span class="noop">    container.config_value = o[key];
+</span><span class="noop">  }
+</span><span class="noop">}
+</span><span class="noop">function unsetImageOptions() {
+</span><span class="noop">  setImageOptions({});
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">const set_button = CLIPBOARD_HEADER.querySelector(&#34;.clipboard-span.set&#34;);
+</span><span class="noop">const unset_button = CLIPBOARD_HEADER.querySelector(&#34;.clipboard-span.unset&#34;);
+</span><span class="noop">if (firstRun) {
+</span><span class="noop">  set_button.onclick = (e) =&gt; {
+</span><span class="noop">    for (const container of Object.values(config_spans)) {
+</span><span class="noop">      container.config_value = container.ui_value;
+</span><span class="noop">    }
+</span><span class="noop">  };
+</span><span class="noop">  unset_button.onclick = unsetImageOptions;
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// We add a function to check if the clipboard is popped out
+</span><span class="noop">CONTAINER.isPoppedOut = () =&gt; {
+</span><span class="noop">  return CONTAINER.classList.contains(&#34;popped-out&#34;);
+</span><span class="noop">};
+</span><span class="noop">
+</span><span class="noop">CLIPBOARD_HEADER.onmousedown = function (event) {
+</span><span class="noop">  if (event.target.matches(&#34;span.clipboard-value&#34;)) {
+</span><span class="noop">    console.log(&#34;We don&#39;t move!&#34;);
+</span><span class="noop">    return;
+</span><span class="noop">  }
+</span><span class="noop">  const start = {
+</span><span class="noop">    left: parseFloat(CONTAINER.style.left),
+</span><span class="noop">    top: parseFloat(CONTAINER.style.top),
+</span><span class="noop">    X: event.pageX,
+</span><span class="noop">    Y: event.pageY,
+</span><span class="noop">  };
+</span><span class="noop">  function moveAt(event, start) {
+</span><span class="noop">    const top = event.pageY - start.Y + start.top + &#34;px&#34;;
+</span><span class="noop">    const left = event.pageX - start.X + start.left + &#34;px&#34;;
+</span><span class="noop">    CLIPBOARD_HEADER.style.left = left;
+</span><span class="noop">    CONTAINER.style.left = left;
+</span><span class="noop">    CONTAINER.style.top = top;
+</span><span class="noop">  }
+</span><span class="noop">
+</span><span class="noop">  // move our absolutely positioned ball under the pointer
+</span><span class="noop">  moveAt(event, start);
+</span><span class="noop">  function onMouseMove(event) {
+</span><span class="noop">    moveAt(event, start);
+</span><span class="noop">  }
+</span><span class="noop">
+</span><span class="noop">  // We use this to remove the mousemove when clicking outside of the container
+</span><span class="noop">  const controller = new AbortController();
+</span><span class="noop">
+</span><span class="noop">  // move the container on mousemove
+</span><span class="noop">  document.addEventListener(&#34;mousemove&#34;, onMouseMove, {
+</span><span class="noop">    signal: controller.signal,
+</span><span class="noop">  });
+</span><span class="noop">  document.addEventListener(
+</span><span class="noop">    &#34;mousedown&#34;,
+</span><span class="noop">    (e) =&gt; {
+</span><span class="noop">      if (e.target.closest(&#34;.plutoplotly-container&#34;) !== CONTAINER) {
+</span><span class="noop">        cleanUp();
+</span><span class="noop">        controller.abort();
+</span><span class="noop">        return;
+</span><span class="noop">      }
+</span><span class="noop">    },
+</span><span class="noop">    { signal: controller.signal }
+</span><span class="noop">  );
+</span><span class="noop">
+</span><span class="noop">  function cleanUp() {
+</span><span class="noop">    console.log(&#34;cleaning up the plot move listener&#34;);
+</span><span class="noop">    controller.abort();
+</span><span class="noop">    CLIPBOARD_HEADER.onmouseup = null;
+</span><span class="noop">  }
+</span><span class="noop">
+</span><span class="noop">  // (3) drop the ball, remove unneeded handlers
+</span><span class="noop">  CLIPBOARD_HEADER.onmouseup = cleanUp;
+</span><span class="noop">};
+</span><span class="noop">
+</span><span class="noop">function sendToClipboard(blob) {
+</span><span class="noop">  if (!navigator.clipboard) {
+</span><span class="noop">    alert(
+</span><span class="noop">      &#34;The Clipboard API does not seem to be available, make sure the Pluto notebook is being used from either localhost or an https source.&#34;
+</span><span class="noop">    );
+</span><span class="noop">  }
+</span><span class="noop">  navigator.clipboard
+</span><span class="noop">    .write([
+</span><span class="noop">      new ClipboardItem({
+</span><span class="noop">        // The key is determined dynamically based on the blob&#39;s type.
+</span><span class="noop">        [blob.type]: blob,
+</span><span class="noop">      }),
+</span><span class="noop">    ])
+</span><span class="noop">    .then(
+</span><span class="noop">      function () {
+</span><span class="noop">        console.log(&#34;Async: Copying to clipboard was successful!&#34;);
+</span><span class="noop">      },
+</span><span class="noop">      function (err) {
+</span><span class="noop">        console.error(&#34;Async: Could not copy text: &#34;, err);
+</span><span class="noop">      }
+</span><span class="noop">    );
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">function copyImageToClipboard() {
+</span><span class="noop">  // We extract the image options from the provided parameters (if they exist)
+</span><span class="noop">  const config = {};
+</span><span class="noop">  for (const [key, container] of Object.entries(config_spans)) {
+</span><span class="noop">    let val =
+</span><span class="noop">      container.config_value ??
+</span><span class="noop">      (CONTAINER.isPoppedOut() ? container.ui_value : undefined);
+</span><span class="noop">    // If we have undefined we don&#39;t create the key. We also ignore format because the clipboard only supports png.
+</span><span class="noop">    if (val === undefined || key === &#34;format&#34;) {
+</span><span class="noop">      continue;
+</span><span class="noop">    }
+</span><span class="noop">    config[key] = val;
+</span><span class="noop">  }
+</span><span class="noop">  Plotly.toImage(PLOT, config).then(function (dataUrl) {
+</span><span class="noop">    fetch(dataUrl)
+</span><span class="noop">      .then((res) =&gt; res.blob())
+</span><span class="noop">      .then((blob) =&gt; {
+</span><span class="noop">        const paste_receiver = document.querySelector(&#39;paste-receiver.plutoplotly&#39;)
+</span><span class="noop">        if (paste_receiver) {
+</span><span class="noop">          paste_receiver.attachImage(dataUrl, CONTAINER)
+</span><span class="noop">        }
+</span><span class="noop">        sendToClipboard(blob)
+</span><span class="noop">      });
+</span><span class="noop">  });
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">function saveImageToFile() {
+</span><span class="noop">  const config = {};
+</span><span class="noop">  for (const [key, container] of Object.entries(config_spans)) {
+</span><span class="noop">    let val =
+</span><span class="noop">      container.config_value ??
+</span><span class="noop">      (CONTAINER.isPoppedOut() ? container.ui_value : undefined);
+</span><span class="noop">    // If we have undefined we don&#39;t create the key.
+</span><span class="noop">    if (val === undefined) {
+</span><span class="noop">      continue;
+</span><span class="noop">    }
+</span><span class="noop">    config[key] = val;
+</span><span class="noop">  }
+</span><span class="noop">  Plotly.downloadImage(PLOT, config);
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">let container_rect = { width: 0, height: 0, top: 0, left: 0 };
+</span><span class="noop">function unpop_container(cl) {
+</span><span class="noop">  CONTAINER.classList.toggle(&#34;popped-out&#34;, false);
+</span><span class="noop">  CONTAINER.classList.toggle(cl, false);
+</span><span class="noop">  // We fix the height back to the value it had before popout, also setting the flag to signal that upon first resize we remove the fixed inline-style
+</span><span class="noop">  CONTAINER.style.height = container_rect.height + &#34;px&#34;;
+</span><span class="noop">  remove_container_size = true;
+</span><span class="noop">  // We set the other fixed inline-styles to null
+</span><span class="noop">  CONTAINER.style.width = &#34;&#34;;
+</span><span class="noop">  CONTAINER.style.top = &#34;&#34;;
+</span><span class="noop">  CONTAINER.style.left = &#34;&#34;;
+</span><span class="noop">  // We also remove the CLIPBOARD_HEADER
+</span><span class="noop">  CLIPBOARD_HEADER.style.width = &#34;&#34;;
+</span><span class="noop">  CLIPBOARD_HEADER.style.left = &#34;&#34;;
+</span><span class="noop">  // Finally we remove the hidden class to the header
+</span><span class="noop">  CLIPBOARD_HEADER.classList.toggle(&#34;hidden&#34;, true);
+</span><span class="noop">  return;
+</span><span class="noop">}
+</span><span class="noop">function popout_container(opts) {
+</span><span class="noop">  const cl = opts?.cl;
+</span><span class="noop">  const target_container_size = opts?.target_container_size ?? {};
+</span><span class="noop">  const target_plot_size = opts?.target_plot_size ?? {};
+</span><span class="noop">  if (CONTAINER.isPoppedOut()) {
+</span><span class="noop">    return unpop_container(cl);
+</span><span class="noop">  }
+</span><span class="noop">  CONTAINER.classList.toggle(cl, cl === undefined ? false : true);
+</span><span class="noop">  // We extract the current size of the container, save them and fix them
+</span><span class="noop">  const { width, height, top, left } = CONTAINER.getBoundingClientRect();
+</span><span class="noop">  container_rect = { width, height, top, left };
+</span><span class="noop">  // We save the current plot size before we pop as it will fill the screen
+</span><span class="noop">  const current_plot_size = {
+</span><span class="noop">    width: PLOT._fullLayout.width,
+</span><span class="noop">    height: PLOT._fullLayout.height,
+</span><span class="noop">  };
+</span><span class="noop">  // We have to save the pad data before popping so we can resize precisely
+</span><span class="noop">  const pad = {};
+</span><span class="noop">  pad.unpopped = getSizeData().container_pad;
+</span><span class="noop">  CONTAINER.classList.toggle(&#34;popped-out&#34;, true);
+</span><span class="noop">  pad.popped = getSizeData().container_pad;
+</span><span class="noop">  // We do top and left based on the current rect
+</span><span class="noop">  for (const key of [&#34;top&#34;, &#34;left&#34;]) {
+</span><span class="noop">    const start_val = target_container_size[key] ?? container_rect[key];
+</span><span class="noop">    let offset = 0;
+</span><span class="noop">    for (const kind of [&#34;padding&#34;, &#34;border&#34;]) {
+</span><span class="noop">      offset += pad.popped[kind][key] - pad.unpopped[kind][key];
+</span><span class="noop">    }
+</span><span class="noop">    CONTAINER.style[key] = start_val - offset + &#34;px&#34;;
+</span><span class="noop">    if (key === &#34;left&#34;) {
+</span><span class="noop">      CLIPBOARD_HEADER.style[key] = CONTAINER.style[key];
+</span><span class="noop">    }
+</span><span class="noop">  }
+</span><span class="noop">  // We compute the width and height depending on eventual config data
+</span><span class="noop">  const csz = computeContainerSize({
+</span><span class="noop">    width:
+</span><span class="noop">      target_plot_size.width ??
+</span><span class="noop">      config_spans.width.config_value ??
+</span><span class="noop">      current_plot_size.width,
+</span><span class="noop">    height:
+</span><span class="noop">      target_plot_size.height ??
+</span><span class="noop">      config_spans.height.config_value ??
+</span><span class="noop">      current_plot_size.height,
+</span><span class="noop">  });
+</span><span class="noop">  for (const key of [&#34;width&#34;, &#34;height&#34;]) {
+</span><span class="noop">    const val = target_container_size[key] ?? csz[key];
+</span><span class="noop">    CONTAINER.style[key] = val + &#34;px&#34;;
+</span><span class="noop">    if (key === &#34;width&#34;) {
+</span><span class="noop">      CLIPBOARD_HEADER.style[key] = CONTAINER.style[key];
+</span><span class="noop">    }
+</span><span class="noop">  }
+</span><span class="noop">  CLIPBOARD_HEADER.classList.toggle(&#34;hidden&#34;, false);
+</span><span class="noop">  const controller = new AbortController();
+</span><span class="noop">
+</span><span class="noop">  document.addEventListener(
+</span><span class="noop">    &#34;mousedown&#34;,
+</span><span class="noop">    (e) =&gt; {
+</span><span class="noop">      if (e.target.closest(&#34;.plutoplotly-container&#34;) !== CONTAINER) {
+</span><span class="noop">        unpop_container();
+</span><span class="noop">        controller.abort();
+</span><span class="noop">        return;
+</span><span class="noop">      }
+</span><span class="noop">    },
+</span><span class="noop">    { signal: controller.signal }
+</span><span class="noop">  );
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">CONTAINER.popOut = popout_container;
+</span><span class="noop">
+</span><span class="noop">function DualClick(single_func, dbl_func) {
+</span><span class="noop">  let nclicks = 0;
+</span><span class="noop">  return function (...args) {
+</span><span class="noop">    nclicks += 1;
+</span><span class="noop">    if (nclicks &gt; 1) {
+</span><span class="noop">      dbl_func(...args);
+</span><span class="noop">      nclicks = 0;
+</span><span class="noop">    } else {
+</span><span class="noop">      delay(300).then(() =&gt; {
+</span><span class="noop">        if (nclicks == 1) {
+</span><span class="noop">          single_func(...args);
+</span><span class="noop">        }
+</span><span class="noop">        nclicks = 0;
+</span><span class="noop">      });
+</span><span class="noop">    }
+</span><span class="noop">  };
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// We remove the default download image button
+</span><span class="noop">plot_obj.config.modeBarButtonsToRemove = _.union(
+</span><span class="noop">  plot_obj.config.modeBarButtonsToRemove,
+</span><span class="noop">  [&#34;toImage&#34;]
+</span><span class="noop">);
+</span><span class="noop">// We add the custom button to the modebar
+</span><span class="noop">plot_obj.config.modeBarButtonsToAdd = _.union(
+</span><span class="noop">  plot_obj.config.modeBarButtonsToAdd,
+</span><span class="noop">  [
+</span><span class="noop">    {
+</span><span class="noop">      name: &#34;Copy PNG to Clipboard&#34;,
+</span><span class="noop">      icon: {
+</span><span class="noop">        height: 520,
+</span><span class="noop">        width: 520,
+</span><span class="noop">        path: &#34;M280 64h40c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h40 9.6C121 27.5 153.3 0 192 0s71 27.5 78.4 64H280zM64 112c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320c8.8 0 16-7.2 16-16V128c0-8.8-7.2-16-16-16H304v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112H64zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z&#34;,
+</span><span class="noop">      },
+</span><span class="noop">      direction: &#34;up&#34;,
+</span><span class="noop">      click: DualClick(copyImageToClipboard, () =&gt; {
+</span><span class="noop">        popout_container();
+</span><span class="noop">      }),
+</span><span class="noop">    },
+</span><span class="noop">    {
+</span><span class="noop">      name: &#34;Download Image&#34;,
+</span><span class="noop">      icon: Plotly.Icons.camera,
+</span><span class="noop">      direction: &#34;up&#34;,
+</span><span class="noop">      click: DualClick(saveImageToFile, () =&gt; {
+</span><span class="noop">        popout_container({ cl: &#34;filesave&#34; });
+</span><span class="noop">      }),
+</span><span class="noop">    },
+</span><span class="noop">  ]
+</span><span class="noop">);
+</span><span class="noop">&#34;&#34;&#34;)</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 id="src\script_contents\resizer.jl">src\script_contents\resizer.jl</h4>
+<table class="code u-max-full-width">
+  <tbody>
+    <tr>
+      <td class="lineno">
+        <pre>1 &nbsp;
+2 &nbsp;
+3 &nbsp;
+4 &nbsp;
+5 &nbsp;
+6 &nbsp;
+7 &nbsp;
+8 &nbsp;
+9 &nbsp;
+10 &nbsp;
+11 &nbsp;
+12 &nbsp;
+13 &nbsp;
+14 &nbsp;
+15 &nbsp;
+16 &nbsp;
+17 &nbsp;
+18 &nbsp;
+19 &nbsp;
+20 &nbsp;
+21 &nbsp;
+22 &nbsp;
+23 &nbsp;
+24 &nbsp;
+25 &nbsp;
+26 &nbsp;
+27 &nbsp;
+28 &nbsp;
+29 &nbsp;
+30 &nbsp;
+31 &nbsp;
+32 &nbsp;
+33 &nbsp;
+34 &nbsp;
+35 &nbsp;
+36 &nbsp;
+37 &nbsp;
+38 &nbsp;
+39 &nbsp;
+40 &nbsp;
+41 &nbsp;
+42 &nbsp;
+43 &nbsp;
+44 &nbsp;
+45 &nbsp;
+46 &nbsp;
+47 &nbsp;
+48 &nbsp;
+49 &nbsp;
+50 &nbsp;
+51 &nbsp;
+52 &nbsp;
+53 &nbsp;
+54 &nbsp;
+55 &nbsp;
+56 &nbsp;
+57 &nbsp;
+58 &nbsp;
+59 &nbsp;
+60 &nbsp;
+61 &nbsp;
+62 &nbsp;
+63 &nbsp;
+64 &nbsp;
+65 &nbsp;
+66 &nbsp;
+67 &nbsp;
+68 &nbsp;
+69 &nbsp;
+70 &nbsp;
+71 &nbsp;
+72 &nbsp;
+73 &nbsp;
+74 &nbsp;
+75 &nbsp;
+76 &nbsp;
+77 &nbsp;
+78 &nbsp;
+79 &nbsp;
+80 &nbsp;
+81 &nbsp;
+82 &nbsp;
+83 &nbsp;
+84 &nbsp;
+85 &nbsp;
+86 &nbsp;
+87 &nbsp;
+88 &nbsp;
+89 &nbsp;
+90 &nbsp;
+91 &nbsp;
+92 &nbsp;
+93 &nbsp;
+94 &nbsp;
+95 &nbsp;
+96 &nbsp;
+97 &nbsp;
+98 &nbsp;
+99 &nbsp;
+100 &nbsp;
+101 &nbsp;
+102 &nbsp;
+103 &nbsp;
+104 &nbsp;
+105 &nbsp;
+106 &nbsp;
+107 &nbsp;
+108 &nbsp;
+109 &nbsp;
+110 &nbsp;
+111 &nbsp;
+112 &nbsp;
+113 &nbsp;
+114 &nbsp;
+115 &nbsp;
+116 &nbsp;
+117 &nbsp;
+118 &nbsp;
+119 &nbsp;
+120 &nbsp;
+121 &nbsp;
+122 &nbsp;
+123 &nbsp;
+124 &nbsp;
+125 &nbsp;
+126 &nbsp;
+127 &nbsp;
+128 &nbsp;
+129 &nbsp;
+130 &nbsp;
+131 &nbsp;
+132 &nbsp;
+133 &nbsp;
+134 &nbsp;
+135 &nbsp;
+136 &nbsp;
+137 &nbsp;
+138 &nbsp;
+139 &nbsp;
+140 &nbsp;
+141 &nbsp;
+142 &nbsp;
+143 &nbsp;
+144 &nbsp;
+145 &nbsp;
+146 &nbsp;
+147 &nbsp;
+148 &nbsp;
+149 &nbsp;
+150 &nbsp;
+</pre>
+      </td>
+      <td class="source">
+        <pre><span class="noop">const resizer_script = htl_js(&#34;&#34;&#34;
+</span><span class="noop">function getOffsetData(el) {
+</span><span class="noop">  let cs = window.getComputedStyle(el, null);
+</span><span class="noop">  const odata = {
+</span><span class="noop">    padding: {
+</span><span class="noop">      left: parseFloat(cs.paddingLeft),
+</span><span class="noop">      right: parseFloat(cs.paddingRight),
+</span><span class="noop">      top: parseFloat(cs.paddingTop),
+</span><span class="noop">      bottom: parseFloat(cs.paddingBottom),
+</span><span class="noop">      width: parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight),
+</span><span class="noop">      height: parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom),
+</span><span class="noop">    },
+</span><span class="noop">    border: {
+</span><span class="noop">      left: parseFloat(cs.borderLeftWidth),
+</span><span class="noop">      right: parseFloat(cs.borderRightWidth),
+</span><span class="noop">      top: parseFloat(cs.borderTopWidth),
+</span><span class="noop">      bottom: parseFloat(cs.borderBottomWidth),
+</span><span class="noop">      width: parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth),
+</span><span class="noop">      height: parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth),
+</span><span class="noop">    }
+</span><span class="noop">  };
+</span><span class="noop">  if (el === PLOT) {
+</span><span class="noop">    // For the PLOT we also want to take into account the offset
+</span><span class="noop">    odata.offset = {
+</span><span class="noop">      top: PLOT.offsetParent == CONTAINER ? PLOT.offsetTop : 0,
+</span><span class="noop">      left: PLOT.offsetParent == CONTAINER ? PLOT.offsetLeft : 0,
+</span><span class="noop">    }
+</span><span class="noop">  }
+</span><span class="noop">  return odata;
+</span><span class="noop">}
+</span><span class="noop">function getSizeData() {
+</span><span class="noop">  const data = {
+</span><span class="noop">    plot_pad: getOffsetData(PLOT),
+</span><span class="noop">    plot_rect: PLOT.getBoundingClientRect(),
+</span><span class="noop">    container_pad: getOffsetData(CONTAINER),
+</span><span class="noop">    container_rect: CONTAINER.getBoundingClientRect(),
+</span><span class="noop">  };
+</span><span class="noop">  return data;
+</span><span class="noop">}
+</span><span class="noop">function computeContainerSize({ width, height }, sizeData = getSizeData()) {
+</span><span class="noop">  const computed_size = computePlotSize(sizeData);
+</span><span class="noop">  const offsets = computed_size.offsets;
+</span><span class="noop">
+</span><span class="noop">  const plot_data = {
+</span><span class="noop">    width: width ?? computed_size.width,
+</span><span class="noop">    height: height ?? computed_size.height,
+</span><span class="noop">  };
+</span><span class="noop">
+</span><span class="noop">  return {
+</span><span class="noop">    width: (width ?? computed_size.width) + offsets.width,
+</span><span class="noop">    height: (height ?? computed_size.height) + offsets.height,
+</span><span class="noop">    noChange: width == computed_size.width &amp;&amp; height == computed_size.height,
+</span><span class="noop">  }
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// This function will change the container size so that the resulting plot will be matching the provided specs
+</span><span class="noop">function changeContainerSize({ width, height }, sizeData = getSizeData()) {
+</span><span class="noop">  if (!CONTAINER.isPoppedOut()) {
+</span><span class="noop">    console.log(&#34;Tried to change container size when not popped, ignoring&#34;);
+</span><span class="noop">    return;
+</span><span class="noop">  }
+</span><span class="noop">
+</span><span class="noop">  const csz = computeContainerSize({ width, height }, sizeData);
+</span><span class="noop">
+</span><span class="noop">  if (csz.noChange) {
+</span><span class="noop">    console.log(&#34;Size is the same as current, ignoring&#34;);
+</span><span class="noop">    return
+</span><span class="noop">  }
+</span><span class="noop">  // We are now going to set he width and height of the container
+</span><span class="noop">  for (const key of [&#34;width&#34;, &#34;height&#34;]) {
+</span><span class="noop">    CONTAINER.style[key] = csz[key] + &#34;px&#34;;
+</span><span class="noop">  }
+</span><span class="noop">}
+</span><span class="noop">// We now create the function that will update the plot based on the values specified
+</span><span class="noop">function updateFromHeader() {
+</span><span class="noop">  const header_data = {
+</span><span class="noop">    height: config_spans.height.ui_value,
+</span><span class="noop">    width: config_spans.width.ui_value,
+</span><span class="noop">  };
+</span><span class="noop">  changeContainerSize(header_data);
+</span><span class="noop">}
+</span><span class="noop">// We assign this function to the onblur event of width and height
+</span><span class="noop">if (firstRun) {
+</span><span class="noop">  for (const container of Object.values(config_spans)) {
+</span><span class="noop">    container.ui_span.onblur = (e) =&gt; {
+</span><span class="noop">      container.ui_value = container.ui_span.textContent;
+</span><span class="noop">      updateFromHeader();
+</span><span class="noop">    };
+</span><span class="noop">  }
+</span><span class="noop">}
+</span><span class="noop">// This function computes the plot size to use for relayout as a function of the container size
+</span><span class="noop">function computePlotSize(data = getSizeData()) {
+</span><span class="noop">  // Remove Padding
+</span><span class="noop">  const { container_pad, plot_pad, container_rect } = data;
+</span><span class="noop">  const offsets = {
+</span><span class="noop">    width:
+</span><span class="noop">      plot_pad.padding.width +
+</span><span class="noop">      plot_pad.border.width +
+</span><span class="noop">      plot_pad.offset.left +
+</span><span class="noop">      container_pad.padding.width +
+</span><span class="noop">      container_pad.border.width,
+</span><span class="noop">    height:
+</span><span class="noop">      plot_pad.padding.height +
+</span><span class="noop">      plot_pad.border.height +
+</span><span class="noop">      plot_pad.offset.top +
+</span><span class="noop">      container_pad.padding.height +
+</span><span class="noop">      container_pad.border.height,
+</span><span class="noop">  };
+</span><span class="noop">  const sz = {
+</span><span class="noop">    width: Math.round(container_rect.width - offsets.width),
+</span><span class="noop">    height: Math.round(container_rect.height - offsets.height),
+</span><span class="noop">    offsets,
+</span><span class="noop">  };
+</span><span class="noop">  return sz;
+</span><span class="noop">}
+</span><span class="noop">
+</span><span class="noop">// Create the resizeObserver to make the plot even more responsive! :magic:
+</span><span class="noop">const resizeObserver = new ResizeObserver((entries) =&gt; {
+</span><span class="noop">  const sizeData = getSizeData();
+</span><span class="noop">  const {container_rect, container_pad} = sizeData;
+</span><span class="noop">  let plot_size = computePlotSize(sizeData);
+</span><span class="noop">  // We save the height in the PLOT object
+</span><span class="noop">  PLOT.container_height = container_rect.height;
+</span><span class="noop">  // We deal with some stuff if the container is poppped
+</span><span class="noop">  CLIPBOARD_HEADER.style.width = container_rect.width + &#34;px&#34;;
+</span><span class="noop">  CLIPBOARD_HEADER.style.left = container_rect.left + &#34;px&#34;;
+</span><span class="noop">  config_spans.height.ui_value = plot_size.height;
+</span><span class="noop">  config_spans.width.ui_value = plot_size.width;
+</span><span class="noop">  /* 
+</span><span class="noop">		The addition of the invalid argument `plutoresize` seems to fix the problem with calling `relayout` simply with `{autosize: true}` as update breaking mouse relayout events tracking. 
+</span><span class="noop">		See https://github.com/plotly/plotly.js/issues/6156 for details
+</span><span class="noop">		*/
+</span><span class="noop">  let config = {
+</span><span class="noop">    // If this is popped out, we ignore the original width/height
+</span><span class="noop">    width: (CONTAINER.isPoppedOut() ? undefined : original_width) ?? plot_size.width,
+</span><span class="noop">    height: (CONTAINER.isPoppedOut() ? undefined : original_height) ?? plot_size.height,
+</span><span class="noop">    plutoresize: true,
+</span><span class="noop">  };
+</span><span class="noop">  Plotly.relayout(PLOT, config).then(() =&gt; {
+</span><span class="noop">    if (remove_container_size &amp;&amp; !CONTAINER.isPoppedOut()) {
+</span><span class="noop">      // This is needed to avoid the first resize upon plot creation to already be without a fixed height
+</span><span class="noop">      CONTAINER.style.height = &#34;&#34;;
+</span><span class="noop">      CONTAINER.style.width = &#34;&#34;;
+</span><span class="noop">      remove_container_size = false;
+</span><span class="noop">    }
+</span><span class="noop">  });
+</span><span class="noop">});
+</span><span class="noop">
+</span><span class="noop">resizeObserver.observe(CONTAINER);
+</span><span class="noop">&#34;&#34;&#34;)</span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+  </body>
+</html>
