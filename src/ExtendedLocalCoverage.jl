@@ -50,7 +50,7 @@ function generate_html_report(cobertura_file, html_file; title = "Package Covera
 end
 
 """
-    generate_package_coverage(pkg = nothing; run_test=true, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true)
+    generate_package_coverage(pkg = nothing; kwargs...)
 
 Generate a summary of coverage results for package `pkg`.
 
@@ -64,8 +64,7 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
  - `use_existing_lcov = false` if true, the coverage is assumed to be already computed and available in `coverage/lcov.info` within the package directory. If false, the coverage is generated from scratch calling `LocalCoverage.generate_coverage`.
 
-- `run_test = true` this is forwarded to `LocalCoverage.generate_coverage` and determines whether tests are executed. When `false`, test execution
-step is skipped allowing an easier use in combination with other test packages.
+- `run_test = true` this is forwarded to `LocalCoverage.generate_coverage` and determines whether tests are executed. When `false`, test execution step is skipped allowing an easier use in combination with other test packages.
 
 - `test_args = [""]` this is forwarded to `LocalCoverage.generate_coverage` and is there passed on to `Pkg.test`.
 
@@ -89,7 +88,7 @@ The function returns a named tuple with the following fields:
 - `cobertura_file` the full path to the cobertura XML file, if any was generated.
 - `html_file` the full path to the HTML file, if any was generated.
 """
-function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test=!use_existing_lcov, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false, extensions = true)
+function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test= true, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false, extensions = true)
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
     # Generate the coverage
