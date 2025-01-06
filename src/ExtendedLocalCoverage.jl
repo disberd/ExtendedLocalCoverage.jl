@@ -14,8 +14,9 @@ function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
     pkg_name = project_toml["name"]
     pkg_uuid = project_toml["uuid"] |> Base.UUID
+    pkg_extensions = get(project_toml, "extensions", nothing)
     pkg_id = Base.PkgId(pkg_uuid, pkg_name)
-    return (; pkg_name, pkg_uuid, pkg_id)
+    return (; pkg_name, pkg_uuid, pkg_id, pkg_extensions)
 end
 
 function extract_included_files(pkg_id::Base.PkgId)
@@ -86,15 +87,16 @@ The function returns a named tuple with the following fields:
 - `cobertura_file` the full path to the cobertura XML file, if any was generated.
 - `html_file` the full path to the HTML file, if any was generated.
 """
-function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test=!use_existing_lcov, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false)
+function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test=!use_existing_lcov, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false, extensions = true)
     pkg_dir = pkgdir(pkg)
-    (; pkg_name, pkg_id) = extract_package_info(pkg_dir)
+    (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
     # Generate the coverage
     cov = if use_existing_lcov
         coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
         eval_coverage_metrics(coverage, pkg_dir)
     else
         file_list = extract_included_files(pkg_id)
+        extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
         filter!(file_list) do filename
             for needle in exclude
                 occursin(needle, filename) && return false
@@ -126,6 +128,22 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
         generate_html_report(cobertura_file, html_file; title = pkg_name * " coverage report", pkg_dir)
     end
     return (; cov, cobertura_file, html_file)
+end
+
+function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
+    isnothing(pkg_extensions) && return files_list
+    for (path, dir, files) in walkdir("ext")
+        for file in files
+            endswith(file, ".jl") || continue
+            noext_name = chopsuffix(file, ".jl")
+            if noext_name in pkg_extensions || basename(path) in pkg_extensions
+                rel_path = relpath(joinpath(path, file), pkg_dir)
+                push!(files_list, rel_path)
+            end
+        end
+    end
+    unique!(files_list)
+    return nothing
 end
 
 # This ensures that paths in the lcov.info file relative to the package directory. Needed in some corner cases.
