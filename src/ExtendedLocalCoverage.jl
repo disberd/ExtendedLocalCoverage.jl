@@ -14,7 +14,7 @@ function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
     pkg_name = project_toml["name"]
     pkg_uuid = project_toml["uuid"] |> Base.UUID
-    pkg_extensions = get(project_toml, "extensions", nothing)
+    pkg_extensions = get(Dict{String, Any},project_toml, "extensions") |> keys
     pkg_id = Base.PkgId(pkg_uuid, pkg_name)
     return (; pkg_name, pkg_uuid, pkg_id, pkg_extensions)
 end
@@ -78,6 +78,8 @@ step is skipped allowing an easier use in combination with other test packages.
 - `print_to_stdout = true` determines whether the coverage summary is printed to the standard output.
 
 - `force_paths_relative = false` determines whether the paths in the `lcov.info` file are processed to make sure they are relative to the package directory. This is needed in some corner cases, especially if one wants the html file to correctly show source code for the files in the report.
+
+- `extensions = true` when `true`, also tries to add to the coverage files in the `ext` directory that match an extension name specified in the `Project.toml` file.
 
 # Return values
 
