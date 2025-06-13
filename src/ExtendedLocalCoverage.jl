@@ -132,7 +132,7 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
 end
 
 function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
-    isnothing(pkg_extensions) && return files_list
+    (isnothing(pkg_extensions) || isempty(pkg_extensions)) && return files_list
     for (path, dir, files) in walkdir("ext")
         for file in files
             endswith(file, ".jl") || continue
