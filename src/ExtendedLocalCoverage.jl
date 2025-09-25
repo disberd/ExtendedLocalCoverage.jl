@@ -10,6 +10,9 @@ import Pkg
 
 export generate_package_coverage, generate_html_report
 
+# This is a temporary fix to fix PrettyTables issues until https://github.com/JuliaCI/LocalCoverage.jl/pull/68 is merged.
+include("show_fix.jl")
+
 function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
     pkg_name = project_toml["name"]
@@ -105,7 +108,7 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
             return true
         end
         LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
-    end
+    end |> WrappedPackageCoverage
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
     end
