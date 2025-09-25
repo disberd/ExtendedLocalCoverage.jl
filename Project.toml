@@ -16,7 +16,7 @@ TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 [compat]
 CondaPkg = "0.2.24"
 CoverageTools = "1.3.2"
-LocalCoverage = "0.8.2"
+LocalCoverage = "0.8.3"
 Pkg = "1"
 PrettyTables = "2, 3"
 PythonCall = "0.9.23"
