@@ -10,6 +10,15 @@ struct WrappedPackageCoverage
     summary::PackageCoverage
 end
 
+function Base.getproperty(wrapped::WrappedPackageCoverage, s::Symbol)
+    summary = getfield(wrapped, :summary)
+    if s == :summary
+        return summary
+    else
+        return getfield(summary, s)
+    end
+end
+
 function Base.show(io::IO, wrapped::WrappedPackageCoverage)
     (; summary) = wrapped
     (; files, package_dir) = summary
