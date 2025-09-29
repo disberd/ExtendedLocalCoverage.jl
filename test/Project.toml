@@ -1,6 +1,4 @@
 [deps]
-CoverageTest = "800f3ee2-9fa6-4bb2-9e19-6019203e9ef1"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-
-[sources]
-CoverageTest = {path = "CoverageTest"}
+TestItemRunner = "f8b46487-2199-4994-9208-9a1283c18c0a"

@@ -107,7 +107,11 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
             end
             return true
         end
-        LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
+        try
+            LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
+        catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
+            rethrow()
+        end
     end |> WrappedPackageCoverage
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
