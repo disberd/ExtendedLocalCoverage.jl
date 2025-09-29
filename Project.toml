@@ -1,6 +1,6 @@
 name = "ExtendedLocalCoverage"
 uuid = "eb248270-a497-541c-8f75-6bb2aa2715dc"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Alberto Mengali <a.mengali@gmail.com>"]
 
 [deps]
