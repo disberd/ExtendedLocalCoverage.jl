@@ -19,7 +19,7 @@ try
     generate_native_html_report(
         cobertura_file,
         output_file;
-        title="ExtendedLocalCoverage Test Report",
+        title="ExtendedLocalCoverage Coverage Report",
         pkg_dir=pkg_dir
     )
     println("✓ Success! HTML report generated at: $output_file")

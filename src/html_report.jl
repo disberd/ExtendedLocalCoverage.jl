@@ -5,7 +5,7 @@ HTML report generator using HypertextTemplates.jl for coverage reports.
 using HypertextTemplates
 using HypertextTemplates.Elements
 using Dates
-
+using JuliaSyntaxHighlighting: highlight
 
 include("cobertura_parser.jl")
 
@@ -274,13 +274,18 @@ function modern_css_styles()
         background: #fafbfc;
         border-right: 1px solid #e1e4e8;
         user-select: none;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
     }
     
     .line-content {
         flex: 1;
         padding: 4px 12px;
-        white-space: pre;
-        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .line-covered {
@@ -295,18 +300,22 @@ function modern_css_styles()
     
     .line-neutral {
         background: white;
+        border-left: 3px solid transparent;
     }
     
-    /* Julia Syntax Highlighting */
-    .jl-keyword { color: #d73a49; font-weight: 600; }
-    .jl-string { color: #032f62; }
-    .jl-comment { color: #6a737d; font-style: italic; }
-    .jl-number { color: #005cc5; }
-    .jl-operator { color: #d73a49; }
-    .jl-function { color: #6f42c1; }
-    .jl-type { color: #005cc5; font-weight: 600; }
-    .jl-macro { color: #e36209; }
-    .jl-symbol { color: #22863a; }
+    /* Julia Syntax Highlighting - using JuliaSyntaxHighlighting.jl faces */
+    .julia_keyword { color: #d73a49; font-weight: 600; }
+    .julia_string, .julia_regex, .julia_cmdstring, .julia_char { color: #032f62; }
+    .julia_string_delim, .julia_char_delim { color: #22863a; font-weight: 600; }
+    .julia_comment { color: #6a737d; font-style: italic; }
+    .julia_number, .julia_bool { color: #005cc5; }
+    .julia_operator, .julia_comparator, .julia_assignment { color: #d73a49; }
+    .julia_funcall, .julia_funcdef { color: #6f42c1; }
+    .julia_builtin { color: #005cc5; font-weight: 600; }
+    .julia_type, .julia_typedec { color: #005cc5; font-weight: 600; }
+    .julia_macro, .julia_symbol, .julia_backslash_literal { color: #e36209; }
+    .julia_broadcast { color: #005cc5; font-weight: bold; }
+    .julia_error { background-color: #ffeef0; color: #d73a49; }
     
     .missing-lines {
         padding: 12px 20px;
@@ -346,39 +355,64 @@ end
 """
     highlight_julia_syntax(code::AbstractString) -> String
 
-Apply Julia syntax highlighting to source code by wrapping tokens in HTML spans.
-Returns HTML-safe string with syntax highlighting.
+Apply Julia syntax highlighting to source code using JuliaSyntaxHighlighting.jl.
+Returns HTML-safe string with syntax highlighting using semantic face annotations.
 """
 function highlight_julia_syntax(code::AbstractString)
-    # Escape HTML first
-    code = replace(code, "&" => "&amp;")
-    code = replace(code, "<" => "&lt;")
-    code = replace(code, ">" => "&gt;")
+    result = IOBuffer()
     
-    # Julia keywords
-    keywords = r"\b(function|end|if|else|elseif|for|while|break|continue|return|try|catch|finally|do|begin|let|local|global|const|struct|mutable|abstract|primitive|type|module|baremodule|using|import|export|macro|quote|true|false|nothing)\b"
-    code = replace(code, keywords => s"<span class='jl-keyword'>\g<0></span>")
+    try
+        # Get highlighted annotated string
+        highlighted = highlight(code)
+        annotations = Base.annotations(highlighted)
+        content = String(highlighted)
+        
+        # Escape HTML
+        content_escaped = replace(content, "&" => "&amp;")
+        content_escaped = replace(content_escaped, "<" => "&lt;")
+        content_escaped = replace(content_escaped, ">" => "&gt;")
+        
+        # Process annotations and wrap regions in spans
+        if isempty(annotations)
+            return content_escaped
+        end
+        
+        # Sort annotations by region start
+        sorted_annotations = sort(annotations, by = a -> first(a.region))
+        
+        pos = 1
+        for ann in sorted_annotations
+            # Only process :face annotations
+            ann.label == :face || continue
+            face_name = String(ann.value)
+            
+            # Write text before this annotation
+            if first(ann.region) > pos
+                print(result, content_escaped[pos:prevind(content_escaped, first(ann.region))])
+            end
+            
+            # Write annotated text with span
+            annotated_text = content_escaped[first(ann.region):last(ann.region)]
+            print(result, "<span class='", face_name, "'>", annotated_text, "</span>")
+            
+            pos = nextind(content_escaped, last(ann.region))
+        end
+        
+        # Write remaining text
+        if pos <= lastindex(content_escaped)
+            print(result, content_escaped[pos:end])
+        end
+        
+    catch e
+        # If highlighting fails, return escaped plain text
+        @warn "Failed to highlight Julia code" exception=(e, catch_backtrace())
+        text_escaped = replace(code, "&" => "&amp;")
+        text_escaped = replace(text_escaped, "<" => "&lt;")
+        text_escaped = replace(text_escaped, ">" => "&gt;")
+        return text_escaped
+    end
     
-    # Comments (must be before strings to handle # in strings correctly)
-    code = replace(code, r"#[^\n]*" => s"<span class='jl-comment'>\g<0></span>")
-    
-    # Strings (triple-quoted and regular)
-    code = replace(code, r"\"\"\"[\s\S]*?\"\"\"" => s"<span class='jl-string'>\g<0></span>")
-    code = replace(code, r"\"(?:[^\"\\\n]|\\.)*\"" => s"<span class='jl-string'>\g<0></span>")
-    
-    # Macros
-    code = replace(code, r"@\w+" => s"<span class='jl-macro'>\g<0></span>")
-    
-    # Numbers
-    code = replace(code, r"\b\d+\.?\d*([eE][+-]?\d+)?\b" => s"<span class='jl-number'>\g<0></span>")
-    
-    # Symbols
-    code = replace(code, r":\w+" => s"<span class='jl-symbol'>\g<0></span>")
-    
-    # Types (capitalized words, common pattern in Julia)
-    code = replace(code, r"\b[A-Z]\w*\b" => s"<span class='jl-type'>\g<0></span>")
-    
-    return code
+    return String(take!(result))
 end
 
 """

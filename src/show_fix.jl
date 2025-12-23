@@ -22,10 +22,10 @@ end
 function Base.show(io::IO, wrapped::WrappedPackageCoverage)
     (; summary) = wrapped
     (; files, package_dir) = summary
-    row_data = map(format_line, files)
+    row_data = Base.map(format_line, files)
     push!(row_data, format_line(summary))
-    row_coverage = map(x -> x.coverage_percentage, row_data)
-    rows = map(row_data) do row
+    row_coverage = Base.map(x -> x.coverage_percentage, row_data)
+    rows = Base.map(row_data) do row
         (; name, total, hit, missed, coverage_percentage, gaps) = row
         percentage = isnan(coverage_percentage) ? "-" : "$(round(Int, coverage_percentage))%"
         (; name, total, hit, missed, percentage, gaps)
@@ -40,7 +40,7 @@ function Base.show(io::IO, wrapped::WrappedPackageCoverage)
         display_cols = last(get(io, :displaysize, 100))
         push!(columns_width, display_cols - 45)
     else
-        rows = map(row -> Base.structdiff(row, NamedTuple{(:gaps,)}), rows)
+        rows = Base.map(row -> Base.structdiff(row, NamedTuple{(:gaps,)}), rows)
     end
     # PrettyTables 3.0 changed Highlighter to TextHighlighter, which up to currently published version (v3.10) does not provide the kwargs constructor (despite having it documented). We create here a patch to handle both cases
     Highlighter(f; kwargs...) = @static if pkgversion(PrettyTables) < v"3.0.0"
