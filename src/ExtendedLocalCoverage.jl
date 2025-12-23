@@ -8,10 +8,13 @@ using CoverageTools: CoverageTools, LCOV
 import Pkg
 
 
-export generate_package_coverage, generate_html_report
+export generate_package_coverage, generate_html_report, generate_native_html_report
 
 # This is a temporary fix to fix PrettyTables issues until https://github.com/JuliaCI/LocalCoverage.jl/pull/68 is merged.
 include("show_fix.jl")
+
+# Native Julia HTML report generation (without Python dependencies)
+include("html_report.jl")
 
 function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
