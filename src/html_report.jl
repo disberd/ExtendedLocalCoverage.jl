@@ -352,64 +352,46 @@ function modern_css_styles()
     """
 end
 
-"""
-    highlight_julia_syntax(code::AbstractString) -> String
-
-Apply Julia syntax highlighting to source code using JuliaSyntaxHighlighting.jl.
-Returns HTML-safe string with syntax highlighting using semantic face annotations.
-"""
-function highlight_julia_syntax(code::AbstractString)
+function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString}, AnnotatedString})
     result = IOBuffer()
-    
     try
-        # Get highlighted annotated string
-        highlighted = highlight(code)
         annotations = Base.annotations(highlighted)
-        content = String(highlighted)
-        
-        # Escape HTML
-        content_escaped = replace(content, "&" => "&amp;")
-        content_escaped = replace(content_escaped, "<" => "&lt;")
-        content_escaped = replace(content_escaped, ">" => "&gt;")
-        
-        # Process annotations and wrap regions in spans
+
         if isempty(annotations)
-            return content_escaped
+            return String(highlighted)
         end
+
+        # We sort annotation by start position
+        sort!(annotations, by = ann -> first(ann.region))
         
-        # Sort annotations by region start
-        sorted_annotations = sort(annotations, by = a -> first(a.region))
+        # It seems we also have to make annotations unique
+        unique!(annotations)
         
-        pos = 1
-        for ann in sorted_annotations
+        pos = firstindex(highlighted)
+        for ann in annotations
             # Only process :face annotations
             ann.label == :face || continue
             face_name = String(ann.value)
             
-            # Write text before this annotation
-            if first(ann.region) > pos
-                print(result, content_escaped[pos:prevind(content_escaped, first(ann.region))])
-            end
+            region = ann.region
+            
+            # We write all the text between the previous annotation and the current
+            prev_region = pos:prevind(highlighted, first(region))
+            print(result, highlighted[prev_region])
             
             # Write annotated text with span
-            annotated_text = content_escaped[first(ann.region):last(ann.region)]
+            annotated_text = highlighted[region]
             print(result, "<span class='", face_name, "'>", annotated_text, "</span>")
             
-            pos = nextind(content_escaped, last(ann.region))
+            pos = nextind(highlighted, last(region))
         end
         
-        # Write remaining text
-        if pos <= lastindex(content_escaped)
-            print(result, content_escaped[pos:end])
-        end
+        last_region = pos:lastindex(highlighted)
+        print(result, highlighted[last_region])
         
-    catch e
+    catch
         # If highlighting fails, return escaped plain text
-        @warn "Failed to highlight Julia code" exception=(e, catch_backtrace())
-        text_escaped = replace(code, "&" => "&amp;")
-        text_escaped = replace(text_escaped, "<" => "&lt;")
-        text_escaped = replace(text_escaped, ">" => "&gt;")
-        return text_escaped
+        return String(highlighted)
     end
     
     return String(take!(result))
@@ -500,7 +482,7 @@ end
 @deftag macro summary_section_component end
 
 # Component that renders a single line of source code with coverage highlighting
-@component function code_line_component(; line_num::Int, content::String, hits::Union{Int,Nothing})
+@component function code_line_component(; line_num::Int, content::AbstractString, hits::Union{Int,Nothing})
     line_class = if isnothing(hits)
         "code-line line-neutral"
     elseif hits > 0
@@ -510,11 +492,11 @@ end
     end
     
     # Apply syntax highlighting
-    highlighted_content = highlight_julia_syntax(content)
+    highlighted_content = HypertextTemplates.SafeString(highlight_to_html(content))
     
     @div {class = line_class} begin
         @div {class = "line-number"} $line_num
-        @div {class = "line-content"} @text HypertextTemplates.SafeString(highlighted_content)
+        @div {class = "line-content"} @text highlighted_content
     end
 end
 @deftag macro code_line_component end
@@ -658,4 +640,11 @@ function generate_native_html_report(cobertura_file::String, output_file::String
     
     @info "HTML coverage report generated: $output_file"
     return output_file
+end
+
+function highlighted_lines(io::IO)
+    highlighted = highlight(io)
+    Base.map(eachsplit(highlighted, '\n')) do line
+        endswith(line, '\r') ? line[1:end-1] : line # Deal with Windows line endings
+    end
 end

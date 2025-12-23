@@ -137,6 +137,7 @@ Returns empty vector if file cannot be read.
 function read_source_file(filepath::String, pkg_dir::String)
     # Try to construct the full path
     full_path = joinpath(pkg_dir, filepath)
+    OUT_ELTYPE = SubString{AnnotatedString{String}}
     
     # Handle Windows backslashes
     full_path = replace(full_path, "\\" => "/")
@@ -146,14 +147,16 @@ function read_source_file(filepath::String, pkg_dir::String)
         # Try without pkg_dir
         full_path = filepath
         if !isfile(full_path)
-            return String[]
+            return OUT_ELTYPE[]
         end
     end
     
     try
-        return readlines(full_path)
+        return open(full_path, "r") do io
+            highlighted_lines(io)
+        end
     catch e
         @warn "Could not read source file: $full_path" exception=e
-        return String[]
+        return OUT_ELTYPE[]
     end
 end

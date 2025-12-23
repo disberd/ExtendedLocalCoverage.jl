@@ -6,6 +6,7 @@ using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
 using CoverageTools: CoverageTools, LCOV
 import Pkg
+using StyledStrings: StyledStrings, AnnotatedString, htmlcolor
 
 
 export generate_package_coverage, generate_html_report, generate_native_html_report
