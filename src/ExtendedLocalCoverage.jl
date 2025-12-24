@@ -1,10 +1,10 @@
 module ExtendedLocalCoverage
 
-using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, eval_coverage_metrics
+using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, eval_coverage_metrics, PackageCoverage, FileCoverageSummary, format_gaps
 using Revise: Revise, parse_pkg_files
 using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
-using CoverageTools: CoverageTools, LCOV
+using CoverageTools: CoverageTools, LCOV, FileCoverage
 import Pkg
 using StyledStrings: StyledStrings, AnnotatedString, htmlcolor
 

@@ -41,6 +41,21 @@ function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString}, Anno
     return String(take!(result))
 end
 
+function calculate_file_stats(file::FileCoverageSummary)
+    total_lines = file.lines_tracked
+    covered_lines = file.lines_hit
+    missed_lines = total_lines - covered_lines
+    coverage_pct = total_lines == 0 ? 100.0 : (covered_lines / total_lines) * 100.0
+    
+    return (;
+        total = total_lines,
+        covered = covered_lines,
+        missed = missed_lines,
+        coverage = coverage_pct,
+        missing_str = format_gaps(file)
+    )
+end
+
 """
     coverage_badge_class(coverage::Float64) -> String
 
@@ -56,8 +71,10 @@ function coverage_badge_class(coverage::Float64)
     end
 end
 
-# Component that renders a file summary table with links to detailed sections
-@component function file_summary_table_component(; data::CoverageData)
+# Make all paths relative to pkgdir and always using `/` as separator (even on Windows)
+normrelpath(file::String, pkg_dir::String) = replace(relpath(file, pkg_dir), "\\" => "/")
+
+@component function file_summary_table_component(; data::PackageCoverage)
     @div {class = "summary-table-section"} begin
         @h2 "📋 Files Overview"
         @table {class = "file-summary-table"} begin
@@ -73,13 +90,14 @@ end
             end
             @tbody begin
                 for (idx, file) in enumerate(data.files)
+                    fname = normrelpath(file.filename, data.package_dir)
                     stats = calculate_file_stats(file)
                     badge_class = coverage_badge_class(stats.coverage)
                     file_anchor = "file-$idx"
                     
                     @tr begin
                         @td begin
-                            @a {class = "file-link", href = "#$file_anchor"} $(file.filename)
+                            @a {class = "file-link", href = "#$file_anchor"} $(fname)
                         end
                         @td {class = "stats-cell"} $(stats.total)
                         @td {class = "stats-cell"} $(stats.covered)
@@ -87,7 +105,7 @@ end
                         @td {class = "stats-cell"} begin
                             @span {class = "coverage-badge $badge_class"} "$(round(stats.coverage, digits=2))%"
                         end
-                        @td {class = "missing-cell"} $(isempty(stats.missing) ? "—" : stats.missing)
+                        @td {class = "missing-cell"} $(isempty(stats.missing_str) ? "—" : stats.missing_str)
                     end
                 end
             end
@@ -97,23 +115,25 @@ end
 @deftag macro file_summary_table_component end
 
 # Component that renders the summary metrics section
-@component function summary_section_component(; data::CoverageData)
-    coverage_pct = data.line_rate * 100
+@component function summary_section_component(; data::PackageCoverage)
+    lines_covered = data.lines_hit
+    lines_valid = data.lines_tracked
+    coverage_pct = (lines_covered / lines_valid) * 100
     
     @div {class = "summary"} begin
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Total Coverage"
             @div {class = "metric-value"} "$(round(coverage_pct, digits=2))%"
-            @div {class = "metric-subtext"} "$(data.lines_covered) of $(data.lines_valid) lines"
+            @div {class = "metric-subtext"} "$(lines_covered) of $(lines_valid) lines"
         end
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Lines Covered"
-            @div {class = "metric-value"} "$(data.lines_covered)"
+            @div {class = "metric-value"} "$(lines_covered)"
             @div {class = "metric-subtext"} "executable lines"
         end
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Lines Uncovered"
-            @div {class = "metric-value"} "$(data.lines_valid - data.lines_covered)"
+            @div {class = "metric-value"} "$(lines_valid - lines_covered)"
             @div {class = "metric-subtext"} "need testing"
         end
         @div {class = "metric"} begin
@@ -151,19 +171,16 @@ end
 @deftag macro code_line_component end
 
 # Component that renders a single file card with coverage information and source code
-@component function file_card_component(; file::FileData, pkg_dir::String, file_index::Int)
+@component function file_card_component(; file::FileCoverageSummary, pkg_dir::String, file_index::Int, lines_hits::Vector{Union{Int,Nothing}})
     stats = calculate_file_stats(file)
     source_lines = read_source_file(file.filename, pkg_dir)
-    
-    # Create a map of line number -> hits
-    line_hits = Dict(line.number => line.hits for line in file.lines)
     
     badge_class = coverage_badge_class(stats.coverage)
     file_anchor = "file-$file_index"
     
     @div {class = "file-card", id = file_anchor} begin
         @div {class = "file-header"} begin
-            @div {class = "file-name"} $(file.filename)
+            @div {class = "file-name"} $(normrelpath(file.filename, pkg_dir))
             @div {class = "file-stats"} begin
                 @span {class = "stat"} begin
                     @span {class = "coverage-badge $badge_class"} "$(round(stats.coverage, digits=2))%"
@@ -184,7 +201,7 @@ end
                     @code_line_component {
                         line_num = i,
                         content = line,
-                        hits = get(line_hits, i, nothing)
+                        hits = i > length(lines_hits) ? nothing : lines_hits[i]
                     }
                 end
             end
@@ -197,10 +214,10 @@ end
         end
         
         # Missing lines section
-        if !isempty(stats.missing)
+        if !isempty(stats.missing_str)
             @div {class = "missing-lines"} begin
                 @strong "Uncovered Lines: "
-                @text stats.missing
+                @text stats.missing_str
             end
         end
     end
@@ -229,14 +246,12 @@ generate_native_html_report(
 )
 ```
 """
-function generate_native_html_report(cobertura_file::String, output_file::String;
+function generate_native_html_report(infofile::String, output_file::String;
                                      title::String="Coverage Report",
-                                     pkg_dir::String=dirname(cobertura_file))
+                                     pkg_dir::String)
     # Parse the Cobertura XML file
-    data = parse_cobertura(cobertura_file)
-    
-    # Generate timestamp
-    timestamp = Dates.format(Dates.unix2datetime(data.timestamp), "yyyy-mm-dd HH:MM:SS")
+    raw_coverage = LCOV.readfile(infofile)
+    data = eval_coverage_metrics(raw_coverage, pkg_dir)
     
     # Build and render the HTML document
     function render_html(io)
@@ -255,10 +270,6 @@ function generate_native_html_report(cobertura_file::String, output_file::String
                         # Header
                         @header begin
                             @h1 $title
-                            # @div {class = "subtitle"} begin
-                            #     "Generated on "
-                            #     @text timestamp
-                            # end
                         end
                         
                         # Summary metrics
@@ -271,7 +282,7 @@ function generate_native_html_report(cobertura_file::String, output_file::String
                         @div {class = "files-section"} begin
                             @h2 "📁 File Coverage Details"
                             for (idx, file) in enumerate(data.files)
-                                @file_card_component {file = file, pkg_dir = pkg_dir, file_index = idx}
+                                @file_card_component {file = file, pkg_dir = pkg_dir, file_index = idx, lines_hits = raw_coverage[idx].coverage}
                             end
                         end
                         
