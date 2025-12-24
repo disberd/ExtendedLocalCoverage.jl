@@ -10,7 +10,7 @@ function modern_css_styles()
     return read(joinpath(@__DIR__, "style.css"), String)
 end
 
-function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString}, AnnotatedString})
+function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString},AnnotatedString})
     result = IOBuffer()
     try
         for (content, annots) in Base.eachregion(highlighted)
@@ -28,7 +28,7 @@ function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString}, Anno
         # If highlighting fails, return escaped plain text
         return String(highlighted)
     end
-    
+
     return String(take!(result))
 end
 
@@ -37,13 +37,13 @@ function calculate_file_stats(file::FileCoverageSummary)
     covered_lines = file.lines_hit
     missed_lines = total_lines - covered_lines
     coverage_pct = total_lines == 0 ? 100.0 : (covered_lines / total_lines) * 100.0
-    
+
     return (;
         total = total_lines,
         covered = covered_lines,
         missed = missed_lines,
         coverage = coverage_pct,
-        missing_str = format_gaps(file)
+        missing_str = format_gaps(file),
     )
 end
 
@@ -85,7 +85,7 @@ normrelpath(file::String, pkg_dir::String) = replace(relpath(file, pkg_dir), "\\
                     stats = calculate_file_stats(file)
                     badge_class = coverage_badge_class(stats.coverage)
                     file_anchor = "file-$idx"
-                    
+
                     @tr begin
                         @td begin
                             @a {class = "file-link", href = "#$file_anchor"} $(fname)
@@ -96,7 +96,9 @@ normrelpath(file::String, pkg_dir::String) = replace(relpath(file, pkg_dir), "\\
                         @td {class = "stats-cell"} begin
                             @span {class = "coverage-badge $badge_class"} "$(round(stats.coverage, digits=2))%"
                         end
-                        @td {class = "missing-cell"} $(isempty(stats.missing_str) ? "—" : stats.missing_str)
+                        @td {class = "missing-cell"} $(
+                            isempty(stats.missing_str) ? "—" : stats.missing_str
+                        )
                     end
                 end
             end
@@ -110,7 +112,7 @@ end
     lines_covered = data.lines_hit
     lines_valid = data.lines_tracked
     coverage_pct = (lines_covered / lines_valid) * 100
-    
+
     @div {class = "summary"} begin
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Total Coverage"
@@ -137,7 +139,11 @@ end
 @deftag macro summary_section_component end
 
 # Component that renders a single line of source code with coverage highlighting
-@component function code_line_component(; line_num::Int, content::AbstractString, hits::Union{Int,Nothing})
+@component function code_line_component(;
+    line_num::Int,
+    content::AbstractString,
+    hits::Union{Int,Nothing},
+)
     line_class = if isnothing(hits)
         "code-line line-neutral"
     elseif hits > 0
@@ -145,7 +151,7 @@ end
     else
         "code-line line-uncovered"
     end
-    
+
     # Apply syntax highlighting
     highlighted_content = let
         # io = IOBuffer()
@@ -153,7 +159,7 @@ end
         # String(take!(io)) |> HypertextTemplates.SafeString
         highlight_to_html(content) |> HypertextTemplates.SafeString
     end
-    
+
     @div {class = line_class} begin
         @div {class = "line-number"} $line_num
         @div {class = "line-content"} @text highlighted_content
@@ -162,13 +168,18 @@ end
 @deftag macro code_line_component end
 
 # Component that renders a single file card with coverage information and source code
-@component function file_card_component(; file::FileCoverageSummary, pkg_dir::String, file_index::Int, lines_hits::Vector{Union{Int,Nothing}})
+@component function file_card_component(;
+    file::FileCoverageSummary,
+    pkg_dir::String,
+    file_index::Int,
+    lines_hits::Vector{Union{Int,Nothing}},
+)
     stats = calculate_file_stats(file)
     source_lines = highlighted_lines(file.filename, pkg_dir)
-    
+
     badge_class = coverage_badge_class(stats.coverage)
     file_anchor = "file-$file_index"
-    
+
     @div {class = "file-card", id = file_anchor} begin
         @div {class = "file-header"} begin
             @div {class = "file-name"} $(normrelpath(file.filename, pkg_dir))
@@ -184,7 +195,7 @@ end
                 end
             end
         end
-        
+
         # Source code section
         if !isempty(source_lines)
             @div {class = "source-code"} begin
@@ -192,7 +203,7 @@ end
                     @code_line_component {
                         line_num = i,
                         content = line,
-                        hits = i > length(lines_hits) ? nothing : lines_hits[i]
+                        hits = i > length(lines_hits) ? nothing : lines_hits[i],
                     }
                 end
             end
@@ -203,7 +214,7 @@ end
                 end
             end
         end
-        
+
         # Missing lines section
         if !isempty(stats.missing_str)
             @div {class = "missing-lines"} begin
@@ -216,34 +227,27 @@ end
 @deftag macro file_card_component end
 
 """
-    generate_native_html_report(cobertura_file::String, output_file::String;
-                                 title::String="Coverage Report",
-                                 pkg_dir::String=dirname(cobertura_file))
+    generate_html_report(lcov_file, html_file; title = nothing, pkg_dir = nothing)
 
-Generate a modern, static HTML coverage report from a Cobertura XML file using HypertextTemplates.jl.
+Generate a static HTML report from a LCOV file using a native Julia solution.
 
-# Arguments
-- `cobertura_file`: Path to the Cobertura XML file
-- `output_file`: Path where the HTML report should be written
-- `title`: Title for the HTML report (default: "Coverage Report")
-- `pkg_dir`: Root directory of the package for resolving source file paths (default: directory of cobertura_file)
+The `lcov_file` and `html_file` arguments are the full paths to the LCOV file used as input and of the HTML file to be generated, respectively.
 
-# Example
-```julia
-generate_native_html_report(
-    "coverage/cobertura-coverage.xml",
-    "coverage/report.html",
-    title="MyPackage Coverage"
-)
-```
+# Keyword arguments
+
+- `title = "Package Coverage Report"` is the title used at the top of the HTML report.
+- `pkg_dir` is the directory of the package being covered. It is used to generate the source code links in the HTML report.
 """
-function generate_native_html_report(infofile::String, output_file::String;
-                                     title::String="Coverage Report",
-                                     pkg_dir::String)
+function generate_html_report(
+    lcov_file::String,
+    output_file::String;
+    title::String = "Coverage Report",
+    pkg_dir::String,
+)
     # Parse the Cobertura XML file
-    raw_coverage = LCOV.readfile(infofile)
+    raw_coverage = LCOV.readfile(lcov_file)
     data = eval_coverage_metrics(raw_coverage, pkg_dir)
-    
+
     # Build and render the HTML document
     function render_html(io)
         # We disable debug mode which is automatically enabled in HypertextTemplates.jl when Revise is loaded. This is a hack as mentioned in https://github.com/MichaelHatherly/HypertextTemplates.jl/issues/36#issuecomment-3004032438
@@ -252,7 +256,10 @@ function generate_native_html_report(infofile::String, output_file::String;
             @html {lang = "en"} begin
                 @head begin
                     @meta {charset = "UTF-8"}
-                    @meta {name = "viewport", content = "width=device-width, initial-scale=1.0"}
+                    @meta {
+                        name = "viewport",
+                        content = "width=device-width, initial-scale=1.0",
+                    }
                     @title $title
                     @style @text modern_css_styles()
                 end
@@ -262,21 +269,26 @@ function generate_native_html_report(infofile::String, output_file::String;
                         @header begin
                             @h1 $title
                         end
-                        
+
                         # Summary metrics
                         @summary_section_component {data = data}
-                        
+
                         # File summary table
                         @file_summary_table_component {data = data}
-                        
+
                         # File coverage details
                         @div {class = "files-section"} begin
                             @h2 "📁 File Coverage Details"
                             for (idx, file) in enumerate(data.files)
-                                @file_card_component {file = file, pkg_dir = pkg_dir, file_index = idx, lines_hits = raw_coverage[idx].coverage}
+                                @file_card_component {
+                                    file = file,
+                                    pkg_dir = pkg_dir,
+                                    file_index = idx,
+                                    lines_hits = raw_coverage[idx].coverage,
+                                }
                             end
                         end
-                        
+
                         # Footer
                         @footer begin
                             "Generated by ExtendedLocalCoverage.jl using HypertextTemplates.jl"
@@ -286,12 +298,12 @@ function generate_native_html_report(infofile::String, output_file::String;
             end
         end
     end
-    
+
     # Write to file
     open(output_file, "w") do io
         render_html(io)
     end
-    
+
     @info "HTML coverage report generated: $output_file"
     return output_file
 end

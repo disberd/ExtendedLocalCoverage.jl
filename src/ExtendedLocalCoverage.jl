@@ -65,7 +65,7 @@ function extract_included_files(pkg_id::Base.PkgId)
 end
 
 """
-    generate_html_report(cobertura_file, html_file; title = nothing, pkg_dir = nothing)
+    generate_html_report(lcov_file, html_file; title = nothing, pkg_dir = nothing)
 
 Generate an HTML report from a cobertura XML file using the `pycobertura` Python package.
 
@@ -76,21 +76,6 @@ The `cobertura_file` and `html_file` arguments are the full paths to the cobertu
 - `title = "Package Coverage Report"` is the title used at the top of the HTML report.
 - `pkg_dir = dirname(cobertura_file)` is the directory of the package being covered. It is used to generate the source code links in the HTML report and by default assumes the package directory to be the directory of the cobertura XML file.
 """
-function generate_html_report(
-    cobertura_file,
-    html_file;
-    title = "Package Coverage Report",
-    pkg_dir = dirname(cobertura_file),
-)
-    (; filesystem_factory) = pyimport("pycobertura.filesystem")
-    pycob = pyimport("pycobertura")
-    cobertura = pycob.Cobertura(cobertura_file, filesystem = filesystem_factory(pkg_dir))
-    reporter = pycall(pycob.reporters.HtmlReporter, cobertura; title)
-    report = reporter.generate()
-    open(html_file, "w") do io
-        print(io, report)
-    end
-end
 
 """
     generate_package_coverage(pkg = nothing; kwargs...)
@@ -145,10 +130,12 @@ function generate_package_coverage(
 )
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
+    coverage_dir = joinpath(pkg_dir, "coverage")
+    lcov_file = joinpath(coverage_dir, "lcov.info")
     # Generate the coverage
     cov =
         if use_existing_lcov
-            coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
+            coverage = LCOV.readfile(lcov_file)
             eval_coverage_metrics(coverage, pkg_dir)
         else
             file_list = extract_included_files(pkg_id)
@@ -175,8 +162,6 @@ function generate_package_coverage(
         show(IOContext(stdout, :print_gaps => true), cov)
     end
     # Create the cobertura xml file
-    coverage_dir = joinpath(pkg_dir, "coverage")
-    lcov_file = joinpath(coverage_dir, "lcov.info")
     if force_paths_relative
         make_paths_relative(lcov_file, pkg_dir)
     end
@@ -192,7 +177,7 @@ function generate_package_coverage(
     # Create the cobertura html file with source code
     if !isnothing(html_file)
         generate_html_report(
-            cobertura_file,
+            lcov_file,
             html_file;
             title = pkg_name * " coverage report",
             pkg_dir,
