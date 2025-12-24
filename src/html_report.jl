@@ -4,10 +4,7 @@ HTML report generator using HypertextTemplates.jl for coverage reports.
 
 using HypertextTemplates
 using HypertextTemplates.Elements
-using Dates
 using JuliaSyntaxHighlighting: highlight
-
-include("cobertura_parser.jl")
 
 """
     modern_css_styles() -> String
@@ -173,7 +170,7 @@ end
 # Component that renders a single file card with coverage information and source code
 @component function file_card_component(; file::FileCoverageSummary, pkg_dir::String, file_index::Int, lines_hits::Vector{Union{Int,Nothing}})
     stats = calculate_file_stats(file)
-    source_lines = read_source_file(file.filename, pkg_dir)
+    source_lines = highlighted_lines(file.filename, pkg_dir)
     
     badge_class = coverage_badge_class(stats.coverage)
     file_anchor = "file-$file_index"
@@ -309,5 +306,12 @@ function highlighted_lines(io::IO)
     highlighted = highlight(io)
     Base.map(eachsplit(highlighted, '\n')) do line
         endswith(line, '\r') ? line[1:end-1] : line # Deal with Windows line endings
+    end
+end
+function highlighted_lines(filepath::String, pkg_dir::String)
+    fullpath = joinpath(pkg_dir, filepath)
+    isfile(fullpath) || throw(ArgumentError("Source file not found: $fullpath"))
+    return open(fullpath, "r") do io
+        highlighted_lines(io)
     end
 end
