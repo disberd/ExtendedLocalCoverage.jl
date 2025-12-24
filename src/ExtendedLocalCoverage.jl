@@ -1,12 +1,43 @@
 module ExtendedLocalCoverage
 
-using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, eval_coverage_metrics, PackageCoverage, FileCoverageSummary, format_gaps
+using LocalCoverage:
+    LocalCoverage,
+    write_lcov_to_xml,
+    pkgdir,
+    eval_coverage_metrics,
+    PackageCoverage,
+    FileCoverageSummary,
+    format_gaps
+using HypertextTemplates: HypertextTemplates, @component, @deftag, @render, @text
+using HypertextTemplates.Elements:
+    Elements,
+    @a,
+    @body,
+    @div,
+    @footer,
+    @h1,
+    @h2,
+    @head,
+    @header,
+    @html,
+    @meta,
+    @span,
+    @strong,
+    @style,
+    @table,
+    @tbody,
+    @td,
+    @th,
+    @thead,
+    @title,
+    @tr
+using JuliaSyntaxHighlighting: JuliaSyntaxHighlighting, highlight
 using Revise: Revise, parse_pkg_files
 using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
-using CoverageTools: CoverageTools, LCOV, FileCoverage
+using CoverageTools: CoverageTools, LCOV
 import Pkg
-using StyledStrings: StyledStrings, AnnotatedString, htmlcolor
+using StyledStrings: StyledStrings, AnnotatedString
 
 
 export generate_package_coverage, generate_html_report, generate_native_html_report
@@ -21,7 +52,7 @@ function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
     pkg_name = project_toml["name"]
     pkg_uuid = project_toml["uuid"] |> Base.UUID
-    pkg_extensions = get(Dict{String, Any},project_toml, "extensions") |> keys
+    pkg_extensions = get(Dict{String,Any}, project_toml, "extensions") |> keys
     pkg_id = Base.PkgId(pkg_uuid, pkg_name)
     return (; pkg_name, pkg_uuid, pkg_id, pkg_extensions)
 end
@@ -45,10 +76,15 @@ The `cobertura_file` and `html_file` arguments are the full paths to the cobertu
 - `title = "Package Coverage Report"` is the title used at the top of the HTML report.
 - `pkg_dir = dirname(cobertura_file)` is the directory of the package being covered. It is used to generate the source code links in the HTML report and by default assumes the package directory to be the directory of the cobertura XML file.
 """
-function generate_html_report(cobertura_file, html_file; title = "Package Coverage Report", pkg_dir = dirname(cobertura_file))
+function generate_html_report(
+    cobertura_file,
+    html_file;
+    title = "Package Coverage Report",
+    pkg_dir = dirname(cobertura_file),
+)
     (; filesystem_factory) = pyimport("pycobertura.filesystem")
     pycob = pyimport("pycobertura")
-    cobertura = pycob.Cobertura(cobertura_file, filesystem=filesystem_factory(pkg_dir))
+    cobertura = pycob.Cobertura(cobertura_file, filesystem = filesystem_factory(pkg_dir))
     reporter = pycall(pycob.reporters.HtmlReporter, cobertura; title)
     report = reporter.generate()
     open(html_file, "w") do io
@@ -95,28 +131,46 @@ The function returns a named tuple with the following fields:
 - `cobertura_file` the full path to the cobertura XML file, if any was generated.
 - `html_file` the full path to the HTML file, if any was generated.
 """
-function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test= true, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false, extensions = true)
+function generate_package_coverage(
+    pkg = nothing;
+    use_existing_lcov = false,
+    run_test = true,
+    test_args = [""],
+    exclude = [],
+    html_name = "index.html",
+    cobertura_name = "cobertura-coverage.xml",
+    print_to_stdout = true,
+    force_paths_relative = false,
+    extensions = true,
+)
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
     # Generate the coverage
-    cov = if use_existing_lcov
-        coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
-        eval_coverage_metrics(coverage, pkg_dir)
-    else
-        file_list = extract_included_files(pkg_id)
-        extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
-        filter!(file_list) do filename
-            for needle in exclude
-                occursin(needle, filename) && return false
+    cov =
+        if use_existing_lcov
+            coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
+            eval_coverage_metrics(coverage, pkg_dir)
+        else
+            file_list = extract_included_files(pkg_id)
+            extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
+            filter!(file_list) do filename
+                for needle in exclude
+                    occursin(needle, filename) && return false
+                end
+                return true
             end
-            return true
-        end
-        try
-            LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
-        catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
-            rethrow()
-        end
-    end |> WrappedPackageCoverage
+            try
+                LocalCoverage.generate_coverage(
+                    pkg;
+                    run_test,
+                    test_args,
+                    folder_list = [],
+                    file_list,
+                )
+            catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
+                rethrow()
+            end
+        end |> WrappedPackageCoverage
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
     end
@@ -137,7 +191,12 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
     end
     # Create the cobertura html file with source code
     if !isnothing(html_file)
-        generate_html_report(cobertura_file, html_file; title = pkg_name * " coverage report", pkg_dir)
+        generate_html_report(
+            cobertura_file,
+            html_file;
+            title = pkg_name * " coverage report",
+            pkg_dir,
+        )
     end
     return (; cov, cobertura_file, html_file)
 end
@@ -159,16 +218,21 @@ function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
 end
 
 # This ensures that paths in the lcov.info file relative to the package directory. Needed in some corner cases.
-function make_paths_relative(lcov_file::String, pkg_dir::String; output_file::String = lcov_file)
+function make_paths_relative(
+    lcov_file::String,
+    pkg_dir::String;
+    output_file::String = lcov_file,
+)
     (tmppath, tmpio) = mktemp()
     open(lcov_file) do io
-        for line in eachline(io, keep=true) # keep so the new line isn't chomped
+        for line in eachline(io, keep = true) # keep so the new line isn't chomped
             if startswith(line, "SF:")
-                path = split(line, "SF:")[2] 
+                path = split(line, "SF:")[2]
                 path = chopsuffix(path, "\n")
                 if isabspath(path)
                     real_path = realpath(path)
-                    ispath(real_path) || error("Something went wrong, path $path does not seem valid")
+                    ispath(real_path) ||
+                        error("Something went wrong, path $path does not seem valid")
                     line = replace(line, path => relpath(real_path, pkg_dir))
                 end
             end
@@ -176,7 +240,7 @@ function make_paths_relative(lcov_file::String, pkg_dir::String; output_file::St
         end
     end
     close(tmpio)
-    mv(tmppath, output_file, force=true)
+    mv(tmppath, output_file, force = true)
 end
 
 end
