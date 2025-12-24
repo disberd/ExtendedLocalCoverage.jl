@@ -355,41 +355,18 @@ end
 function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString}, AnnotatedString})
     result = IOBuffer()
     try
-        annotations = Base.annotations(highlighted)
-
-        if isempty(annotations)
-            return String(highlighted)
+        for (content, annots) in Base.eachregion(highlighted)
+            print(result, "<span")
+            if !isempty(annots)
+                print(result, " class=\"")
+                print(result, join(Base.map(a -> a.value, annots), " "))
+                print(result, "\"")
+            end
+            print(result, ">")
+            print(result, content)
+            print(result, "</span>")
         end
-
-        # We sort annotation by start position
-        sort!(annotations, by = ann -> first(ann.region))
-        
-        # It seems we also have to make annotations unique
-        unique!(annotations)
-        
-        pos = firstindex(highlighted)
-        for ann in annotations
-            # Only process :face annotations
-            ann.label == :face || continue
-            face_name = String(ann.value)
-            
-            region = ann.region
-            
-            # We write all the text between the previous annotation and the current
-            prev_region = pos:prevind(highlighted, first(region))
-            print(result, highlighted[prev_region])
-            
-            # Write annotated text with span
-            annotated_text = highlighted[region]
-            print(result, "<span class='", face_name, "'>", annotated_text, "</span>")
-            
-            pos = nextind(highlighted, last(region))
-        end
-        
-        last_region = pos:lastindex(highlighted)
-        print(result, highlighted[last_region])
-        
-    catch
+    catch e
         # If highlighting fails, return escaped plain text
         return String(highlighted)
     end
@@ -492,7 +469,12 @@ end
     end
     
     # Apply syntax highlighting
-    highlighted_content = HypertextTemplates.SafeString(highlight_to_html(content))
+    highlighted_content = let
+        # io = IOBuffer()
+        # show(io, MIME"text/html"(), content)
+        # String(take!(io)) |> HypertextTemplates.SafeString
+        highlight_to_html(content) |> HypertextTemplates.SafeString
+    end
     
     @div {class = line_class} begin
         @div {class = "line-number"} $line_num
@@ -590,42 +572,46 @@ function generate_native_html_report(cobertura_file::String, output_file::String
     timestamp = Dates.format(Dates.unix2datetime(data.timestamp), "yyyy-mm-dd HH:MM:SS")
     
     # Build and render the HTML document
-    html_content = @render begin
-        @html {lang = "en"} begin
-            @head begin
-                @meta {charset = "UTF-8"}
-                @meta {name = "viewport", content = "width=device-width, initial-scale=1.0"}
-                @title $title
-                @style @text modern_css_styles()
-            end
-            @body begin
-                @div {class = "container"} begin
-                    # Header
-                    @header begin
-                        @h1 $title
-                        # @div {class = "subtitle"} begin
-                        #     "Generated on "
-                        #     @text timestamp
-                        # end
-                    end
-                    
-                    # Summary metrics
-                    @summary_section_component {data = data}
-                    
-                    # File summary table
-                    @file_summary_table_component {data = data}
-                    
-                    # File coverage details
-                    @div {class = "files-section"} begin
-                        @h2 "📁 File Coverage Details"
-                        for (idx, file) in enumerate(data.files)
-                            @file_card_component {file = file, pkg_dir = pkg_dir, file_index = idx}
+    function render_html(io)
+        # We disable debug mode which is automatically enabled in HypertextTemplates.jl when Revise is loaded. This is a hack as mentioned in https://github.com/MichaelHatherly/HypertextTemplates.jl/issues/36#issuecomment-3004032438
+        ctx = IOContext(io, HypertextTemplates._include_data_htloc() => false)
+        @render ctx begin
+            @html {lang = "en"} begin
+                @head begin
+                    @meta {charset = "UTF-8"}
+                    @meta {name = "viewport", content = "width=device-width, initial-scale=1.0"}
+                    @title $title
+                    @style @text modern_css_styles()
+                end
+                @body begin
+                    @div {class = "container"} begin
+                        # Header
+                        @header begin
+                            @h1 $title
+                            # @div {class = "subtitle"} begin
+                            #     "Generated on "
+                            #     @text timestamp
+                            # end
                         end
-                    end
-                    
-                    # Footer
-                    @footer begin
-                        "Generated by ExtendedLocalCoverage.jl using HypertextTemplates.jl"
+                        
+                        # Summary metrics
+                        @summary_section_component {data = data}
+                        
+                        # File summary table
+                        @file_summary_table_component {data = data}
+                        
+                        # File coverage details
+                        @div {class = "files-section"} begin
+                            @h2 "📁 File Coverage Details"
+                            for (idx, file) in enumerate(data.files)
+                                @file_card_component {file = file, pkg_dir = pkg_dir, file_index = idx}
+                            end
+                        end
+                        
+                        # Footer
+                        @footer begin
+                            "Generated by ExtendedLocalCoverage.jl using HypertextTemplates.jl"
+                        end
                     end
                 end
             end
@@ -634,8 +620,7 @@ function generate_native_html_report(cobertura_file::String, output_file::String
     
     # Write to file
     open(output_file, "w") do io
-        println(io, "<!DOCTYPE html>")
-        print(io, html_content)
+        render_html(io)
     end
     
     @info "HTML coverage report generated: $output_file"
