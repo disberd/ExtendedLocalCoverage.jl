@@ -62,9 +62,6 @@ function coverage_badge_class(coverage::Float64)
     end
 end
 
-# Make all paths relative to pkgdir and always using `/` as separator (even on Windows)
-normrelpath(file::String, pkg_dir::String) = replace(relpath(file, pkg_dir), "\\" => "/")
-
 @component function file_summary_table_component(; data::PackageCoverage)
     @div {class = "summary-table-section"} begin
         @h2 "📋 Files Overview"
@@ -81,7 +78,7 @@ normrelpath(file::String, pkg_dir::String) = replace(relpath(file, pkg_dir), "\\
             end
             @tbody begin
                 for (idx, file) in enumerate(data.files)
-                    fname = normrelpath(file.filename, data.package_dir)
+                    fname = file.filename
                     stats = calculate_file_stats(file)
                     badge_class = coverage_badge_class(stats.coverage)
                     file_anchor = "file-$idx"
@@ -122,17 +119,17 @@ end
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Lines Covered"
             @div {class = "metric-value"} "$(lines_covered)"
-            @div {class = "metric-subtext"} "executable lines"
+            @div {class = "metric-subtext"} ""
         end
         @div {class = "metric"} begin
             @div {class = "metric-label"} "Lines Uncovered"
             @div {class = "metric-value"} "$(lines_valid - lines_covered)"
-            @div {class = "metric-subtext"} "need testing"
+            @div {class = "metric-subtext"} ""
         end
         @div {class = "metric"} begin
-            @div {class = "metric-label"} "Files"
+            @div {class = "metric-label"} "Tracked Files"
             @div {class = "metric-value"} "$(length(data.files))"
-            @div {class = "metric-subtext"} "in project"
+            @div {class = "metric-subtext"} ""
         end
     end
 end
@@ -182,7 +179,7 @@ end
 
     @div {class = "file-card", id = file_anchor} begin
         @div {class = "file-header"} begin
-            @div {class = "file-name"} $(normrelpath(file.filename, pkg_dir))
+            @div {class = "file-name"} $(file.filename)
             @div {class = "file-stats"} begin
                 @span {class = "stat"} begin
                     @span {class = "coverage-badge $badge_class"} "$(round(stats.coverage, digits=2))%"
@@ -246,6 +243,12 @@ function generate_html_report(
 )
     # Parse the Cobertura XML file
     raw_coverage = LCOV.readfile(lcov_file)
+    # Make the package directory absolute
+    pkg_dir = abspath(pkg_dir)
+    # We make the filepaths absolute
+    foreach(raw_coverage) do fc
+        fc.filename = abspath(pkg_dir, fc.filename)
+    end
     data = eval_coverage_metrics(raw_coverage, pkg_dir)
 
     # Build and render the HTML document
