@@ -10,7 +10,13 @@ function modern_css_styles()
     return read(joinpath(@__DIR__, "style.css"), String)
 end
 
-function highlight_to_html(highlighted::Union{SubString{<:AnnotatedString},AnnotatedString})
+function highlight_with_show(line::Union{SubString{<:AnnotatedString},AnnotatedString})
+    io = IOBuffer()
+    show(io, MIME"text/html"(), line)
+    return String(take!(io))
+end
+
+function highlight_with_classes(highlighted::Union{SubString{<:AnnotatedString},AnnotatedString})
     result = IOBuffer()
     try
         for (content, annots) in Base.eachregion(highlighted)
@@ -140,6 +146,7 @@ end
     line_num::Int,
     content::AbstractString,
     hits::Union{Int,Nothing},
+    html_function
 )
     line_class = if isnothing(hits)
         "code-line line-neutral"
@@ -150,12 +157,7 @@ end
     end
 
     # Apply syntax highlighting
-    highlighted_content = let
-        # io = IOBuffer()
-        # show(io, MIME"text/html"(), content)
-        # String(take!(io)) |> HypertextTemplates.SafeString
-        highlight_to_html(content) |> HypertextTemplates.SafeString
-    end
+    highlighted_content = html_function(content) |> HypertextTemplates.SafeString
 
     @div {class = line_class} begin
         @div {class = "line-number"} $line_num
@@ -170,9 +172,11 @@ end
     pkg_dir::String,
     file_index::Int,
     lines_hits::Vector{Union{Int,Nothing}},
+    lines_function,
+    html_function,
 )
     stats = calculate_file_stats(file)
-    source_lines = highlighted_lines(file.filename, pkg_dir)
+    source_lines = extract_file_lines(lines_function, file.filename, pkg_dir)
 
     badge_class = coverage_badge_class(stats.coverage)
     file_anchor = "file-$file_index"
@@ -201,6 +205,7 @@ end
                         line_num = i,
                         content = line,
                         hits = i > length(lines_hits) ? nothing : lines_hits[i],
+                        html_function
                     }
                 end
             end
@@ -240,6 +245,8 @@ function generate_html_report(
     output_file::String;
     title::String = "Coverage Report",
     pkg_dir::String,
+    lines_function = highlighted_lines,
+    html_function = highlight_with_show,
 )
     # Parse the Cobertura XML file
     raw_coverage = LCOV.readfile(lcov_file)
@@ -288,6 +295,8 @@ function generate_html_report(
                                     pkg_dir = pkg_dir,
                                     file_index = idx,
                                     lines_hits = raw_coverage[idx].coverage,
+                                    lines_function,
+                                    html_function
                                 }
                             end
                         end
@@ -317,10 +326,13 @@ function highlighted_lines(io::IO)
         endswith(line, '\r') ? line[1:end-1] : line # Deal with Windows line endings
     end
 end
-function highlighted_lines(filepath::String, pkg_dir::String)
+function plain_lines(io::IO)
+    collect(eachline(io))
+end
+function extract_file_lines(lines_function, filepath::String, pkg_dir::String)
     fullpath = joinpath(pkg_dir, filepath)
     isfile(fullpath) || throw(ArgumentError("Source file not found: $fullpath"))
     return open(fullpath, "r") do io
-        highlighted_lines(io)
+        lines_function(io)
     end
 end
