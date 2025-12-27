@@ -33,7 +33,6 @@ using HypertextTemplates.Elements:
     @tr
 using JuliaSyntaxHighlighting: JuliaSyntaxHighlighting, highlight
 using Revise: Revise, parse_pkg_files
-using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
 using CoverageTools: CoverageTools, LCOV
 import Pkg
@@ -63,19 +62,6 @@ function extract_included_files(pkg_id::Base.PkgId)
     pkgfiles = parse_pkg_files(pkg_id)
     return unique(pkgfiles.info.files)
 end
-
-"""
-    generate_html_report(lcov_file, html_file; title = nothing, pkg_dir = nothing)
-
-Generate an HTML report from a cobertura XML file using the `pycobertura` Python package.
-
-The `cobertura_file` and `html_file` arguments are the full paths to the cobertura XML file used as input and of the HTML file to be generated, respectively.
-
-# Keyword arguments
-
-- `title = "Package Coverage Report"` is the title used at the top of the HTML report.
-- `pkg_dir = dirname(cobertura_file)` is the directory of the package being covered. It is used to generate the source code links in the HTML report and by default assumes the package directory to be the directory of the cobertura XML file.
-"""
 
 """
     generate_package_coverage(pkg = nothing; kwargs...)
