@@ -56,7 +56,6 @@
         generate_package_coverage(
             "CoverageTest";
             use_existing_lcov = true,
-            force_paths_relative = true,
         )
         @test isfile(joinpath(coverage_dir, "cobertura-coverage.xml"))
         @test isfile(joinpath(coverage_dir, "index.html"))

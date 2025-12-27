@@ -90,8 +90,6 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
 - `print_to_stdout = true` determines whether the coverage summary is printed to the standard output.
 
-- `force_paths_relative = false` determines whether the paths in the `lcov.info` file are processed to make sure they are relative to the package directory. This is needed in some corner cases, especially if one wants the html file to correctly show source code for the files in the report.
-
 - `extensions = true` when `true`, also tries to add to the coverage files in the `ext` directory that match an extension name specified in the `Project.toml` file.
 
 # Return values
@@ -111,7 +109,6 @@ function generate_package_coverage(
     html_name = "index.html",
     cobertura_name = "cobertura-coverage.xml",
     print_to_stdout = true,
-    force_paths_relative = false,
     extensions = true,
 )
     pkg_dir = pkgdir(pkg)
@@ -146,10 +143,6 @@ function generate_package_coverage(
         end |> WrappedPackageCoverage
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
-    end
-    # Create the cobertura xml file
-    if force_paths_relative
-        make_paths_relative(lcov_file, pkg_dir)
     end
     cobertura_file = if isnothing(cobertura_name) && isnothing(html_name)
         nothing
@@ -186,32 +179,6 @@ function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
     end
     unique!(files_list)
     return nothing
-end
-
-# This ensures that paths in the lcov.info file relative to the package directory. Needed in some corner cases.
-function make_paths_relative(
-    lcov_file::String,
-    pkg_dir::String;
-    output_file::String = lcov_file,
-)
-    (tmppath, tmpio) = mktemp()
-    open(lcov_file) do io
-        for line in eachline(io, keep = true) # keep so the new line isn't chomped
-            if startswith(line, "SF:")
-                path = split(line, "SF:")[2]
-                path = chopsuffix(path, "\n")
-                if isabspath(path)
-                    real_path = realpath(path)
-                    ispath(real_path) ||
-                        error("Something went wrong, path $path does not seem valid")
-                    line = replace(line, path => relpath(real_path, pkg_dir))
-                end
-            end
-            write(tmpio, line)
-        end
-    end
-    close(tmpio)
-    mv(tmppath, output_file, force = true)
 end
 
 end
