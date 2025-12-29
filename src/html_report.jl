@@ -11,7 +11,6 @@ function modern_css_styles()
 end
 
 function highlight_with_show end
-function highlight_with_classes end
 
 function calculate_file_stats(file::FileCoverageSummary)
     total_lines = file.lines_tracked
