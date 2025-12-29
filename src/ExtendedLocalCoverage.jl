@@ -121,7 +121,9 @@ function generate_package_coverage(
             coverage = LCOV.readfile(lcov_file)
             eval_coverage_metrics(coverage, pkg_dir)
         else
-            file_list = extract_included_files(pkg_id)
+            file_list = map(extract_included_files(pkg_id)) do relative_path
+                abspath(pkg_dir, relative_path)
+            end
             extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
             filter!(file_list) do filename
                 for needle in exclude
