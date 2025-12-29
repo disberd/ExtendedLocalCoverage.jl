@@ -10,33 +10,8 @@ function modern_css_styles()
     return read(joinpath(@__DIR__, "style.css"), String)
 end
 
-function highlight_with_show(line::Union{SubString{<:AnnotatedString},AnnotatedString})
-    io = IOBuffer()
-    show(io, MIME"text/html"(), line)
-    return String(take!(io))
-end
-
-function highlight_with_classes(highlighted::Union{SubString{<:AnnotatedString},AnnotatedString})
-    result = IOBuffer()
-    try
-        for (content, annots) in Base.eachregion(highlighted)
-            print(result, "<span")
-            if !isempty(annots)
-                print(result, " class=\"")
-                print(result, join(map(a -> a.value, annots), " "))
-                print(result, "\"")
-            end
-            print(result, ">")
-            print(result, content)
-            print(result, "</span>")
-        end
-    catch e
-        # If highlighting fails, return escaped plain text
-        return String(highlighted)
-    end
-
-    return String(take!(result))
-end
+function highlight_with_show end
+function highlight_with_classes end
 
 function calculate_file_stats(file::FileCoverageSummary)
     total_lines = file.lines_tracked
@@ -59,13 +34,9 @@ end
 Return CSS class for coverage badge based on coverage percentage.
 """
 function coverage_badge_class(coverage::Float64)
-    if coverage >= 80.0
-        return "coverage-excellent"
-    elseif coverage >= 60.0
-        return "coverage-good"
-    else
-        return "coverage-poor"
-    end
+    return coverage >= 80 ? "coverage-excellent" :
+           coverage >= 60 ? "coverage-good" :
+                            "coverage-poor"
 end
 
 @component function file_summary_table_component(; data::PackageCoverage)
@@ -320,12 +291,8 @@ function generate_html_report(
     return output_file
 end
 
-function highlighted_lines(io::IO)
-    highlighted = highlight(io)
-    map(eachsplit(highlighted, '\n')) do line
-        endswith(line, '\r') ? line[1:end-1] : line # Deal with Windows line endings
-    end
-end
+function highlighted_lines end
+
 function plain_lines(io::IO)
     collect(eachline(io))
 end

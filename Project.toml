@@ -7,13 +7,19 @@ authors = ["Alberto Mengali <a.mengali@gmail.com>"]
 CoverageTools = "c36e975a-824b-4404-a568-ef97ca766997"
 EzXML = "8f5d6c58-4d21-5cfd-889c-e3ad7ee6a615"
 HypertextTemplates = "c7d46f9d-34c3-4420-bf57-257f25aec718"
-JuliaSyntaxHighlighting = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
 LocalCoverage = "5f6e1e16-694c-5876-87ef-16b5274f298e"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
-StyledStrings = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[weakdeps]
+StyledStrings = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
+JuliaSyntaxHighlighting = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+
+[extensions]
+StyledStringsExt = ["StyledStrings"]
+JuliaSyntaxHighlightingExt = ["JuliaSyntaxHighlighting"]
 
 [compat]
 CoverageTools = "1.3.2"

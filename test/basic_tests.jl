@@ -1,5 +1,6 @@
 @testitem "ExtendedLocalCoverage.jl" begin
     using ExtendedLocalCoverage: PackageCoverage, WrappedPackageCoverage
+    import JuliaSyntaxHighlighting
     import Pkg
 
     function clean_coverage(dir)

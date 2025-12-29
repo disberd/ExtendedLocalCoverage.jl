@@ -31,15 +31,15 @@ using HypertextTemplates.Elements:
     @thead,
     @title,
     @tr
-using JuliaSyntaxHighlighting: JuliaSyntaxHighlighting, highlight
 using Revise: Revise, parse_pkg_files
 using TOML: TOML, tryparsefile
 using CoverageTools: CoverageTools, LCOV
 import Pkg
-using StyledStrings: StyledStrings, AnnotatedString
-
 
 export generate_package_coverage, generate_html_report, generate_native_html_report
+
+const StyledStringsLoaded = Ref(false)
+const JuliaSyntaxHighlightingLoaded = Ref(false)
 
 # This is a temporary fix to fix PrettyTables issues until https://github.com/JuliaCI/LocalCoverage.jl/pull/68 is merged.
 include("show_fix.jl")
