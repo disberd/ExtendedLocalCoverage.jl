@@ -1,6 +1,5 @@
 @testitem "ExtendedLocalCoverage.jl" begin
     using ExtendedLocalCoverage: PackageCoverage, WrappedPackageCoverage
-    import JuliaSyntaxHighlighting
     import Pkg
 
     function clean_coverage(dir)
@@ -80,5 +79,19 @@
         @test cov.lines_hit isa Int
     finally
         Pkg.activate(current_proj)
+    end
+end
+
+@testitem "html defaults functions" begin
+    using ExtendedLocalCoverage: default_lines_function, default_html_function
+
+    lines_function = default_lines_function()
+    html_function = default_html_function(lines_function)
+    @static if VERSION >= v"1.12"
+        @test lines_function == ExtendedLocalCoverage.highlighted_lines
+        @test html_function == ExtendedLocalCoverage.highlight_with_show
+    else
+        @test lines_function == ExtendedLocalCoverage.plain_lines
+        @test html_function == String
     end
 end
