@@ -168,22 +168,14 @@ end
         end
 
         # Source code section
-        if !isempty(source_lines)
-            @div {class = "source-code"} begin
-                for (i, line) in enumerate(source_lines)
-                    @code_line_component {
-                        line_num = i,
-                        content = line,
-                        hits = i > length(lines_hits) ? nothing : lines_hits[i],
-                        html_function
-                    }
-                end
-            end
-        else
-            @div {class = "source-code"} begin
-                @div {style = "padding: 20px; text-align: center; color: #666;"} begin
-                    "Source code not available"
-                end
+        @div {class = "source-code"} begin
+            for (i, line) in enumerate(source_lines)
+                @code_line_component {
+                    line_num = i,
+                    content = line,
+                    hits = i > length(lines_hits) ? nothing : lines_hits[i],
+                    html_function
+                }
             end
         end
 
@@ -215,10 +207,13 @@ function generate_html_report(
     output_file::String;
     title::String = "Coverage Report",
     pkg_dir::String,
-    lines_function = highlighted_lines,
-    html_function = highlight_with_show,
+    lines_function = nothing,
+    html_function = nothing,
 )
-    # Parse the Cobertura XML file
+    # Eventually set defaults for lines and html functions depending on loaded extensions
+    lines_function = @something lines_function default_lines_function()
+    html_function = @something html_function default_html_function(lines_function)
+    # Parse the LCOV file
     raw_coverage = LCOV.readfile(lcov_file)
     # Make the package directory absolute
     pkg_dir = abspath(pkg_dir)
@@ -285,9 +280,6 @@ function generate_html_report(
     open(output_file, "w") do io
         render_html(io)
     end
-
-    @info "HTML coverage report generated: $output_file"
-    return output_file
 end
 
 function highlighted_lines end
@@ -301,4 +293,12 @@ function extract_file_lines(lines_function, filepath::String, pkg_dir::String)
     return open(fullpath, "r") do io
         lines_function(io)
     end
+end
+
+function default_html_function(lines_function)
+    return StyledStringsLoaded[] && lines_function === highlighted_lines ? highlight_with_show : identity
+end
+
+function default_lines_function()
+    return JuliaSyntaxHighlightingLoaded[] ? highlighted_lines : plain_lines
 end
