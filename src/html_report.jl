@@ -295,10 +295,23 @@ function extract_file_lines(lines_function, filepath::String, pkg_dir::String)
     end
 end
 
+"""
+    default_html_function(lines_function)
+
+Extract the default function to be passed as `html_function` argument to `generate_html_report`.
+
+It takes the `lines_function` as an argument and returns `highligh_with_show` if the `lines_function` is `ExtendedLocalCoverage.highlighted_lines` and simply return the `String` constructor otherwise.
+"""
 function default_html_function(lines_function)
-    return StyledStringsLoaded[] && lines_function === highlighted_lines ? highlight_with_show : identity
+    return StyledStringsLoaded[] && lines_function === highlighted_lines ? highlight_with_show : String
 end
 
+"""
+    default_lines_function()
+Extract the default function to be passed as `lines_function` argument to `generate_html_report`.
+
+If the `JuliaSyntaxHighlighting` package is loaded, this returns the `ExtendedLocalCoverage.highlighted_lines` function, otherwise it returns the `ExtendedLocalCoverage.plain_lines` function.
+"""
 function default_lines_function()
     return JuliaSyntaxHighlightingLoaded[] ? highlighted_lines : plain_lines
 end
