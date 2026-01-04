@@ -169,7 +169,7 @@ end
 
 function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
     (isnothing(pkg_extensions) || isempty(pkg_extensions)) && return files_list
-    for (path, dir, files) in walkdir("ext")
+    for (path, dir, files) in walkdir(joinpath(pkg_dir, "ext"))
         for file in files
             endswith(file, ".jl") || continue
             noext_name = chopsuffix(file, ".jl")
