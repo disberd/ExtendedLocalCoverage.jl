@@ -11,7 +11,7 @@ function ExtendedLocalCoverage.highlight_with_show(line::VALID_TYPE)
 end
 
 function __init__()
-    # We set this flag to true to indicate that tye StyledStrings extension has been loaded
+    # We set this flag to true to indicate that the StyledStrings extension has been loaded
     StyledStringsLoaded[] = true
 end
 
