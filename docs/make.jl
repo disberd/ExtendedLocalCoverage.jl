@@ -12,7 +12,7 @@ const numbered_pages = [
 makedocs(;
     modules = [ExtendedLocalCoverage],
     authors = "Alberto Mengali <a.mengali@gmail.com>",
-    repo = "https://github.com/disberd/ExtendedLocalCoverage.jl/blob/{commit}{path}#{line}",
+    repo = Remotes.GitHub("disberd", "ExtendedLocalCoverage.jl"),
     sitename = "ExtendedLocalCoverage.jl",
     format = Documenter.HTML(; canonical = "https://disberd.github.io/ExtendedLocalCoverage.jl"),
     pages = ["index.md"; numbered_pages],
