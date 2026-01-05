@@ -300,7 +300,7 @@ end
 
 Extract the default function to be passed as `html_function` argument to `generate_html_report`.
 
-It takes the `lines_function` as an argument and returns `highligh_with_show` if the `lines_function` is `ExtendedLocalCoverage.highlighted_lines` and simply return the `String` constructor otherwise.
+It takes the `lines_function` as an argument and returns `highlight_with_show` if the `lines_function` is `ExtendedLocalCoverage.highlighted_lines` and simply return the `String` constructor otherwise.
 """
 function default_html_function(lines_function)
     return StyledStringsLoaded[] && lines_function === highlighted_lines ? highlight_with_show : String
