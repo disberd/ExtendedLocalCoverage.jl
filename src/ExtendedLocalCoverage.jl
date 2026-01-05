@@ -8,7 +8,7 @@ using LocalCoverage:
     PackageCoverage,
     FileCoverageSummary,
     format_gaps
-using HypertextTemplates: HypertextTemplates, @component, @deftag, @render, @text
+using HypertextTemplates: HypertextTemplates, @component, @deftag, @render, @text, SafeString
 using HypertextTemplates.Elements:
     Elements,
     @a,

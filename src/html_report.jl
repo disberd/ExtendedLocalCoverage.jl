@@ -132,7 +132,7 @@ end
     end
 
     # Apply syntax highlighting
-    highlighted_content = html_function(content) |> HypertextTemplates.SafeString
+    highlighted_content = html_function(content)
 
     @div {class = line_class} begin
         @div {class = "line-number"} $line_num
