@@ -230,8 +230,8 @@ function generate_html_report(
     end
     data = eval_coverage_metrics(raw_coverage, pkg_dir)
 
-    # Build and render the HTML document
-    function render_html(io)
+    # Write to file
+    open(output_file, "w") do io
         # We disable debug mode which is automatically enabled in HypertextTemplates.jl when Revise is loaded. This is a hack as mentioned in https://github.com/MichaelHatherly/HypertextTemplates.jl/issues/36#issuecomment-3004032438
         ctx = IOContext(io, HypertextTemplates._include_data_htloc() => false)
         @render ctx begin
@@ -282,11 +282,6 @@ function generate_html_report(
             end
         end
     end
-
-    # Write to file
-    open(output_file, "w") do io
-        render_html(io)
-    end
 end
 
 """
@@ -294,7 +289,7 @@ end
 
 Extract lines from the given `IO` stream and return them with syntax highlighting using `JuliaSyntaxHighlighting.jl`.
 
-These lines usually processed with [`ExtendedLocalCoverage.highligh_with_show`](@ref) to get synthax highlighting of julia code in the static HTML report.
+These lines usually processed with [`ExtendedLocalCoverage.highlight_with_show`](@ref) to get synthax highlighting of julia code in the static HTML report.
 """
 function highlighted_lines end
 
