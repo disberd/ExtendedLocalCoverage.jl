@@ -184,8 +184,8 @@ function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
             endswith(file, ".jl") || continue
             noext_name = chopsuffix(file, ".jl")
             if noext_name in pkg_extensions || basename(path) in pkg_extensions
-                rel_path = relpath(joinpath(path, file), pkg_dir)
-                push!(files_list, rel_path)
+                fullpath = joinpath(path, file)
+                push!(files_list, fullpath)
             end
         end
     end
