@@ -10,6 +10,11 @@ function modern_css_styles()
     return read(joinpath(@__DIR__, "style.css"), String)
 end
 
+"""
+    highlight_with_show(line::Union{AnnotatedString, SubString{<:AnnotatedString}}) -> String
+
+Take as input an annotated string containing synthax highlighting and generate an HTML representation of it using the `show` method with `MIME"text/html"()`, relying on `StyledStrings.jl` implementation to create HTML with synthax highlighting.
+"""
 function highlight_with_show end
 
 function calculate_file_stats(file::FileCoverageSummary)
@@ -201,6 +206,8 @@ The `lcov_file` and `html_file` arguments are the full paths to the LCOV file us
 
 - `title = "Package Coverage Report"` is the title used at the top of the HTML report.
 - `pkg_dir` is the directory of the package being covered. It is used to generate the source code links in the HTML report.
+- `lines_function` is a function that takes an `IO` stream representing the contents of a file and returns a vector of `AbstractString` objects representing each line of the source file. When not provided, it defaults to [`ExtendedLocalCoverage.default_lines_function`](@ref).
+- `html_function` is a function that takes a single line of source code as an `AbstractString` and returns an HTML-safe representation of that line, potentially with syntax highlighting. When not provided, it defaults to [`ExtendedLocalCoverage.default_html_function`](@ref).
 """
 function generate_html_report(
     lcov_file::String,
@@ -282,8 +289,22 @@ function generate_html_report(
     end
 end
 
+"""
+    highlighted_lines(io::IO)
+
+Extract lines from the given `IO` stream and return them with syntax highlighting using `JuliaSyntaxHighlighting.jl`.
+
+These lines usually processed with [`ExtendedLocalCoverage.highligh_with_show`](@ref) to get synthax highlighting of julia code in the static HTML report.
+"""
 function highlighted_lines end
 
+"""
+    plain_lines(io::IO)
+
+Extract lines from the given `IO` stream and return them as plain text without any syntax highlighting.
+
+This function simply does `collect(eachline(io))` and is the default fallback used as `lines_function` when `JuliaSyntaxHighlighting.jl` is not loaded.
+"""
 function plain_lines(io::IO)
     collect(eachline(io))
 end
