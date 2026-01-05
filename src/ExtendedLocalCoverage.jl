@@ -41,9 +41,6 @@ export generate_package_coverage, generate_html_report
 const StyledStringsLoaded = Ref(false)
 const JuliaSyntaxHighlightingLoaded = Ref(false)
 
-# This is a temporary fix to fix PrettyTables issues until https://github.com/JuliaCI/LocalCoverage.jl/pull/68 is merged.
-include("show_fix.jl")
-
 # Native Julia HTML report generation (without Python dependencies)
 include("html_report.jl")
 
@@ -147,10 +144,11 @@ function generate_package_coverage(
                     folder_list = [],
                     file_list,
                 )
-            catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
+            catch e
+                # We used to do this for pretty tables error. Now still kept for a while to test
                 rethrow()
             end
-        end |> WrappedPackageCoverage
+        end
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)
     end

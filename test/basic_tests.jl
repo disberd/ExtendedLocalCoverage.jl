@@ -1,5 +1,5 @@
 @testitem "ExtendedLocalCoverage.jl" begin
-    using ExtendedLocalCoverage: PackageCoverage, WrappedPackageCoverage
+    using ExtendedLocalCoverage: PackageCoverage
     import Pkg
 
     function clean_coverage(dir)
@@ -72,11 +72,6 @@
         @test html_path === joinpath(coverage_dir, "magic.html")
         @test isfile(xml_path)
         @test isfile(html_path)
-
-        # getproperty test
-        @test cov isa WrappedPackageCoverage
-        @test cov.summary isa PackageCoverage
-        @test cov.lines_hit isa Int
     finally
         Pkg.activate(current_proj)
     end
