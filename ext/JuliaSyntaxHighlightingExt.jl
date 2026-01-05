@@ -1,6 +1,6 @@
 module JuliaSyntaxHighlightingExt
     using JuliaSyntaxHighlighting: JuliaSyntaxHighlighting, highlight
-    using ExtendedLocalCoverage: ExtendedLocalCoverage, StyledStringsLoaded
+    using ExtendedLocalCoverage: ExtendedLocalCoverage
 
 
     function ExtendedLocalCoverage.highlighted_lines(io::IO)
