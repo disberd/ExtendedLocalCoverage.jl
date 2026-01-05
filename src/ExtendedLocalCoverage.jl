@@ -36,7 +36,7 @@ using TOML: TOML, tryparsefile
 using CoverageTools: CoverageTools, LCOV
 import Pkg
 
-export generate_package_coverage, generate_html_report, generate_native_html_report
+export generate_package_coverage, generate_html_report
 
 const StyledStringsLoaded = Ref(false)
 const JuliaSyntaxHighlightingLoaded = Ref(false)
