@@ -1,23 +1,57 @@
 module ExtendedLocalCoverage
 
-using LocalCoverage: LocalCoverage, write_lcov_to_xml, pkgdir, eval_coverage_metrics
+using LocalCoverage:
+    LocalCoverage,
+    write_lcov_to_xml,
+    pkgdir,
+    eval_coverage_metrics,
+    PackageCoverage,
+    FileCoverageSummary,
+    format_gaps
+using HypertextTemplates: HypertextTemplates, @component, @deftag, @render, @text, SafeString
+using HypertextTemplates.Elements:
+    Elements,
+    @a,
+    @body,
+    @div,
+    @footer,
+    @h1,
+    @h2,
+    @head,
+    @header,
+    @html,
+    @meta,
+    @span,
+    @strong,
+    @style,
+    @table,
+    @tbody,
+    @td,
+    @th,
+    @thead,
+    @title,
+    @tr
 using Revise: Revise, parse_pkg_files
-using PythonCall: PythonCall, pyimport, pycall
 using TOML: TOML, tryparsefile
 using CoverageTools: CoverageTools, LCOV
 import Pkg
 
-
 export generate_package_coverage, generate_html_report
+
+const StyledStringsLoaded = Ref(false)
+const JuliaSyntaxHighlightingLoaded = Ref(false)
 
 # This is a temporary fix to fix PrettyTables issues until https://github.com/JuliaCI/LocalCoverage.jl/pull/68 is merged.
 include("show_fix.jl")
+
+# Native Julia HTML report generation (without Python dependencies)
+include("html_report.jl")
 
 function extract_package_info(pkg_dir)
     project_toml = TOML.tryparsefile(joinpath(pkg_dir, "Project.toml"))
     pkg_name = project_toml["name"]
     pkg_uuid = project_toml["uuid"] |> Base.UUID
-    pkg_extensions = get(Dict{String, Any},project_toml, "extensions") |> keys
+    pkg_extensions = get(Dict{String,Any}, project_toml, "extensions") |> keys
     pkg_id = Base.PkgId(pkg_uuid, pkg_name)
     return (; pkg_name, pkg_uuid, pkg_id, pkg_extensions)
 end
@@ -27,29 +61,6 @@ function extract_included_files(pkg_id::Base.PkgId)
     Base.eval(Main, :(import $(Symbol(pkg_id.name))))
     pkgfiles = parse_pkg_files(pkg_id)
     return unique(pkgfiles.info.files)
-end
-
-"""
-    generate_html_report(cobertura_file, html_file; title = nothing, pkg_dir = nothing)
-
-Generate an HTML report from a cobertura XML file using the `pycobertura` Python package.
-
-The `cobertura_file` and `html_file` arguments are the full paths to the cobertura XML file used as input and of the HTML file to be generated, respectively.
-
-# Keyword arguments
-
-- `title = "Package Coverage Report"` is the title used at the top of the HTML report.
-- `pkg_dir = dirname(cobertura_file)` is the directory of the package being covered. It is used to generate the source code links in the HTML report and by default assumes the package directory to be the directory of the cobertura XML file.
-"""
-function generate_html_report(cobertura_file, html_file; title = "Package Coverage Report", pkg_dir = dirname(cobertura_file))
-    (; filesystem_factory) = pyimport("pycobertura.filesystem")
-    pycob = pyimport("pycobertura")
-    cobertura = pycob.Cobertura(cobertura_file, filesystem=filesystem_factory(pkg_dir))
-    reporter = pycall(pycob.reporters.HtmlReporter, cobertura; title)
-    report = reporter.generate()
-    open(html_file, "w") do io
-        print(io, report)
-    end
 end
 
 """
@@ -79,9 +90,11 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
 - `print_to_stdout = true` determines whether the coverage summary is printed to the standard output.
 
-- `force_paths_relative = false` determines whether the paths in the `lcov.info` file are processed to make sure they are relative to the package directory. This is needed in some corner cases, especially if one wants the html file to correctly show source code for the files in the report.
-
 - `extensions = true` when `true`, also tries to add to the coverage files in the `ext` directory that match an extension name specified in the `Project.toml` file.
+
+- `lines_function` use to customize how the HTML report is generated. Is directly forwarded to `generate_html_report` and can only be provided if the `html_name` kwarg is also provided.
+
+- `html_function` use to customize how the HTML report is generated. Is directly forwarded to `generate_html_report` and can only be provided if the `html_name` kwarg is also provided.
 
 # Return values
 
@@ -91,36 +104,55 @@ The function returns a named tuple with the following fields:
 - `cobertura_file` the full path to the cobertura XML file, if any was generated.
 - `html_file` the full path to the HTML file, if any was generated.
 """
-function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run_test= true, test_args=[""], exclude = [], html_name = "index.html", cobertura_name = "cobertura-coverage.xml", print_to_stdout = true, force_paths_relative = false, extensions = true)
+function generate_package_coverage(
+    pkg = nothing;
+    use_existing_lcov = false,
+    run_test = true,
+    test_args = [""],
+    exclude = [],
+    html_name = "index.html",
+    cobertura_name = "cobertura-coverage.xml",
+    print_to_stdout = true,
+    extensions = true,
+    lines_function = nothing,
+    html_function = nothing,
+)
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
-    # Generate the coverage
-    cov = if use_existing_lcov
-        coverage = LCOV.readfile(joinpath(pkg_dir, "coverage", "lcov.info"))
-        eval_coverage_metrics(coverage, pkg_dir)
-    else
-        file_list = extract_included_files(pkg_id)
-        extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
-        filter!(file_list) do filename
-            for needle in exclude
-                occursin(needle, filename) && return false
-            end
-            return true
-        end
-        try
-            LocalCoverage.generate_coverage(pkg; run_test, test_args, folder_list=[], file_list)
-        catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
-            rethrow()
-        end
-    end |> WrappedPackageCoverage
-    if print_to_stdout
-        show(IOContext(stdout, :print_gaps => true), cov)
-    end
-    # Create the cobertura xml file
     coverage_dir = joinpath(pkg_dir, "coverage")
     lcov_file = joinpath(coverage_dir, "lcov.info")
-    if force_paths_relative
-        make_paths_relative(lcov_file, pkg_dir)
+    # We do some input checks
+    isnothing(html_name) && (!isnothing(html_function) || !isnothing(lines_function)) && throw(ArgumentError("Cannot provide `html_function` or `lines_function` when `html_name` is `nothing`."))
+    # Generate the coverage
+    cov =
+        if use_existing_lcov
+            coverage = LCOV.readfile(lcov_file)
+            eval_coverage_metrics(coverage, pkg_dir)
+        else
+            file_list = map(extract_included_files(pkg_id)) do relative_path
+                abspath(pkg_dir, relative_path)
+            end
+            extensions && maybe_add_extensions!(file_list, pkg_extensions, pkg_dir)
+            filter!(file_list) do filename
+                for needle in exclude
+                    occursin(needle, filename) && return false
+                end
+                return true
+            end
+            try
+                LocalCoverage.generate_coverage(
+                    pkg;
+                    run_test,
+                    test_args,
+                    folder_list = [],
+                    file_list,
+                )
+            catch e # We do this, as the problem with PrettyTables causes an error from within the catch block in LocalCoverage.
+                rethrow()
+            end
+        end |> WrappedPackageCoverage
+    if print_to_stdout
+        show(IOContext(stdout, :print_gaps => true), cov)
     end
     cobertura_file = if isnothing(cobertura_name) && isnothing(html_name)
         nothing
@@ -133,46 +165,32 @@ function generate_package_coverage(pkg = nothing; use_existing_lcov = false, run
     end
     # Create the cobertura html file with source code
     if !isnothing(html_file)
-        generate_html_report(cobertura_file, html_file; title = pkg_name * " coverage report", pkg_dir)
+        generate_html_report(
+            lcov_file,
+            html_file;
+            title = pkg_name * " coverage report",
+            pkg_dir,
+            lines_function,
+            html_function,
+        )
     end
     return (; cov, cobertura_file, html_file)
 end
 
 function maybe_add_extensions!(files_list, pkg_extensions, pkg_dir)
     (isnothing(pkg_extensions) || isempty(pkg_extensions)) && return files_list
-    for (path, dir, files) in walkdir("ext")
+    for (path, dir, files) in walkdir(joinpath(pkg_dir, "ext"))
         for file in files
             endswith(file, ".jl") || continue
             noext_name = chopsuffix(file, ".jl")
             if noext_name in pkg_extensions || basename(path) in pkg_extensions
-                rel_path = relpath(joinpath(path, file), pkg_dir)
-                push!(files_list, rel_path)
+                fullpath = joinpath(path, file)
+                push!(files_list, fullpath)
             end
         end
     end
     unique!(files_list)
     return nothing
-end
-
-# This ensures that paths in the lcov.info file relative to the package directory. Needed in some corner cases.
-function make_paths_relative(lcov_file::String, pkg_dir::String; output_file::String = lcov_file)
-    (tmppath, tmpio) = mktemp()
-    open(lcov_file) do io
-        for line in eachline(io, keep=true) # keep so the new line isn't chomped
-            if startswith(line, "SF:")
-                path = split(line, "SF:")[2] 
-                path = chopsuffix(path, "\n")
-                if isabspath(path)
-                    real_path = realpath(path)
-                    ispath(real_path) || error("Something went wrong, path $path does not seem valid")
-                    line = replace(line, path => relpath(real_path, pkg_dir))
-                end
-            end
-            write(tmpio, line)
-        end
-    end
-    close(tmpio)
-    mv(tmppath, output_file, force=true)
 end
 
 end
