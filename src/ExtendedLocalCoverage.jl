@@ -92,6 +92,10 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
 - `extensions = true` when `true`, also tries to add to the coverage files in the `ext` directory that match an extension name specified in the `Project.toml` file.
 
+- `lines_function` use to customize how the HTML report is generated. Is directly forwarded to `generate_html_report` and can only be provided if the `html_name` kwarg is also provided.
+
+- `html_function` use to customize how the HTML report is generated. Is directly forwarded to `generate_html_report` and can only be provided if the `html_name` kwarg is also provided.
+
 # Return values
 
 The function returns a named tuple with the following fields:
@@ -110,11 +114,15 @@ function generate_package_coverage(
     cobertura_name = "cobertura-coverage.xml",
     print_to_stdout = true,
     extensions = true,
+    lines_function = nothing,
+    html_function = nothing,
 )
     pkg_dir = pkgdir(pkg)
     (; pkg_name, pkg_id, pkg_extensions) = extract_package_info(pkg_dir)
     coverage_dir = joinpath(pkg_dir, "coverage")
     lcov_file = joinpath(coverage_dir, "lcov.info")
+    # We do some input checks
+    isnothing(html_name) && (!isnothing(html_function) || !isnothing(lines_function)) && throw(ArgumentError("Cannot provide `html_function` or `lines_function` when `html_name` is `nothing`."))
     # Generate the coverage
     cov =
         if use_existing_lcov
@@ -162,6 +170,8 @@ function generate_package_coverage(
             html_file;
             title = pkg_name * " coverage report",
             pkg_dir,
+            lines_function,
+            html_function,
         )
     end
     return (; cov, cobertura_file, html_file)
