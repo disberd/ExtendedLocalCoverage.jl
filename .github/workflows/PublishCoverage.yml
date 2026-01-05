@@ -1,0 +1,49 @@
+name: Publish coverage report
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v2
+        with:
+          version: "1"
+          os: "ubuntu-latest"
+
+      - name: Generate coverage HTML
+        run: |
+          julia --color=yes -t auto --project=. -e '
+            using Pkg
+            Pkg.instantiate()
+            using ExtendedLocalCoverage
+            generate_package_coverage()
+          '
+
+      - name: Prepare gh-pages payload
+        run: |
+          test -f coverage/index.html
+          mkdir -p coverage_example
+          cp coverage/index.html coverage_example/index.html
+
+      - name: Publish coverage_example to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: coverage_example
+          destination_dir: coverage_example
+          keep_files: true
+          commit_message: "Update coverage report (coverage run)"
