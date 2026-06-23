@@ -4,6 +4,21 @@ This file contains the changelog for the ExtendedLocalCoverage package. It follo
 
 ## Unreleased
 
+## [0.2.1] - 2026-06-23
+
+### Fixed
+- Fixed a `StringIndexError` in the HTML line-coverage report (`highlighted_lines`, `JuliaSyntaxHighlighting` extension) when a source file used CRLF line endings and had a multibyte Unicode character (e.g. `π`) right before the `\r`. The trailing `\r` is now stripped with `chop` instead of byte-based indexing.
+
+## [0.2.0] - 2026-01-05
+
+### Added
+- The HTML coverage report is now generated natively in Julia (via `HypertextTemplates`) as a self-contained static page, replacing the previous report based on the Python `pycobertura` package.
+- Optional Julia syntax highlighting of the source code in the HTML report through a `JuliaSyntaxHighlighting` package extension (with a `StyledStrings` extension for rendering), available on Julia 1.12+.
+
+### Removed
+- Dropped the `PythonCall` and `CondaPkg` dependencies (no Python/Conda environment is needed anymore).
+- Removed the `WrappedPackageCoverage` `show` wrapper and the `PrettyTables` dependency, as the upstream `PrettyTables` v3 issue was fixed.
+
 ## [0.1.3] - 2025-09-29
 
 ### Added
