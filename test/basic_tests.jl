@@ -77,6 +77,99 @@
     end
 end
 
+@testitem "julia_args reaches the test subprocess" begin
+    import Pkg
+    # `julia_args` must be forwarded to the julia process that `Pkg.test` spawns, so that
+    # flags like `--heap-size-hint` actually take effect (the JULIA_HEAP_SIZE_HINT env var
+    # is ignored; only the CLI flag sets Base.JLOptions().heap_size_hint).
+    CoverageTest_dir = joinpath(@__DIR__, "CoverageTest")
+    hint_file = tempname()
+    current_proj = dirname(Base.active_project())
+    Pkg.activate(CoverageTest_dir)
+    try
+        generate_package_coverage(
+            "CoverageTest";
+            test_args = [hint_file],          # fixture writes heap_size_hint here
+            julia_args = ["--heap-size-hint=2G"],
+            html_name = nothing,
+            cobertura_name = nothing,
+            print_to_stdout = false,
+        )
+        @test isfile(hint_file)
+        @test parse(Int, read(hint_file, String)) == 2 * 2^30  # 2 GiB = 2147483648
+    finally
+        Pkg.activate(current_proj)
+        rm(hint_file; force = true)
+    end
+end
+
+@testitem "EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT env var sets test heap hint" begin
+    import Pkg
+    # CI can set the test-process heap-size hint via an env var, without touching the call site.
+    CoverageTest_dir = joinpath(@__DIR__, "CoverageTest")
+    hint_file = tempname()
+    current_proj = dirname(Base.active_project())
+    Pkg.activate(CoverageTest_dir)
+    try
+        withenv("EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT" => "2G") do
+            generate_package_coverage(
+                "CoverageTest";
+                test_args = [hint_file],   # note: no julia_args passed; the env var must supply the flag
+                html_name = nothing,
+                cobertura_name = nothing,
+                print_to_stdout = false,
+            )
+        end
+        @test parse(Int, read(hint_file, String)) == 2 * 2^30  # 2 GiB = 2147483648
+    finally
+        Pkg.activate(current_proj)
+        rm(hint_file; force = true)
+    end
+end
+
+@testitem "explicit julia_args --heap-size-hint overrides env var" begin
+    import Pkg
+    # When both EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT and an explicit --heap-size-hint in
+    # julia_args are given, the explicit one must win (julia uses the last occurrence).
+    CoverageTest_dir = joinpath(@__DIR__, "CoverageTest")
+    hint_file = tempname()
+    current_proj = dirname(Base.active_project())
+    Pkg.activate(CoverageTest_dir)
+    try
+        withenv("EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT" => "2G") do
+            generate_package_coverage(
+                "CoverageTest";
+                test_args = [hint_file],
+                julia_args = ["--heap-size-hint=4G"],
+                html_name = nothing,
+                cobertura_name = nothing,
+                print_to_stdout = false,
+            )
+        end
+        @test parse(Int, read(hint_file, String)) == 4 * 2^30  # explicit 4 GiB wins over env 2 GiB
+    finally
+        Pkg.activate(current_proj)
+        rm(hint_file; force = true)
+    end
+end
+
+@testitem "generate_package_coverage with no pkg arg uses the active project" begin
+    import Pkg
+    # Exercises the pkg=nothing path: pkgdir(nothing) -> active project, and Pkg.test by the
+    # active project's own name (no isnothing(pkg) branch).
+    CoverageTest_dir = joinpath(@__DIR__, "CoverageTest")
+    current_proj = dirname(Base.active_project())
+    Pkg.activate(CoverageTest_dir)
+    try
+        cov, xml, html = generate_package_coverage(; print_to_stdout = false)
+        @test isfile(xml)
+        @test isfile(html)
+        rm(dirname(xml); recursive = true, force = true)
+    finally
+        Pkg.activate(current_proj)
+    end
+end
+
 @testitem "highlighted_lines CRLF + multibyte" begin
     # Regression: CRLF line endings with a multibyte char (e.g. π) right before
     # the \r used to throw StringIndexError because the old code stripped the \r

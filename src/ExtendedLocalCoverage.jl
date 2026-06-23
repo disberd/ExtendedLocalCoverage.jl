@@ -77,7 +77,10 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 
 - `run_test = true` this is forwarded to `LocalCoverage.generate_coverage` and determines whether tests are executed. When `false`, test execution step is skipped allowing an easier use in combination with other test packages.
 
-- `test_args = [""]` this is forwarded to `LocalCoverage.generate_coverage` and is there passed on to `Pkg.test`.
+- `test_args = [""]` this is passed on to `Pkg.test` (it becomes `ARGS` in the test process).
+
+- `julia_args = String[]` is a vector of extra command-line flags (strings, like `test_args`) forwarded to the julia process that `Pkg.test` spawns for the test run. The main use case is passing `--heap-size-hint` to bound the test process' GC heap on memory-limited CI runners (where julia otherwise sizes its heap to the host RAM, not the cgroup limit, and can get OOM-killed). For example `julia_args = ["--heap-size-hint=6G"]`. Note `LocalCoverage.generate_coverage` does not forward `julia_args`, which is why this package runs `Pkg.test` directly.
+  - The `EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` environment variable, when set to a non-empty value (e.g. `6G`), adds `--heap-size-hint=<value>` to the test process' `julia_args`. This lets CI configs set the hint without changing the call site. An explicit `--heap-size-hint` in `julia_args` takes precedence (julia uses the last occurrence).
 
 - `exclude = []` is used to specify string or regexes that are used to filter out some of the files in the list of package includes. The exclusion is done by removing from the list of files all files for which `occursin(needle, filename)` returns `true`, where `needle` is any element of `exclude`.
 
@@ -106,6 +109,7 @@ function generate_package_coverage(
     use_existing_lcov = false,
     run_test = true,
     test_args = [""],
+    julia_args = String[],
     exclude = [],
     html_name = "index.html",
     cobertura_name = "cobertura-coverage.xml",
@@ -136,18 +140,32 @@ function generate_package_coverage(
                 end
                 return true
             end
-            try
-                LocalCoverage.generate_coverage(
-                    pkg;
-                    run_test,
-                    test_args,
-                    folder_list = [],
-                    file_list,
-                )
-            catch e
-                # We used to do this for pretty tables error. Now still kept for a while to test
-                rethrow()
-            end
+            # Run the tests ourselves (when requested) so we can forward `julia_args` — e.g.
+            # `--heap-size-hint` — to the julia process `Pkg.test` spawns. LocalCoverage's
+            # `generate_coverage` only forwards `test_args`, not `julia_args`.
+            #
+            # The `EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` env var lets CI set the test-process
+            # heap-size hint without touching the call site. It is prepended, so an explicit
+            # `--heap-size-hint` in `julia_args` still wins (julia takes the last occurrence).
+            heap_hint = get(ENV, "EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT", "")
+            effective_julia_args =
+                isempty(heap_hint) ? julia_args : ["--heap-size-hint=$heap_hint", julia_args...]
+            # `pkg_name` comes from the (active or named) package's own Project.toml, so we can
+            # always test by name — no need to branch on whether `pkg` was explicitly provided.
+            run_test && Pkg.test(
+                pkg_name;
+                coverage = true,
+                test_args,
+                julia_args = effective_julia_args,
+            )
+            # Build the lcov + coverage metrics from the produced data without re-running tests.
+            LocalCoverage.generate_coverage(
+                pkg;
+                run_test = false,
+                test_args,
+                folder_list = [],
+                file_list,
+            )
         end
     if print_to_stdout
         show(IOContext(stdout, :print_gaps => true), cov)

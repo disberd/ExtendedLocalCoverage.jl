@@ -1,7 +1,10 @@
 name = "ExtendedLocalCoverage"
 uuid = "eb248270-a497-541c-8f75-6bb2aa2715dc"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Alberto Mengali <a.mengali@gmail.com>"]
+
+[workspace]
+projects = ["test", "docs"]
 
 [deps]
 CoverageTools = "c36e975a-824b-4404-a568-ef97ca766997"
@@ -12,6 +15,7 @@ Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [weakdeps]
+Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 JuliaSyntaxHighlighting = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
 StyledStrings = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
 
@@ -28,7 +32,5 @@ Pkg = "1"
 Revise = "3.7.1"
 StyledStrings = "1.11.0"
 TOML = "1.0.3"
+Tables = "1.12.1"
 julia = "1.10"
-
-[workspace]
-projects = ["test", "docs"]
