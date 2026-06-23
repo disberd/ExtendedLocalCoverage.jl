@@ -39,6 +39,29 @@ using ExtendedLocalCoverage
 cov_data = generate_package_coverage();
 ```
 
+### Limiting test-process memory on CI
+
+The coverage test run happens in a separate julia process spawned by `Pkg.test`. On
+memory-limited CI runners (e.g. an 8 GB container) this can get OOM-killed, because julia
+sizes its GC heap target to the *host* RAM rather than the cgroup limit. Pass
+`--heap-size-hint` to that process via the `julia_args` keyword (a vector of strings, like
+`test_args`):
+
+```julia
+generate_package_coverage(; julia_args = ["--heap-size-hint=6G"])
+```
+
+For CI configs it is often easier to set this without touching the call site, via the
+`EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` environment variable:
+
+```bash
+EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT=6G   # adds --heap-size-hint=6G to the test process
+```
+
+An explicit `--heap-size-hint` in `julia_args` takes precedence over the environment
+variable. (Note the `JULIA_HEAP_SIZE_HINT` env var does *not* work — only the
+`--heap-size-hint` CLI flag sets the test process' heap-size hint.)
+
 See the [developer documentation](https://disberd.github.io/ExtendedLocalCoverage.jl/dev) for more details.
 
 ## How to Cite
