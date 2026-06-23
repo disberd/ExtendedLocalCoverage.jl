@@ -77,6 +77,21 @@
     end
 end
 
+@testitem "highlighted_lines CRLF + multibyte" begin
+    # Regression: CRLF line endings with a multibyte char (e.g. π) right before
+    # the \r used to throw StringIndexError because the old code stripped the \r
+    # with byte arithmetic (line[1:end-1]) instead of a char-safe chop.
+    # On Julia 1.12+ JuliaSyntaxHighlighting is preloaded, so its extension is
+    # active and ExtendedLocalCoverage.highlighted_lines is defined (same
+    # assumption as the "html defaults functions" testitem below).
+    @static if VERSION >= v"1.12"
+        @assert ExtendedLocalCoverage.JuliaSyntaxHighlightingLoaded[] "JuliaSyntaxHighlighting extension not loaded"
+        lines = ExtendedLocalCoverage.highlighted_lines(IOBuffer("x = 2π\r\nb = 1\r\n"))
+        @test String(lines[1]) == "x = 2π"  # no trailing \r, no StringIndexError
+        @test String(lines[2]) == "b = 1"
+    end
+end
+
 @testitem "html defaults functions" begin
     using ExtendedLocalCoverage: default_lines_function, default_html_function
 

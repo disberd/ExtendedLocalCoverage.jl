@@ -6,7 +6,7 @@ module JuliaSyntaxHighlightingExt
     function ExtendedLocalCoverage.highlighted_lines(io::IO)
         highlighted = highlight(io)
         map(eachsplit(highlighted, '\n')) do line
-            endswith(line, '\r') ? line[1:end-1] : line # Deal with Windows line endings
+            endswith(line, '\r') ? chop(line) : line # Deal with Windows line endings (chop is char-safe, unlike byte indexing)
         end
     end
 
