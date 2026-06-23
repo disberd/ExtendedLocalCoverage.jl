@@ -153,6 +153,23 @@ end
     end
 end
 
+@testitem "generate_package_coverage with no pkg arg uses the active project" begin
+    import Pkg
+    # Exercises the pkg=nothing path: pkgdir(nothing) -> active project, and Pkg.test by the
+    # active project's own name (no isnothing(pkg) branch).
+    CoverageTest_dir = joinpath(@__DIR__, "CoverageTest")
+    current_proj = dirname(Base.active_project())
+    Pkg.activate(CoverageTest_dir)
+    try
+        cov, xml, html = generate_package_coverage(; print_to_stdout = false)
+        @test isfile(xml)
+        @test isfile(html)
+        rm(dirname(xml); recursive = true, force = true)
+    finally
+        Pkg.activate(current_proj)
+    end
+end
+
 @testitem "highlighted_lines CRLF + multibyte" begin
     # Regression: CRLF line endings with a multibyte char (e.g. π) right before
     # the \r used to throw StringIndexError because the old code stripped the \r

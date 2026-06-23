@@ -80,8 +80,7 @@ This acts similary to (and based on) the `generate_coverage` function from [Loca
 - `test_args = [""]` this is passed on to `Pkg.test` (it becomes `ARGS` in the test process).
 
 - `julia_args = String[]` is a vector of extra command-line flags (strings, like `test_args`) forwarded to the julia process that `Pkg.test` spawns for the test run. The main use case is passing `--heap-size-hint` to bound the test process' GC heap on memory-limited CI runners (where julia otherwise sizes its heap to the host RAM, not the cgroup limit, and can get OOM-killed). For example `julia_args = ["--heap-size-hint=6G"]`. Note `LocalCoverage.generate_coverage` does not forward `julia_args`, which is why this package runs `Pkg.test` directly.
-
-- The `EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` environment variable, when set to a non-empty value (e.g. `6G`), adds `--heap-size-hint=<value>` to the test process' `julia_args`. This lets CI configs set the hint without changing the call site. An explicit `--heap-size-hint` in `julia_args` takes precedence (julia uses the last occurrence).
+  - The `EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` environment variable, when set to a non-empty value (e.g. `6G`), adds `--heap-size-hint=<value>` to the test process' `julia_args`. This lets CI configs set the hint without changing the call site. An explicit `--heap-size-hint` in `julia_args` takes precedence (julia uses the last occurrence).
 
 - `exclude = []` is used to specify string or regexes that are used to filter out some of the files in the list of package includes. The exclusion is done by removing from the list of files all files for which `occursin(needle, filename)` returns `true`, where `needle` is any element of `exclude`.
 
@@ -151,13 +150,14 @@ function generate_package_coverage(
             heap_hint = get(ENV, "EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT", "")
             effective_julia_args =
                 isempty(heap_hint) ? julia_args : ["--heap-size-hint=$heap_hint", julia_args...]
-            if run_test
-                if isnothing(pkg)
-                    Pkg.test(; coverage = true, test_args, julia_args = effective_julia_args)
-                else
-                    Pkg.test(pkg; coverage = true, test_args, julia_args = effective_julia_args)
-                end
-            end
+            # `pkg_name` comes from the (active or named) package's own Project.toml, so we can
+            # always test by name — no need to branch on whether `pkg` was explicitly provided.
+            run_test && Pkg.test(
+                pkg_name;
+                coverage = true,
+                test_args,
+                julia_args = effective_julia_args,
+            )
             # Build the lcov + coverage metrics from the produced data without re-running tests.
             LocalCoverage.generate_coverage(
                 pkg;
