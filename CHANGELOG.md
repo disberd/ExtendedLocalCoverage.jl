@@ -4,6 +4,12 @@ This file contains the changelog for the ExtendedLocalCoverage package. It follo
 
 ## Unreleased
 
+## [0.2.2] - 2026-06-23
+
+### Added
+- `generate_package_coverage` now accepts a `julia_args` keyword (a vector of strings, like `test_args`) that is forwarded to the julia process `Pkg.test` spawns for the test run. The main use case is `julia_args = ["--heap-size-hint=6G"]` to bound the test process' GC heap on memory-limited CI runners and avoid OOM kills. `LocalCoverage.generate_coverage` does not forward `julia_args`, so the test run is now driven via `Pkg.test` directly.
+- The `EXTENDEDLOCALCOVERAGE_HEAP_SIZE_HINT` environment variable, when set (e.g. `6G`), adds `--heap-size-hint=<value>` to the test process' `julia_args`, making the hint configurable from CI without changing the call site. An explicit `--heap-size-hint` in `julia_args` takes precedence.
+
 ## [0.2.1] - 2026-06-23
 
 ### Fixed
